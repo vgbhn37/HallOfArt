@@ -9,9 +9,22 @@
 	.mid_menu{
  		background-color: white;
 		width: 85%;
-		height: 80px;
+		height: 70px;
 		margin: auto;
 		padding: 0 40px;
+		display: flex;
+	}
+	.mid1, .mid2, .mid3{
+		height: 100%;
+		text-align: center;
+		border-right: 1px solid rgba(120,120,120,0.3);
+	}
+	.mid1{
+		flex:0 0 70px;
+		border-left: 1px solid rgba(120,120,120,0.3);
+	}
+	.mid2, .mid3{
+		flex:0 0 220px;
 	}
 	body{
 		margin: 0; padding: 2px;
@@ -31,7 +44,7 @@
 /* 		display: flex; */
 	}
 	.detail_left{
-		width:50%;
+		width:400px;
 		height:100%;
 		float: left;
 		padding-top: 20px;
@@ -58,11 +71,11 @@
 	
 	.detail_content{
 		width: 85%;
-		height: 1000px;
+		min-height: 1000px;
 		padding: 0 40px;
 		margin: auto;
 		background-color: white;
-		box-shadow: inset 0px -10px 10px -10px rgba(128, 128, 128, 0.5);
+		box-shadow: inset 0px 5px 10px 0px rgba(128, 128, 128, 0.3);
 	}
 </style>
 </head>
@@ -115,6 +128,15 @@
 	</div>
 	
 	<div class="mid_menu">
+		<div class="mid1">
+			Home
+		</div>
+		<div class="mid2">
+			{ 공연 / 전시 }
+		</div>
+		<div class="mid3">
+			{ 상세 정보 }
+		</div>
 	</div>
 	<div class="detail_content">
 		
