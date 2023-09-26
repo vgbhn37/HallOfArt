@@ -11,4 +11,8 @@ public class TestController {
 		return "main";
 	}
 	
+	@GetMapping({"/test2", "2"})
+	public String hello2() {
+		return "layout/header";
+	}
 }
