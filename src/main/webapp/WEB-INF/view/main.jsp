@@ -14,4 +14,9 @@
 	</section>
 </body>
 	<%@ include file="layout/footer.jsp" %>
+	
+	<script src="../resources/js/popper.js"></script>
+	<script src="../resources/js/main.js"></script>
+	<script src="../resources/js/jquery.min.js"></script>
+	<script src="../resources/js/bootstrap.min.js"></script>
 </html>

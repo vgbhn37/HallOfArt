@@ -75,9 +75,9 @@
 							class="nav-link dropdown-toggle" href="#" id="dropdown04"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown04">
-								<a class="dropdown-item" href="#">회원1</a> <a
-									class="dropdown-item" href="#">회원2</a> <a class="dropdown-item"
-									href="#">회원3</a> <a class="dropdown-item" href="#">회원4</a>
+								<a class="dropdown-item" href="#">회원정보</a> <a
+									class="dropdown-item" href="#">회원어쩌구</a> <a class="dropdown-item"
+									href="#">회원엄준식123</a> <a class="dropdown-item" href="#">회원4</a>
 							</div></li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown04"
