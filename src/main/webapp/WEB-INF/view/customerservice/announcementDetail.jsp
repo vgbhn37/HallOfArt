@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/header.jsp" %>
-<body>
 <main class="mb-4">
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -25,5 +24,4 @@
     </div>
   </div>
 </main>
-</body>
-</html>
+<%@include file="/WEB-INF/view/layout/footer.jsp" %>
