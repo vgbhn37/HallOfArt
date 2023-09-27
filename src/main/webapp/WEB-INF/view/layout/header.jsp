@@ -29,7 +29,7 @@
 						<div class="row">
 							<div class="col-md-6 text-center">
 								<a class="navbar-brand" href="index.html">
-								<h1 style="font-weight: 900">예술의 전당</h1>
+								<h1 style="font-weight: 900; color: black">예술의 전당</h1>
 									<!-- <span>예매하십셔</span> -->
 								</a>
 							</div>
@@ -64,8 +64,8 @@
 			</div>
 		</div>
 		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
+			class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light"
+			id="ftco-navbar" style="background-color: #252525">
 			<div class="container-fluid">
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#ftco-nav" aria-controls="ftco-nav"
@@ -74,7 +74,7 @@
 				</button>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav mx-auto">
-						<li class="nav-item active"><a href="#" class="nav-link">홈</a></li>
+						<li class="nav-item active"><a href="#" class="nav-link" style="color: red">홈</a></li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown04"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
@@ -94,7 +94,7 @@
 						<li class="nav-item"><a href="#" class="nav-link">오시는길</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">문의센터</a></li>
 					</ul>
-					<ul class="navbar-nav" style="margin-left:-234px">
+					<ul class="navbar-nav" style="margin-left:-144px">
 						<li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
 					</ul>
@@ -103,4 +103,4 @@
 		</nav>
 	</section>
 	
-	<section style="min-height: calc(100vh - 158.77px);">
+	<section style="min-height: calc(100vh - 204px);">
