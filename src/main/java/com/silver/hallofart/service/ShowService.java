@@ -14,10 +14,13 @@ public class ShowService {
 	@Autowired
 	private ShowRepository showRepository;
 	
+	public Show showById(Integer id){
+		Show show = showRepository.findById(id);
+		return show;
+	}
+	
 	public List<Show> showListByDate(String startDate, String endDate){
-		
 		List<Show> list = showRepository.findByDate(startDate, endDate);
-		
 		return list;
 	}
 }

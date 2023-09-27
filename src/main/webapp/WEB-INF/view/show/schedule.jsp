@@ -21,52 +21,7 @@
 		width: 100%;
 		height: 100px;
 	}
-	.mid_menu{
- 		background-color: white;
-		width: 85%;
-		height: 70px;
-		margin: auto;
-		padding: 0 40px;
-		display: flex;
-	}
-	.mid1, .mid2, .mid3{
-		height: 100%;
-		text-align: center;
-		border-right: 1px solid rgba(120,120,120,0.3);
-	}
-	.mid1{
-		flex:0 0 70px;
-		border-left: 1px solid rgba(120,120,120,0.3);
-	}
-	.mid2, .mid3{
-		flex:0 0 220px;
-	}
-	.mid_a{
-		text-decoration: none;
-		color: black;
-		font-size: 1.5em;
-/* 		font-weight: bold; */
-		display: inline-block;
-		vertical-align: middle;
-		height: 70px;
-		line-height: 70px;
-	}
-	.mid_ul{
-		display: block;
-		border: 1px solid rgba(120,120,120,0.3);
-		border-top: none;
-		background-color: white;
-		padding: 20px;
- 		width: 179px;
-		margin: 0;
-		list-style: none;
-		display: none;
-		position: absolute;
-		z-index: 999;
-	}
-	.mid_ul li{
-		height: 28px;
-	}
+	
 	.banner{
 		width: 85%;
 		height: 220px;
@@ -87,15 +42,14 @@
 	}
 	.content_date{
 		flex: 0 0 400px;
-		background-color: lightpink;
+/* 		background-color: lightpink; */
 		text-align: center;
 		margin: auto;
-		z-index: 9;
 	}
 	.content_list{
 		flex: 0 0 500px;
 		min-height: 800px;
-		background-color: lightblue;
+/* 		background-color: lightblue; */
 		margin: auto;
 	}
 	#list_tb{
@@ -107,6 +61,11 @@
 	}
 	#list_tb td{
 		height: 50px;
+	}
+	.footer{
+		background-color: #999;
+		width: 100%;
+		height: 180px;
 	}
 </style>
 
@@ -156,9 +115,9 @@ function findByDateAjax(startDate, endDate){
 	})
 }
 
-$(function() {
+$(function() { // jquery
 	
-	// 현재 날짜를 startDate, endDate 로 default 설정
+	// 현재 날짜를 startDate, endDate 로 default 설정 -----------------------------------------------------------
 	var currentDate = new Date();
 	var year = currentDate.getFullYear();
 	var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자릿수로 패딩
@@ -175,7 +134,7 @@ $(function() {
     
    	findByDateAjax(startDate, endDate);
    	
-   	// datepicker 설정
+   	// datepicker 설정 --------------------------------------------------------------
     $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
         prevText: '이전 달',
@@ -201,20 +160,6 @@ $(function() {
 	   	findByDateAjax(startDate, endDate);
     });
     
-    
-    $(".mid2").mouseenter(function(){
-   		$("#ul_show").stop().slideDown(400);
-   	});
-   	$(".mid2").mouseleave(function(){
-		$("#ul_show").stop().slideUp(200);
-   	});
-    $(".mid3").mouseenter(function(){
-   		$("#ul_detail").stop().slideDown(400);
-   	});
-   	$(".mid3").mouseleave(function(){
-		$("#ul_detail").stop().slideUp(200);
-   	});
-
 
   });
 </script>
@@ -229,32 +174,8 @@ $(function() {
 	<div class="banner">
 		
 	</div>
+<%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
 	
-	<div class="mid_menu">
-		<div class="mid1">
-			<a class="mid_a" id="a_home" >HOME</a>
-		</div>
-		<div class="mid2">
-			<a class="mid_a" id="a_show" >공연 / 전시</a>
-			<ul class="mid_ul" id="ul_show">
-				<li>공연전시1</li>
-				<li>공연전시2</li>
-				<li>공연전시3</li>
-				<li>공연전시4</li>
-				<li>공연전시5</li>
-			</ul>
-		</div>
-		<div class="mid3">
-			<a class="mid_a" id="a_detail" >상세 정보</a>
-			<ul class="mid_ul" id="ul_detail">
-				<li>상세정보1</li>
-				<li>상세정보2</li>
-				<li>상세정보3</li>
-				<li>상세정보4</li>
-				<li>상세정보5</li>
-			</ul>
-		</div>
-	</div>
 	<div class="content">
 		<div class="content_date">
 			최소 날짜 : <span id="start_date"></span><br>
@@ -275,9 +196,14 @@ $(function() {
 				</tr>
 			</thead>
 			<tbody>
+				<!-- jquery - ajax -> 데이터 들어옴 -->
 			</tbody>
 			</table>
 		</div>
+	</div>
+	
+	<div class="footer">
+		footer
 	</div>
 </body>
 </html>
