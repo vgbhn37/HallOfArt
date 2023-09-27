@@ -41,6 +41,32 @@
 	.mid2, .mid3{
 		flex:0 0 220px;
 	}
+	.mid_a{
+		text-decoration: none;
+		color: black;
+		font-size: 1.5em;
+/* 		font-weight: bold; */
+		display: inline-block;
+		vertical-align: middle;
+		height: 70px;
+		line-height: 70px;
+	}
+	.mid_ul{
+		display: block;
+		border: 1px solid rgba(120,120,120,0.3);
+		border-top: none;
+		background-color: white;
+		padding: 20px;
+ 		width: 179px;
+		margin: 0;
+		list-style: none;
+		display: none;
+		position: absolute;
+		z-index: 999;
+	}
+	.mid_ul li{
+		height: 28px;
+	}
 	.banner{
 		width: 85%;
 		height: 220px;
@@ -63,10 +89,14 @@
 		flex: 0 0 400px;
 		background-color: lightpink;
 		text-align: center;
+		margin: auto;
+		z-index: 9;
 	}
 	.content_list{
 		flex: 0 0 500px;
+		min-height: 800px;
 		background-color: lightblue;
+		margin: auto;
 	}
 	#list_tb{
 		border: 1px solid grey;
@@ -162,16 +192,30 @@ $(function() {
     	$("#start_date").html(dateString);
     	startDate = dateString;
     	$("#datepicker2").datepicker('option', 'minDate', dateString);
+	   	findByDateAjax(startDate, endDate);
     });
     $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
     	$("#end_date").html(dateString);
     	endDate = dateString;
     	$("#datepicker1").datepicker('option', 'maxDate', dateString);
+	   	findByDateAjax(startDate, endDate);
     });
-    $("#search").on("click", function(){
-    	console.log("startDate : "+startDate+", endDate : "+endDate);
-       	findByDateAjax(startDate, endDate);
-    });
+    
+    
+    $(".mid2").mouseenter(function(){
+   		$("#ul_show").stop().slideDown(400);
+   	});
+   	$(".mid2").mouseleave(function(){
+		$("#ul_show").stop().slideUp(200);
+   	});
+    $(".mid3").mouseenter(function(){
+   		$("#ul_detail").stop().slideDown(400);
+   	});
+   	$(".mid3").mouseleave(function(){
+		$("#ul_detail").stop().slideUp(200);
+   	});
+
+
   });
 </script>
 
@@ -188,18 +232,31 @@ $(function() {
 	
 	<div class="mid_menu">
 		<div class="mid1">
-			Home
+			<a class="mid_a" id="a_home" >HOME</a>
 		</div>
 		<div class="mid2">
-			{ 공연 / 전시 }
+			<a class="mid_a" id="a_show" >공연 / 전시</a>
+			<ul class="mid_ul" id="ul_show">
+				<li>공연전시1</li>
+				<li>공연전시2</li>
+				<li>공연전시3</li>
+				<li>공연전시4</li>
+				<li>공연전시5</li>
+			</ul>
 		</div>
 		<div class="mid3">
-			{ 상세 정보 }
+			<a class="mid_a" id="a_detail" >상세 정보</a>
+			<ul class="mid_ul" id="ul_detail">
+				<li>상세정보1</li>
+				<li>상세정보2</li>
+				<li>상세정보3</li>
+				<li>상세정보4</li>
+				<li>상세정보5</li>
+			</ul>
 		</div>
 	</div>
 	<div class="content">
 		<div class="content_date">
-			<input type="button" id="search" value="검색" ><br>
 			최소 날짜 : <span id="start_date"></span><br>
 			최대 날짜 : <span id="end_date"></span><br>
 			<div class="datepicker" id="datepicker1"></div>

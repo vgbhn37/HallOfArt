@@ -37,9 +37,9 @@ public class ShowController {
 	@PostMapping("/schedule_proc")
 	@ResponseBody
 	public List<Show> scheduleProc(String startDate, String endDate) {
-		System.out.println("scheduleProc 실행됨");
+//		System.out.println("scheduleProc 실행됨");
 		List<Show> list = showService.showListByDate(startDate, endDate);
-		System.out.println(list);
+//		System.out.println(list);
 
 		return list;
 	}
