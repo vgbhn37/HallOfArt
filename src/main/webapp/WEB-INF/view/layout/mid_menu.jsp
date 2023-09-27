@@ -55,10 +55,13 @@
 	.mid_ul li{
 		height: 28px;
 	}
+<<<<<<< HEAD
 	a{
 		text-decoration: none;
 		color: black;
 	}
+=======
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 </style>
 <script>
 $(function() {
@@ -86,7 +89,11 @@ $(function() {
 	<div class="mid2">
 		<a class="mid_a" id="a_show" >공연 / 전시</a>
 		<ul class="mid_ul" id="ul_show">
+<<<<<<< HEAD
 			<li><a href="/show/schedule">공연 일정 조회</a></li>
+=======
+			<li>공연전시1</li>
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 			<li>공연전시2</li>
 			<li>공연전시3</li>
 			<li>공연전시4</li>

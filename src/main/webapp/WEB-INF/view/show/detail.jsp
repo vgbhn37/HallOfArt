@@ -5,9 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<<<<<<< HEAD
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+=======
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 <style>
 	body{
 		margin: 0; padding: 2px;
@@ -40,7 +43,11 @@
 		width: 400px;
 		height: 600px;
 		padding: 10px;
+<<<<<<< HEAD
  		background-color: lightpink; 
+=======
+		background-color: lightpink;
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 		box-sizing: border-box;
 	}
 	.detail_info{
@@ -49,12 +56,17 @@
 		width: 400px;
 		min-height: 600px;
 		padding: 30px;
+<<<<<<< HEAD
 /* 		background-color: lightblue; */
+=======
+		background-color: lightblue;
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 		box-sizing: border-box;
 	}
 	.detail_tb th{
 		text-align: left;
 	}
+<<<<<<< HEAD
 	#booking{
 		display: block;
 		background-color: white;
@@ -86,6 +98,9 @@
 		);
 	});
 </script>
+=======
+</style>
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 </head>
 <body>
 	<div class="nav">
@@ -132,11 +147,14 @@
 					<td>문의 ?</td>
 					<th>1668-1352</th>
 				</tr>
+<<<<<<< HEAD
 				<tr>
 					<td colspan="2">
 						<a id="booking" href="#">예매하기</a>
 					</td>
 				</tr>
+=======
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 			</table>
 		</div>
 	</div>

@@ -40,8 +40,11 @@ public class AdminController {
 	public String charts() {
 		return "admin/charts";
 	}
+<<<<<<< HEAD
 	@GetMapping("/insertShow")
 	public String insertShow() {
 		return "admin/insertShow";
 	}
+=======
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 }

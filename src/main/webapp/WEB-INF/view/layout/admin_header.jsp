@@ -45,15 +45,26 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 HallOfArt
                             </a>
+<<<<<<< HEAD
                             <div class="sb-sidenav-menu-heading">Admin Menu</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 공연/전시
+=======
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Layouts
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+<<<<<<< HEAD
                                     <a class="nav-link" href="insertShow">공연/전시 게시</a>
+=======
+                                    <a class="nav-link" href="layout-static">Static Navigation</a>
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
                                     <a class="nav-link" href="layout-sidenav-light">Light Sidenav</a>
                                 </nav>
                             </div>

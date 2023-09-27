@@ -94,7 +94,11 @@ function findByDateAjax(startDate, endDate){
 
 	            // 각 데이터 항목에 대한 데이터 셀을 생성하고 값을 설정합니다.
 	            var idCell = $("<td>").text(item.id);
+<<<<<<< HEAD
 	            var titleCell = $("<td>").append($("<a>").attr("href", "detail?id="+item.id).text(item.title));
+=======
+	            var titleCell = $("<td>").append($("<a>").attr("href", "#").text(item.title));
+>>>>>>> eadd2e2d323580e4cc646bd6e11aaeff64027280
 	            var priceCell = $("<td>").text(item.price);
 	            var startDateCell = $("<td>").text(item.startDate);
 	            var endDateCell = $("<td>").text(item.endDate);
