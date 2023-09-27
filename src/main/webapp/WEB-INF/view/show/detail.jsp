@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <style>
 	body{
 		margin: 0; padding: 2px;
@@ -37,7 +40,7 @@
 		width: 400px;
 		height: 600px;
 		padding: 10px;
-		background-color: lightpink;
+ 		background-color: lightpink; 
 		box-sizing: border-box;
 	}
 	.detail_info{
@@ -46,13 +49,43 @@
 		width: 400px;
 		min-height: 600px;
 		padding: 30px;
-		background-color: lightblue;
+/* 		background-color: lightblue; */
 		box-sizing: border-box;
 	}
 	.detail_tb th{
 		text-align: left;
 	}
+	#booking{
+		display: block;
+		background-color: white;
+		border: 1px solid lightblue;
+		width: 200px; height: 60px;
+		text-align: center;
+		border-radius: 10px;
+		font-size: 30px;
+		padding-top: 13px;
+		margin: auto;
+		margin-top: 100px;
+		text-decoration: none;
+		color: black;
+	}
 </style>
+<script>
+	$(document).ready(function(){
+		$("#booking").hover(
+			function(){
+				$("#booking").stop().animate({
+					backgroundColor: "#cef" // 배경색 값을 문자열로 감싸야 합니다.
+				}, 300 );
+			},
+			function(){
+				$("#booking").stop().animate({ // ID 선택자를 빠뜨렸습니다.
+					backgroundColor: "#fff" // 배경색 값을 문자열로 감싸야 합니다.
+				}, 300 );			
+			}
+		);
+	});
+</script>
 </head>
 <body>
 	<div class="nav">
@@ -98,6 +131,11 @@
 				<tr>
 					<td>문의 ?</td>
 					<th>1668-1352</th>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<a id="booking" href="#">예매하기</a>
+					</td>
 				</tr>
 			</table>
 		</div>
