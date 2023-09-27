@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.silver.hallofart.repository.interfaces.BookingRepository"> 
+
+	<select id ="findShowTimeListByShowId" resultType="ShowTime">
+		select * from show_time_tb where show_id = #{showId}
+	</select>
+	<select id ="findSeatListByShowTimeId" resultType="Seat">
+		select * from seat_tb st 
+		left outer join 
+		(select * from booking_tb where show_time_tb_id = #{showTimeId}) b
+		on st.id = b.seat_tb_id;
+	</select>
+</mapper>
