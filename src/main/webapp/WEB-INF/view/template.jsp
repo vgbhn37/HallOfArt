@@ -8,8 +8,9 @@
 <title>Hall Of Art</title>
 </head>
 <body>
+<header>
 	<%@	include file="layout/header.jsp" %>
-	
+</header>
 <!-- --------------------------------------------------------- -->
 	
 	<section style="min-height: calc(100vh - 158.77px);">
@@ -18,8 +19,9 @@
 </body>
 
 <!-- --------------------------------------------------------- -->
-
+<footer>
 	<%@ include file="layout/footer.jsp" %>
+</footer>
 	
 	<script src="../resources/js/popper.js"></script>
 	<script src="../resources/js/main.js"></script>
