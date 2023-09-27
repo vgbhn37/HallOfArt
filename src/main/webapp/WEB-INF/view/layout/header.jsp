@@ -98,11 +98,5 @@
 			</div>
 		</nav>
 	</section>
-
-
-	<script src="../resources/js/popper.js"></script>
-	<script src="../resources/js/main.js"></script>
-	<script src="../resources/js/jquery.min.js"></script>
-	<script src="../resources/js/bootstrap.min.js"></script>
-
-</body>
+	
+	<section style="min-height: calc(100vh - 158.77px);">
