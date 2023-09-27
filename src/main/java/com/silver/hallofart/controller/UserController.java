@@ -32,11 +32,12 @@ public class UserController {
 	
 	@PostMapping("/sign-up")
 	public String signUpProcess(UserDto userDto) {
+		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
-			return null;
+			throw null;
 		}
 		
-		return null;
+		return "redirect:/account/list";
 	}
 	
 }
