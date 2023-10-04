@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.repository.model.Announcement;
+import com.silver.hallofart.repository.model.Inquiry;
 import com.silver.hallofart.service.CustomerServiceService;
 
 @Controller
@@ -27,9 +29,11 @@ public class CustomerServiceController {
 	public String announcement(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
 		    required = false, defaultValue="1")int page, Model model) {
 		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
 		List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
-		int count = (customerServiceService.countPage(paging)) / 10 + 1;
-		model.addAttribute("count", count);
+		model.addAttribute("pagination", pagination);
 		model.addAttribute("announcementList", announcementList);
 		return "customerservice/announcement";
 	}
@@ -75,4 +79,28 @@ public class CustomerServiceController {
 		return "customerservice/information";
 	}
 	
+	@GetMapping("/inquiry")
+	public String inquiry(Model model, @ModelAttribute("paging") PagingDto paging, @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page) {
+		paging.setPage(page);
+		paging.setUserId(1);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countInquiryPage(pagination));
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("inquiryList", customerServiceService.findInquiry(paging));
+		return "customerservice/inquiry";
+	}
+	
+	@PostMapping("/inquiry/write")
+	public String inquiryWriteProc(Inquiry inquiry) {
+		customerServiceService.insertInquiry(inquiry);
+		return "redirect:/customerservice/inquiry";
+	}
+	
+	@GetMapping("/inquiry/detail")
+	public String inquiryDetail(@ModelAttribute("page") int page, @RequestParam("id") Integer id, Model model) {
+		model.addAttribute("inquiry", customerServiceService.findInquiryById(id));
+		return "customerservice/inquiryDetail";
+	}
 }
