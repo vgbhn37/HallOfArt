@@ -135,7 +135,6 @@ public class UserController {
 		HttpEntity<MultiValueMap<String, String>> kakaoInfo = new HttpEntity<>(headers2);
 		
 		ResponseEntity<KakaoProfile> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST, kakaoInfo, KakaoProfile.class);
-		log.info("response2 : " + response2.getBody().getKakaoAccount().getEmail());
 		
 		KakaoProfile kakaoProfile = response2.getBody();
 		
@@ -192,6 +191,8 @@ public class UserController {
 		}
 		
 		oldUser.setUsername(kakaoName.toString());
+		
+		log.info("user : " + oldUser);
 		
 		session.setAttribute("user", oldUser);
 		
