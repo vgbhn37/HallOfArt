@@ -114,7 +114,7 @@ public class UserController {
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
-		params.add("client_id", "c61afbe22e42a3267818a8f28f640550");
+		params.add("client_id", "a88c60cc6973f14916d03d7bd3f7c2a0");
 		params.add("redirect_uri", "http://localhost/user/kakao/callback");
 		params.add("code", code);
 		
@@ -142,13 +142,22 @@ public class UserController {
 	
 		String username = kakaoProfile.getId().toString();
 		String email = kakaoProfile.getKakaoAccount().getEmail();
-		StringBuilder tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
-		tel.delete(0, 4);
-		tel.insert(0, "0");
-		StringBuilder birth = new StringBuilder(kakaoProfile.getKakaoAccount().getBirthYear()+"-"+kakaoProfile.getKakaoAccount().getBirthDay());
-		birth.insert(7, "-");
-		Date date = Date.valueOf(birth.toString());
-		log.info(""+date);
+		StringBuilder tel = new StringBuilder("000-0000-0000");
+		Date date = Date.valueOf("1000-01-01");
+		try {
+			tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
+			tel.delete(0, 4);
+			tel.insert(0, "0");			
+		} catch (Exception e) {
+			log.info("전화번호 기본값 삽입");
+		}
+		try {
+			StringBuilder birth = new StringBuilder(kakaoProfile.getKakaoAccount().getBirthYear()+"-"+kakaoProfile.getKakaoAccount().getBirthDay());
+			birth.insert(7, "-");
+			date = Date.valueOf(birth.toString());
+		} catch (Exception e) {
+			log.info("생년월일 기본값 삽입");
+		}
 		
 		UserDto userDto = UserDto
 				.builder()

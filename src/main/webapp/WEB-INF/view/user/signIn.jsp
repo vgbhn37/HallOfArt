@@ -16,7 +16,7 @@
                 <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" >
             </div>    
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c61afbe22e42a3267818a8f28f640550&redirect_uri=http://localhost/user/kakao/callback"><img width="74" height="38" src="/images/kakao_login_small.png"></a>
+            <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=a88c60cc6973f14916d03d7bd3f7c2a0&redirect_uri=http://localhost/user/kakao/callback"><img width="74" height="38" src="/images/kakao_login_small.png"></a>
         </form>
 
 </div>
