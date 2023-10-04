@@ -37,11 +37,11 @@
 		margin: auto;
 		background-color: white;
 		box-shadow: inset 0px 5px 10px 0px rgba(128, 128, 128, 0.3);
-		display: flex;
+/* 		display: flex; */
 		overflow: hidden;
 	}
 	.content_date{
-		flex: 0 0 400px;
+		flex: 0 0 300px;
 /* 		background-color: lightpink; */
 		text-align: center;
 		margin: auto;
@@ -160,8 +160,26 @@ $(function() { // jquery
 	   	findByDateAjax(startDate, endDate);
     });
     
+    // 반응형 위치 조정
+    $(window).resize(function() {
+        // 현재 윈도우의 너비를 가져옴
+        var windowWidth = $(window).width();
 
-  });
+        if (windowWidth >= 920) {
+            $(".content").css("display", "flex");
+            $(".content_date").css("flex","0 0 300px");
+        } else {
+            $(".content").css("display", "block");
+            $(".content_date").css("width","300px");
+        }
+        if (windowWidth <= 600) {
+            $("#list_tb").css("width", "80%");
+        } else {
+            $("#list_tb").css("width", "480px");
+        }
+    });
+    $(window).trigger("resize");
+});
 </script>
 
 </head>

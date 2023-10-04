@@ -87,7 +87,7 @@ $(function() {
 		<a class="mid_a" id="a_show" >공연 / 전시</a>
 		<ul class="mid_ul" id="ul_show">
 			<li><a href="/show/schedule">공연 일정 조회</a></li>
-			<li>공연전시2</li>
+			<li><a href="/show/apply">대관 신청</a></li>
 			<li>공연전시3</li>
 			<li>공연전시4</li>
 			<li>공연전시5</li>
