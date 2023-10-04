@@ -28,7 +28,7 @@
 					<div class="col-md-8 order-md-last">
 						<div class="row">
 							<div class="col-md-6 text-center">
-								<a class="navbar-brand" href="index.html">
+								<a class="navbar-brand" href="http://localhost/">
 								<h1 style="font-weight: 900; color: black">예술의 전당</h1>
 									<!-- <span>예매하십셔</span> -->
 								</a>
@@ -74,7 +74,7 @@
 				</button>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav mx-auto">
-						<li class="nav-item active"><a href="#" class="nav-link" style="color: red">홈</a></li>
+						<li class="nav-item active"><a href="http://localhost/" class="nav-link" style="color: red">홈</a></li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown04"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
@@ -95,8 +95,15 @@
 						<li class="nav-item"><a href="#" class="nav-link">문의센터</a></li>
 					</ul>
 					<ul class="navbar-nav" style="margin-left:-144px">
-						<li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
+						<c:choose>
+							<c:when test="${empty user}">
+								<li class="nav-item"><a href="http://localhost/user/sign-in" class="nav-link">로그인</a></li>
+								<li class="nav-item"><a href="http://localhost/user/sign-up" class="nav-link">회원가입</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="nav-item"><a href="http://localhost/user/sign-out" class="nav-link">로그아웃</a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 			</div>
