@@ -3,6 +3,7 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
 
@@ -141,51 +142,56 @@ public class UserController {
 		log.info("kakaoProfile : " + kakaoProfile);
 	
 		String username = kakaoProfile.getId().toString();
-		String email = kakaoProfile.getKakaoAccount().getEmail();
-		StringBuilder tel = new StringBuilder("000-0000-0000");
-		Date date = Date.valueOf("1000-01-01");
-		try {
-			tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
-			tel.delete(0, 4);
-			tel.insert(0, "0");			
-		} catch (Exception e) {
-			log.info("전화번호 기본값 삽입");
-		}
-		try {
-			StringBuilder birth = new StringBuilder(kakaoProfile.getKakaoAccount().getBirthYear()+"-"+kakaoProfile.getKakaoAccount().getBirthDay());
-			birth.insert(7, "-");
-			date = Date.valueOf(birth.toString());
-		} catch (Exception e) {
-			log.info("생년월일 기본값 삽입");
-		}
 		
-		UserDto userDto = UserDto
-				.builder()
-				.username(username)
-				.password("kakaoUser")
-				.email(email)
-				.tel(tel.toString())
-				.birthDate(date)
-				.regDate(Timestamp.valueOf(LocalDateTime.now()))
-				.build();
-		
-		log.info("userDto : " + userDto);
-		
-		UserDto oldUser = userService.searchUsername(userDto.getUsername());
+		UserDto oldUser = userService.searchUsername(username);
 		
 		if(oldUser == null) {
-			userService.signUp(userDto);
-			UserDto user = UserDto
+			
+			log.info("가입 이력이 없으므로 카카오 api 정보를 기반으로 회원 가입 진행 후 로그인");
+			
+			String email = kakaoProfile.getKakaoAccount().getEmail();
+			StringBuilder tel = new StringBuilder("000-0000-0000");
+			Date date = Date.valueOf("1000-01-01");
+			try {
+				tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
+				tel.delete(0, 4);
+				tel.insert(0, "0");			
+			} catch (Exception e) {
+				log.info("전화번호 기본값 삽입");
+			}
+			try {
+				StringBuilder birth = new StringBuilder(kakaoProfile.getKakaoAccount().getBirthYear()+"-"+kakaoProfile.getKakaoAccount().getBirthDay());
+				birth.insert(7, "-");
+				date = Date.valueOf(birth.toString());
+			} catch (Exception e) {
+				log.info("생년월일 기본값 삽입");
+			}
+			
+			UserDto userDto = UserDto
 					.builder()
-					.username(userDto.getUsername())
-					.password(userDto.getPassword())
-					.email(userDto.getEmail())
-					.tel(userDto.getTel())
-					.birthDate(userDto.getBirthDate())
-					.regDate(userDto.getRegDate())
+					.username(username)
+					.password("kakaoUser")
+					.email(email)
+					.tel(tel.toString())
+					.birthDate(date)
+					.regDate(Timestamp.valueOf(LocalDateTime.now()))
 					.build();
-			oldUser = user;
+			
+			log.info("userDto : " + userDto);
+			
+			userService.signUp(userDto);
+			oldUser = userDto;
+		} else {
+			log.info("가입된 회원이므로 카카오 로그인 진행");
 		}
+		
+		StringBuilder kakaoName = new StringBuilder(oldUser.getEmail());
+		
+		for (int i = 0; i < kakaoName.length(); i++) {
+			if(kakaoName.charAt(i) == '@') kakaoName.delete(i, kakaoName.length());
+		}
+		
+		oldUser.setUsername(kakaoName.toString());
 		
 		session.setAttribute("user", oldUser);
 		
