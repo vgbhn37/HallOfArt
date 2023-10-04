@@ -70,4 +70,9 @@ public class CustomerServiceController {
 		return "redirect:/customerservice/announcement";
 	}
 	
+	@GetMapping("/information")
+	public String information() {
+		return "customerservice/information";
+	}
+	
 }
