@@ -10,8 +10,8 @@ public class Show {
 	private String startDate;	// 시작하는 날짜
 	private String endDate;	// 끝나는 날짜
 	private String price;				// 가격
-	private String showStatus;		// 공연 중
+	private String showStatus;		// 공연 중 / 승인 요청 중
 	private String show_img;			// 이미지 경로
-	private Integer showTypeId1;	// ??
-	private Integer hallTbId;			// ??
+	private Integer showTypeId1;	// 공연/전시
+	private Integer hallTbId;			// 장소
 }
