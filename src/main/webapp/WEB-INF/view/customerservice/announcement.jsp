@@ -21,19 +21,46 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	  <ul class="pagination">
-    	<li class="page-item"><a class="page-link" href="/customerservice/announcement?page=<c:choose>
-			<c:when test="${paging.page==1}">1</c:when>
-			<c:otherwise>${paging.page-1}</c:otherwise>
-			</c:choose>">Previous</a></li>
-    	<c:forEach var="i" begin="1" end="${count}">
-    	    <li class="page-item"><a class="page-link" href="/customerservice/announcement?page=${i}">${i}</a></li>
-    	</c:forEach>
-    	<li class="page-item"><a class="page-link" href="/customerservice/announcement?page=<c:choose>
-			<c:when test="${paging.page==count}">${paging.page}</c:when>
-			<c:otherwise>${paging.page+1}</c:otherwise>
-			</c:choose>">Next</a></li>
- 	</ul>
+	<div class="paging">
+			<form action="<c:url value='/customerservice/announcement'/>" name="pageForm">
+                       <div class="text-center clearfix">
+                           <ul class="pagination" id="pagination">
+                           	<c:if test="${pagination.prev}">
+                               	<li class="page-item "><a  class="page-link" href="#" data-page="${pagination.beginPage-1}">Prev</a></li>
+                               </c:if>
+                               
+                               <c:forEach var="num" begin="${pagination.beginPage}" end="${pagination.endPage}">
+                               	<li class="${pagination.paging.page == num ? 'age-item active' : ''}" page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
+                               </c:forEach>
+	                                
+                               <c:if test="${pagination.next}">
+                              		<li class="page-item"><a class="page-link" href="#" data-page="${pagination.endPage+1}">Next</a></li>
+                               </c:if>
+                           </ul>
+	                            
+                           <!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+                           <input type="hidden" name="page" value="${pagination.paging.page}">
+                           <input type="hidden" name="recordSize" value="${pagination.paging.recordSize}">
+	                            
+                       </div>
+          </form>
+	</div>
+	<script>
+	$(function() {
+		$('.whyBtn').click(function() {
+			location.href = '<c:url value="/FreeBoard/freeWrite"/>';
+		})
+		$('#pagination').on('click', 'a', function(e) {
+			e.preventDefault();
+			console.log($(this));
+			const value = $(this).data('page');
+			console.log(value);
+			document.pageForm.page.value = value;
+			document.pageForm.submit();
+		});
+		
+	})
+	</script>
 	<a href="/customerservice/announcement/write" class="btn btn-primary">글쓰기</a>
 	
 <%@include file="/WEB-INF/view/layout/footer.jsp" %>
