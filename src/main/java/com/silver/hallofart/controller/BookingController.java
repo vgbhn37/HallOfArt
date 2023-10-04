@@ -60,6 +60,6 @@ public class BookingController {
 		return seatList;
 	}
 	
-
+	
 	
 }
