@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.repository.interfaces.BookingRepository;
-import com.silver.hallofart.repository.model.Seat;
 import com.silver.hallofart.repository.model.ShowTime;
 
 @Service

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.silver.hallofart.dto.SeatStatusDto;
-import com.silver.hallofart.repository.model.Seat;
 import com.silver.hallofart.repository.model.ShowTime;
 
 @Mapper

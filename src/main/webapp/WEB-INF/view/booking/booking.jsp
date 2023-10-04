@@ -113,7 +113,8 @@
 	<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
 </footer>
 <script>
-	var showTitle = "${show.title}";
+	let showTitle = "${show.title}";
+	let selectedSeats = new Array();
 	
 	// 좌석 리스트 보여주기
 	function showSeatList(showtimeId) {
@@ -153,7 +154,7 @@
 	                // 좌석 상태 클래스 추가
 	                if (seat.showTbId == null) {
 	                	seatElement.classList.add('seat');
-	                    seatElement.addEventListener('click', () => addSeat(seat.seatName, showtimeId));
+	                    seatElement.addEventListener('click', () => addSeat(seat.seatName));
 	                } else {    
 	                    seatElement.classList.add('booked_seat');
 	                }
@@ -164,30 +165,30 @@
 	}
 		
 		// 선택한 좌석에 따라 옆에 나타내기
-		function addSeat(seatName, showtimeId){
-			var timeSelect = document.getElementById('time-select');
-			var selectedTime = timeSelect.options[timeSelect.selectedIndex].text;
-			alert(seatName + ',' + selectedTime + ',' + "${hallName}" + ',' + "${show.title}" );
-			
-			const dataToSend = {
+		function addSeat(seatNameValue){
+			let timeSelect = document.getElementById('time-select');
+			let selectedTime = timeSelect.options[timeSelect.selectedIndex].text;
+			//alert(seatName + ',' + selectedTime + ',' + "${hallName}" + ',' + "${show.title}" );
+			let selectedSeat = {
 					title: "${show.title}",
 					hallName: "${hallName}",
-					seatName: seatName,
-					startTime: selectedTime
-				};
-
-				fetch('/booking/addSeat', {
-				    method: 'POST',
-				    headers: {
-				        'Content-Type': 'application/json'
-				    },
-				    body: JSON.stringify(dataToSend)
-				})
-				.then(response => response.json())
-				.then(updatedList => {
-				    console.log(updatedList);
-				})
-				.catch(error => console.error('Error updating the list:', error));
+					seatName: seatNameValue,
+					startTime: selectedTime		
+			}
+			selectedSeats.push(selectedSeat);
+			console.log(selectedSeats);
+			const output = document.getElementById('selected_seats');
+			output.innerHTML = '';
+			selectedSeats.forEach(seat => {
+				const cardDiv = document.createElement('div');
+				cardDiv.classList.add('card');
+				const cardHeaderElement = document.createElement('h5');
+				cardHeaderElement.classList.add('card-header');
+				
+			});
+			
+			
+			
 		}
 		
 	</script>

@@ -9,11 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.silver.hallofart.dto.SeatStatusDto;
-import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.repository.model.ShowTime;
 import com.silver.hallofart.service.BookingService;
@@ -28,8 +25,6 @@ public class BookingController {
 	@Autowired
 	ShowService showService;
 	
-	// 선택된 좌석을 담을 리스트
-	private List<SelectedSeatDto> selectedSeatList = new ArrayList<SelectedSeatDto>();
 	
 	//해당 show의 좌석예매 페이지로 진입
 	@GetMapping("/booking/booking/{showId}")
@@ -56,26 +51,7 @@ public class BookingController {
 		return seatList;
 	}
 	
-	//선택한 좌석 리스트에 더하기
-	@PostMapping("/booking/addSeat")
-	@ResponseBody
-	public List<SelectedSeatDto> addSeat(@RequestBody SelectedSeatDto selectedSeatDto){
-		// 인증 및 유효성 검사 체크 필요
-		
-		selectedSeatList.add(selectedSeatDto);
-		return selectedSeatList;
-	}
-	
-	//선택한 좌석 리스트에서 빼기
-	@PostMapping("/booking/subtractSeat/{index}")
-	@ResponseBody
-	public List<SelectedSeatDto> subtractSeat(@PathVariable int index){
-		// 인증 및 유효성 검사 체크 필요
-		
-		selectedSeatList.remove(index);
-		return selectedSeatList;
-		
-	}
+
 	
 
 }
