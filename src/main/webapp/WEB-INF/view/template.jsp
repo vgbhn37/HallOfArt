@@ -11,6 +11,16 @@
 <h1>전화번호 ${user.birthDate}님</h1>
 <h1>생년월일 ${user.regDate}님</h1>
 <h1>가입일 ${user.roleTypeId}님</h1>
+
+<c:choose>
+	<c:when test="${empty user}">
+		비로그인
+	</c:when>
+	<c:otherwise>
+		로그인
+	</c:otherwise>
+</c:choose>
+
 	
 <!-- --------------------------------------------------------- -->
 <%@ include file="layout/footer.jsp" %>
