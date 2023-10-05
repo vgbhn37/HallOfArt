@@ -62,7 +62,7 @@ public class UserController {
 		log.info("userDto : "+userDto);
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
-			throw new CustomRestfulException("유저 네임을 입력하십시오", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
 			throw new CustomRestfulException("패스워드를 입력하십시오", HttpStatus.BAD_REQUEST);
@@ -86,11 +86,11 @@ public class UserController {
 	public String signInProc(UserDto userDto) {
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
-			throw new CustomRestfulException("username을 입력하십셔", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		
 		if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
-			throw new CustomRestfulException("password을 입력하십셔", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("패스워드를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		
 		UserDto user = userService.signIn(userDto);
