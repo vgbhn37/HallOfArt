@@ -230,6 +230,9 @@
        					</div>
        				</td>
        			</tr>
+       			<tr><td style="height:20px"></td>
+       				<td style="height:20px; padding-bottom: 5px;"><span style="color: #bbb">※ 본 관은 오전 9:00 부터 오후 6:00 까지 운영합니다</span></td>
+       			</tr>
        			<tr>
        				<td>입장 가격</td>
        				<td><input type="text" name="price"></td>

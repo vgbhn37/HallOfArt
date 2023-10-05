@@ -1,13 +1,25 @@
 package com.silver.hallofart.controller;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.silver.hallofart.repository.model.Show;
+import com.silver.hallofart.service.AdminService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+	@Autowired
+	public AdminService service;
+	
 	@GetMapping("/main")
 	public String main() {
 		return "admin/main";
@@ -41,9 +53,18 @@ public class AdminController {
 		return "admin/charts";
 	}
 	
-	@GetMapping("/insertShow")
-	public String insertShow() {
-		return "admin/insertShow";
+	@GetMapping("/showList")
+	public String showList(Model model) {
+		
+		List<Show> list = service.findAll();
+		model.addAttribute("list", list);
+		return "admin/showList";
+	}
+	
+	@GetMapping("/updateStatus")
+	public String updateStatus(@Param("id") int id, @Param("showStatus") String showStatus) {
+		service.updateStatus(id, showStatus);
+		return "redirect:showList";
 	}
 
 }

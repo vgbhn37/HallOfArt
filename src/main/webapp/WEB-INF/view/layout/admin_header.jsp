@@ -53,7 +53,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="insertShow">공연/전시 게시</a>
+                                    <a class="nav-link" href="showList">공연/전시 조회</a>
                                     <a class="nav-link" href="layout-sidenav-light">Light Sidenav</a>
                                 </nav>
                             </div>
