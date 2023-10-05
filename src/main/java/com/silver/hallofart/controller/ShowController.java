@@ -42,6 +42,12 @@ public class ShowController {
 	public String apply() {
 		return "show/applyShow";
 	}
+	@PostMapping("/apply")
+	public String applying(Show show) {
+		System.out.println("applying show : "+show);
+		showService.insertShow(show);
+		return "redirect:applyShow";
+	}
 	
 	@PostMapping("/schedule_proc")
 	@ResponseBody

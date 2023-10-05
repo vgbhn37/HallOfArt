@@ -12,5 +12,5 @@ public interface ShowRepository {
 	public Show findById(Integer id);
 	public List<Show> findByDate(@Param("startDate") String startDate
 												,@Param("endDate") String endDate);
-
+	public int insertShow(Show show);
 }

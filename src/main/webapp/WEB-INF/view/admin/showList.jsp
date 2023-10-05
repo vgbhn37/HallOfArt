@@ -52,8 +52,15 @@
                    				<td style="width:25%">날짜</td>
                    				<td style="width:25%">상태</td>
                    			</tr>
-                   			<c:forEach var="li" items="${list}">
-                   				<tr>
+                   			<c:forEach var="li" items="${list}" varStatus="status">
+                   				<c:choose>
+                   					<c:when test="${status.count % 2 ==0}">
+		                   				<tr style="background-color:rgb(245,245,245)">
+                   					</c:when>
+                   					<c:otherwise>
+		                   				<tr style="background-color:rgb(230,230,230)">
+                   					</c:otherwise>
+                   				</c:choose>
                    					<td>${li.id}</td>
                    					<td>${li.showTypeId1}</td>
                    					<td class="titleTd">${li.title}</td>
@@ -67,10 +74,17 @@
                    							<option value="결제됨">결제됨</option>
                    							<option value="취소">취소</option>
                    						</select>
-                   						<button id="statusBtn">확인</button>
+                   						<button class="statusBtn">확인</button>
                						</td>
                    				</tr>
-                   				<tr class="contentTr">
+                   				<c:choose>
+                   					<c:when test="${status.count % 2 ==0}">
+	                   					<tr class="contentTr" style="background-color:rgb(245,245,245)">
+                   					</c:when>
+                   					<c:otherwise>
+	                   					<tr class="contentTr" style="background-color:rgb(230,230,230)">
+                   					</c:otherwise>
+                   				</c:choose>
                    					<td style="text-align: center;">내용</td>
                    					<td colspan="4" style="padding: 10px;">${li.content}</td>
                    				</tr>
@@ -81,19 +95,19 @@
             </main>
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>
         </div>
-    </div>
 	<script>
-	    var button = document.getElementById('statusBtn');
-	    var select = document.getElementById('selectStatus');
 	
-	    button.addEventListener('click', function() {
-	        var td = button.parentElement;
-	        var tdSelect = td.querySelector('select');
-	        var tdId = td.querySelector('#statusId');
-// 	        alert('updateStatus?id='+tdId.value+'&showStatus=' + tdSelect.value);
-			location.href="updateStatus?id="+tdId.value+"&showStatus="+tdSelect.value;
-	    });
 	    $(function(){
+	    	$(".statusBtn").on("click", function(){
+	    		let id = $(this).prev().prev().val();
+	    		let status = $(this).prev().val();
+	    		if(status==null){
+		    		alert("변경할 상태를 지정해주세요");
+	    		}else{
+	    			location.href="updateStatus?id="+id+"&showStatus="+status;
+	    		}
+	    	});
+	    	
 	    	$(".contentTr").hide();
 	    	$(".titleTd").on("click", function(){
 	    		let content = $(this).parent().next(".contentTr");

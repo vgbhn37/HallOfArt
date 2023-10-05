@@ -23,4 +23,8 @@ public class ShowService {
 		List<Show> list = showRepository.findByDate(startDate, endDate);
 		return list;
 	}
+	
+	public int insertShow(Show show) {
+		return showRepository.insertShow(show); 
+	}
 }

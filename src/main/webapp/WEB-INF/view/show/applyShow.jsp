@@ -101,7 +101,7 @@
 		text-decoration: none;
 		color: black;
 	}
-	#halltime_td{
+	#halltimeTd{
 /* 		text-align: center; */
 		width: 100%; 
 		height: 100%;
@@ -152,11 +152,11 @@
 			formData.forEach(function(input) {
 			    alertText += input.name + ": " + input.value + "\n";
 			});
-
-			alert(alertText);
+// 			alert(alertText);
+			$("#apply_frm").submit();
 		});
 		
-        $(".show_time").on("input", function() {
+        $(".showTime").on("input", function() {
             var inputValue = this.value;
 
             var minTime = "09:00";
@@ -184,7 +184,7 @@
 <%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
 	
 	<div class="content">
-		<form id="apply_frm" action="#" style="width:100%">
+		<form method="post" id="apply_frm" action="apply" style="width:100%">
   			<table id="insertShowTb">
        			<tr>
 					<td colspan="2"  style="text-align: center;">
@@ -194,9 +194,9 @@
        			<tr>
        				<td>공연/전시 유형</td>
        				<td>
-       					<select name="show_type_id1">
-       						<option value="0">0 : 공연</option>
-       						<option value="1">1 : 전시</option>
+       					<select name="showTypeId1">
+       						<option value="1">1 : 공연</option>
+       						<option value="2">2 : 전시</option>
        					</select>
     					</td>
        			</tr>
@@ -210,23 +210,23 @@
        			</tr>
        			<tr>
        				<td>공연/전시 이미지</td>
-       				<td><input type="file" id="show_img" name="show_img"></td>
+       				<td><input type="file" id="show_img" name="showImg"></td>
        			</tr>
        			<tr>
        				<td>시작 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker1" name="start_date"></td>
+       				<td><input type="text" class="datepicker" id="datepicker1" name="startDate"></td>
        			</tr>
        			<tr>
        				<td>종료 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker2" name="end_date"></td>
+       				<td><input type="text" class="datepicker" id="datepicker2" name="endDate"></td>
        			</tr>
        			<tr>
        				<td>공연/전시 시간</td>
        				<td>
        					<div id="showtime_div">
-	       					<input type="time" min="09:00" max="18:00" class="show_time" name="show_time_1" style="width:135px;">
+	       					<input type="time" min="09:00" max="18:00" class="showTime" name="showStartTime" style="width:135px;">
 	       					~
-	       					<input type="time" min="09:00" max="18:00" class="show_time" name="show_time_2" style="width:135px;">
+	       					<input type="time" min="09:00" max="18:00" class="showTime" name="showEndTime" style="width:135px;">
        					</div>
        				</td>
        			</tr>
@@ -237,16 +237,6 @@
        				<td>입장 가격</td>
        				<td><input type="text" name="price"></td>
        			</tr>
-<!--        			<tr> -->
-<!--        				<td>상태 정보</td> -->
-<!--        				<td> -->
-<!--        					<select name="show_status"> -->
-<!--        						<option value="준비 중">준비 중</option> -->
-<!--        						<option value="진행 중">진행 중</option> -->
-<!--        						<option value="종료">종료</option> -->
-<!--        					</select> -->
-<!--        				</td> -->
-<!--        			</tr> -->
 				<tr>
 					<td colspan="2"  style="text-align: center;">
 						<h3>대관 정보</h3>
@@ -255,7 +245,7 @@
        			<tr>
        				<td>장소 (홀)</td>
        				<td>
-       					<select name="hall_tb_id">
+       					<select name="hallTbId">
        						<option value="0">0관 - 401호</option>
        						<option value="1">1관 - 402호</option>
        						<option value="2">2관 - 403호</option>
@@ -265,15 +255,15 @@
        			<tr>
        				<td>대관 시간</td>
        				<td>
-       					<div id="halltime_td">
-	       					<select name="hall_start_time" style="width:140px;">
+       					<div id="halltimeTd">
+	       					<select name="hallStartTime" style="width:140px;">
 	       						<option value="9">09:00</option>
 	       						<option value="10">10:00</option>
 	       						<option value="11">11:00</option>
 	       						<option value="12">12:00</option>
 	       					</select>
 	       					~
-	       					<select name="hall_end_time" style="width:140px;">
+	       					<select name="hallEndTime" style="width:140px;">
 	       						<option value="15">15:00</option>
 	       						<option value="16">16:00</option>
 	       						<option value="17">17:00</option>
@@ -288,8 +278,6 @@
    			</table>
    		</form>
 	</div>
-	<div class="footer">
-		footer
-	</div>
+	<%@ include file="../layout/footer.jsp" %>
 </body>
 </html>

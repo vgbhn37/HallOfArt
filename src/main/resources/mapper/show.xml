@@ -26,4 +26,13 @@
 		select * from show_tb where #{startDate} >= start_date and end_date >= #{endDate}
 		order by end_date
 	</select>
+	
+	<insert id="insertShow">
+		insert into show_tb(
+			title, content, start_date, end_date, price, show_status, show_img, show_type_id1, hall_tb_id	
+		)
+	  	values(
+	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, '승인 요청', #{showImg}, #{showTypeId1}, #{hallTbId}
+  		)
+	</insert>
 </mapper>
