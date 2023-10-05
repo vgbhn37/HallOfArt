@@ -38,6 +38,11 @@ public class ShowController {
 		return "show/schedule";
 	}
 	
+	@GetMapping("/apply")
+	public String apply() {
+		return "show/applyShow";
+	}
+	
 	@PostMapping("/schedule_proc")
 	@ResponseBody
 	public List<Show> scheduleProc(String startDate, String endDate) {

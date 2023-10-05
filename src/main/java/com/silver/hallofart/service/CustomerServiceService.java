@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.repository.interfaces.CustomerServiceRepository;
 import com.silver.hallofart.repository.model.Announcement;
+import com.silver.hallofart.repository.model.Inquiry;
+import com.silver.hallofart.repository.model.InquiryAnswer;
 
 @Service
 public class CustomerServiceService {
@@ -24,8 +27,8 @@ public class CustomerServiceService {
 		customerServiceRepository.insertAnnouncement(announcement);
 	}
 	
-	public int countPage(PagingDto paging) {
-		int count = customerServiceRepository.count(paging);
+	public int countPage(Pagination pagination) {
+		int count = customerServiceRepository.count(pagination);
 		return count;
 	}
 
@@ -40,6 +43,44 @@ public class CustomerServiceService {
 
 	public void updateAnnouncement(Announcement announcement) {
 		customerServiceRepository.updateAnnouncement(announcement);
-		
+	}
+
+	public void insertInquiry(Inquiry inquiry) {
+		inquiry.setAnswer(0);
+		inquiry.setUser_id(1);
+		customerServiceRepository.insertInquiry(inquiry);
+	}
+
+	public List<Inquiry> findInquiry(PagingDto paging) {
+		List<Inquiry> inquiryList = customerServiceRepository.findInquiryByUserId(paging);
+		return inquiryList;
+	}
+
+	public int countInquiryPage(Pagination pagination) {
+		int count = customerServiceRepository.countInquiry(pagination);
+		return count;
+	}
+
+	public Inquiry findInquiryById(Integer id) {
+		return customerServiceRepository.findInquiryById(id);
+	}
+
+	public void insertInquiryAnswer(InquiryAnswer inquiryAnswer) {
+		System.out.println(inquiryAnswer.getInquiryId());
+		customerServiceRepository.insertInquiryAnswer(inquiryAnswer);
+	}
+
+	public InquiryAnswer findInquiryAnswer(Integer inquiryId) {
+		//inquiry테이블에 답변 여부 수정
+		customerServiceRepository.modifyinquiryAnswer(inquiryId);
+		return customerServiceRepository.findInquiryAnswer(inquiryId);
+	}
+
+	public void updateInquiry(Inquiry inquiry) {
+		customerServiceRepository.updateInquiry(inquiry);		
+	}
+
+	public void deleteInquiry(Integer id) {
+		customerServiceRepository.deleteInquiry(id);
 	}
 }

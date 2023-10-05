@@ -6,10 +6,22 @@
 	<select id ="findShowTimeListByShowId" resultType="ShowTime">
 		select * from show_time_tb where show_id = #{showId}
 	</select>
-	<select id ="findSeatListByShowTimeId" resultType="Seat">
+	<select id ="findSeatListByShowTimeId" resultType="com.silver.hallofart.dto.SeatStatusDto">
 		select * from seat_tb st 
 		left outer join 
-		(select * from booking_tb where show_time_tb_id = #{showTimeId}) b
+		(select status, seat_tb_id, show_time_tb_id, show_tb_id from booking_tb where show_time_tb_id = #{showTimeId} AND status != '취소') b
 		on st.id = b.seat_tb_id;
 	</select>
+	<select id = "findHallNameByShowId" resultType="String">
+		select name from hall_tb h join show_tb s on h.id = s.hall_tb_id
+		where s.id = #{showId};
+	</select>
+	<select id = "findBookingByshowTimeIdAndseatId" resultType="Booking">
+		select * from booking_tb where show_time_tb_id = #{showTimeId} and seat_tb_id = #{seatId} and status != "취소"
+	</select>
+	<insert id = "insertBookingInfo">
+		insert into booking_tb (status, user_tb_id, seat_tb_id, show_time_tb_id, show_tb_id)
+		values (#{status}, #{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId})
+	</insert>
+	
 </mapper>

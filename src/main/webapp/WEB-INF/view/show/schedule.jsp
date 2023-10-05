@@ -37,11 +37,11 @@
 		margin: auto;
 		background-color: white;
 		box-shadow: inset 0px 5px 10px 0px rgba(128, 128, 128, 0.3);
-		display: flex;
+/* 		display: flex; */
 		overflow: hidden;
 	}
 	.content_date{
-		flex: 0 0 400px;
+		flex: 0 0 300px;
 /* 		background-color: lightpink; */
 		text-align: center;
 		margin: auto;
@@ -94,7 +94,7 @@ function findByDateAjax(startDate, endDate){
 
 	            // 각 데이터 항목에 대한 데이터 셀을 생성하고 값을 설정합니다.
 	            var idCell = $("<td>").text(item.id);
-	            var titleCell = $("<td>").append($("<a>").attr("href", "#").text(item.title));
+	            var titleCell = $("<td>").append($("<a>").attr("href", "detail?id="+item.id).text(item.title));
 	            var priceCell = $("<td>").text(item.price);
 	            var startDateCell = $("<td>").text(item.startDate);
 	            var endDateCell = $("<td>").text(item.endDate);
@@ -160,8 +160,26 @@ $(function() { // jquery
 	   	findByDateAjax(startDate, endDate);
     });
     
+    // 반응형 위치 조정
+    $(window).resize(function() {
+        // 현재 윈도우의 너비를 가져옴
+        var windowWidth = $(window).width();
 
-  });
+        if (windowWidth >= 920) {
+            $(".content").css("display", "flex");
+            $(".content_date").css("flex","0 0 300px");
+        } else {
+            $(".content").css("display", "block");
+            $(".content_date").css("width","300px");
+        }
+        if (windowWidth <= 600) {
+            $("#list_tb").css("width", "80%");
+        } else {
+            $("#list_tb").css("width", "480px");
+        }
+    });
+    $(window).trigger("resize");
+});
 </script>
 
 </head>
