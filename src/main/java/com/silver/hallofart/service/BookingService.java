@@ -1,5 +1,6 @@
 package com.silver.hallofart.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.silver.hallofart.dto.BookedSeatDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
@@ -62,5 +64,27 @@ public class BookingService {
 			
 			bookingRepository.insertBookingInfo(booking);
 		}
+	}
+	
+	public List<BookedSeatDto> findpaymentListByUserId(int id){
+		List<BookedSeatDto> findpaymentListByUserId = new ArrayList<>();
+		List<Booking> bookingList = bookingRepository.findWaitingPaymentBookingByUserId(id);
+		for (Booking booking : bookingList) {
+			BookedSeatDto dto = new BookedSeatDto();
+			dto.setBookingId(booking.getId());
+			dto.setTitle(bookingRepository.findShowTitleByShowId(booking.getShowTbId()));
+			dto.setHallName(bookingRepository.findHallNameByShowId(booking.getShowTbId()));
+			dto.setSeatName(bookingRepository.findSeatNameBySeatId(booking.getSeatTbId()));
+			dto.setPrice(bookingRepository.findPriceByShowId(booking.getShowTbId()));
+			dto.setStartTime(bookingRepository.findShowTimeByShowTimeId(booking.getShowTimeTbId()));
+			findpaymentListByUserId.add(dto);
+		}
+		
+		return findpaymentListByUserId;
+	}
+	
+	public int deleteBookingById(Integer id) {
+		
+		return bookingRepository.deleteBookingById(id);
 	}
 }

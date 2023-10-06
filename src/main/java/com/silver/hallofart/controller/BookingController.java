@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.silver.hallofart.dto.BookedSeatDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
+import com.silver.hallofart.repository.model.Booking;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.repository.model.ShowTime;
 import com.silver.hallofart.service.BookingService;
@@ -110,9 +113,40 @@ public class BookingController {
 		return "booking/success";
 	}
 
-	@GetMapping("/user/payList")
-	public String payList() {
+	@GetMapping("/user/payList/{id}")
+	public String payList(@PathVariable int id, Model model) {
+
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+		if (user.getId() != id) {
+			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+
+		// 결제 대기 상태인 예약테이블 리스트를 가져와서 뿌림
+		List<BookedSeatDto> payList = bookingService.findpaymentListByUserId(id);
+		model.addAttribute("payList", payList);
+
 		return "/user/payList";
+	}
+
+	@DeleteMapping("/booking/delete/{id}")
+	@ResponseBody
+	public String deleteBooking(@PathVariable Integer id) {
+
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+		
+		if(bookingService.deleteBookingById(id)!=1) {
+			return "fail";
+		}
+		
+		return "success";
 	}
 
 }
