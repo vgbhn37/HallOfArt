@@ -8,14 +8,14 @@ public class ErrorController {
 
 	@GetMapping("/401")
 	public String error401() {
-		return "401";
+		return "admin/401";
 	}
 	@GetMapping("/404")
 	public String error404() {
-		return "404";
+		return "admin/404";
 	}
 	@GetMapping("/500")
 	public String error500() {
-		return "500";
+		return "admin/500";
 	}
 }
