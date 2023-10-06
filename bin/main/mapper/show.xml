@@ -35,4 +35,17 @@
 	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, '승인 요청', #{showImg}, #{showTypeId1}, #{hallTbId}
   		)
 	</insert>
+	
+	<select id="findHallAll" resultType="com.silver.hallofart.repository.model.Hall">
+		select * from hall_tb
+	</select>
+	
+	<insert id="insertRental">
+		insert into rental_tb(
+			show_tb_id, hall_tb_id, user_tb_id, rental_start_time, rental_end_time	
+		)
+	  	values(
+	  		#{showTbId}, #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime}
+  		)
+	</insert>
 </mapper>

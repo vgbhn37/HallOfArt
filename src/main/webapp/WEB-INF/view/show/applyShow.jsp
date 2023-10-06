@@ -146,6 +146,21 @@
 		</form>
 		<form method="post" id="apply_frm" action="apply" style="width:100%">
   			<table class="insertShowTb">
+  				<tr>
+  					<td>신청인</td>
+  					<td>
+  						<c:choose>
+							<c:when test="${empty user}">
+								비로그인
+							</c:when>
+							<c:otherwise>
+								id : <c:out value="${user.id}"></c:out>
+								<input type="hidden" name="userTbId" value="${user.id}">
+								<input type="hidden" name="showTbId" value="1">
+							</c:otherwise>
+						</c:choose>
+  					</td>
+  				</tr>
        			<tr>
        				<td style="width: 40%; min-width: 150px;">공연/전시 유형</td>
        				<td>
@@ -200,9 +215,18 @@
        				<td>
        					<select name="hallTbId">
        					    <option value="" selected disabled>- - - - - - -</option>
-       						<option value="0">0관 - 401호</option>
-       						<option value="1">1관 - 402호</option>
-       						<option value="2">2관 - 403호</option>
+       						<c:forEach var="hall" items="${halls}">
+       							<c:choose>
+       								<c:when test="${hall.status eq '사용 중'}">
+		       							<option value="${hall.id}" disabled>
+       								</c:when>
+       								<c:otherwise>
+		       							<option value="${hall.id}">
+       								</c:otherwise>
+       							</c:choose>
+       								${hall.id} - ${hall.name} : ${hall.status}
+   								</option>
+       						</c:forEach>
        					</select>
        				</td>
        			</tr>
@@ -210,20 +234,22 @@
        				<td>대관 시간</td>
        				<td>
        					<div id="halltimeTd">
-	       					<select name="hallStartTime" style="width:140px;">
+	       					<select name="rentalStartTime" style="width:140px;">
 	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="9">09:00</option>
-	       						<option value="10">10:00</option>
-	       						<option value="11">11:00</option>
-	       						<option value="12">12:00</option>
+	       						<option value="09:00">09:00</option>
+	       						<option value="10:00">10:00</option>
+	       						<option value="11:00">11:00</option>
+	       						<option value="12:00">12:00</option>
+	       						<option value="13:00">13:00</option>
 	       					</select>
 	       					~
-	       					<select name="hallEndTime" style="width:140px;">
+	       					<select name="rentalEndTime" style="width:140px;">
 	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="15">15:00</option>
-	       						<option value="16">16:00</option>
-	       						<option value="17">17:00</option>
-	       						<option value="18">18:00</option>
+	       						<option value="12:00">14:00</option>
+	       						<option value="15:00">15:00</option>
+	       						<option value="16:00">16:00</option>
+	       						<option value="17:00">17:00</option>
+	       						<option value="18:00">18:00</option>
 	       					</select>
        					</div>
        				</td>
@@ -342,9 +368,9 @@
 				checkMsg+="대관할 홀 번호를 입력해주세요\n";
 			}
 			// ---------------- 유효성 : 대관 시간
-			if($("select[name=hallStartTime]").val()==null||$("select[name=hallEndTime]").val()==null){
-				$("select[name=hallStartTime]").css("border", "2px solid red");
-				$("select[name=hallEndTime]").css("border", "2px solid red");
+			if($("select[name=rentalStartTime]").val()==null||$("select[name=rentalEndTime]").val()==null){
+				$("select[name=rentalStartTime]").css("border", "2px solid red");
+				$("select[name=rentalEndTime]").css("border", "2px solid red");
 				checkMsg+="대관 시간을 입력해주세요\n";
 			}
 			

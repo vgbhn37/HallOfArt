@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.silver.hallofart.dto.FileDto;
+import com.silver.hallofart.repository.model.Hall;
+import com.silver.hallofart.repository.model.Rental;
+import com.silver.hallofart.repository.model.Seat;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.ShowService;
 
@@ -44,13 +47,21 @@ public class ShowController {
 	}
 	
 	@GetMapping("/apply")
-	public String apply() {
+	public String apply(Model model) {
+		List<Hall> halls = showService.findHallAll();
+		model.addAttribute("halls", halls);
 		return "show/applyShow";
 	}
 	@PostMapping("/apply")
-	public String applying(Show show) {
+	public String applying(Show show, Rental rental) {
 		System.out.println("applying show : "+show);
-		showService.insertShow(show);
+		System.out.println("applying seat : "+rental);
+		try {
+			showService.insertShow(show);
+			showService.insertRental(rental);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:apply";
 	}
 	
