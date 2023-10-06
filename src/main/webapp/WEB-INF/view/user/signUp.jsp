@@ -26,7 +26,7 @@
 									</div>
 									<!--                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">내용</h5> -->
 									<div class="form-outline mb-0">
-										<label class="form-label my-0" for="username">아이디</label>
+										<label class="form-label my-0" for="username" id="idconfirmTxt">아이디</label>
 										<div style="display: flex;">
 											<input style="width: 79%" type="text" id="username" name="username" placeholder="아이디 입력" class="form-control form-control" /> 
 											<button class="btn btn-outline-primary ml-1" type="button" id="checkId">중복검사</button>
@@ -57,9 +57,11 @@
 									</div>
 									
 									<div class="form-outline mb-0">
-									<label class="form-label my-0" for="tel">전화번호</label>
-										<input type="text" id="tel" name="tel" placeholder="ex) 01040618333"
-											class="form-control form-control" /> 
+										<label class="form-label my-0" for="tel">전화번호</label>
+										<div style="display: flex;">
+											<input style="width: 79%" type="text" id="tel" name="tel" placeholder="ex) 01040618333" class="form-control form-control" />
+											<button class="btn btn-outline-primary ml-1" type="button" id="checkTel">인증받기</button>
+										</div> 
 									</div>
 									<div class="form-outline mb-0">
 									<label class="form-label my-0" for="birthDate">생년월일</label>
@@ -91,28 +93,7 @@
 	let idCheck = false;
 
 	$('#checkId').on('click', () => {
-// 		$.ajax({
-// 			type : "POST",
-// 			url : "/user/duplicate-check",
-// 			data : {
-// 				"email" : $email.val()
-// 			},
-// 			success : function(data){
-// 				if (data === 200) {
-					
-// 					};
-// 				} else {
-					
-// 				}
-// 			}
-// 			,error: function(){
-// 				alert('비밀번호는 영대소문자, 숫자로 구성된 8글자 이상이어야 합니다.');
-// 			}
-// 		});
-	});
 
-	$('.signUpForm').on('submit', () => {
-	
 		let idval = $('#username').val();
 		let idvalcheck = /^[a-z0-9]+$/;
 		if (!idvalcheck.test(idval) || idval.length < 6) {
@@ -120,6 +101,41 @@
 			$('#username').focus();
 			return false
 		}
+		
+		$.ajax({
+			type : "POST",
+			url : "/user/duplicate-check",
+			data : {
+				"username" : idval
+			},
+			success : function(data){
+				if (data === 200) {
+						alert('사용 가능한 아이디입니다.');
+						idCheck = true;
+						
+						let $idconfirmTxt = $("#idconfirmTxt");
+						
+						$idconfirmTxt.html("<span id='idconfirmchk'>사용가능한 아이디입니다.</span>")
+						$("#idconfirmchk").css({
+							"color" : "#0D6EFD",
+							"font-weight" : "bold",
+							"font-size" : "12px"
+						})
+						$("#checkId").prop("disabled", true);
+						$("#checkId").css("background", "#bbbbbb");
+						$("#username").prop("readonly", true);
+						$("#username").css("background", "#bbbbbb");
+					} else {
+					alert('사용중인 아이디 입니다.');
+				}
+			}
+			,error: function(){
+				alert('서버 에러입니다.');
+			}
+		});
+	});
+
+	$('.signUpForm').on('submit', () => {
 	
 		let pwdval = $('#password').val();
 		let pwdokval = $('#password2').val();
@@ -163,6 +179,12 @@
 			return false
 		}
 		
+		if(!idCheck) {
+			alert('아이디 중복검사를 해주세요');
+			$('#username').focus();
+			return false;
+		}
+		
 		if(!emailCheck) {
 			alert('이메일 인증을 진행해주세요');
 			$('#email').focus();
@@ -188,13 +210,29 @@
 		
 		$.ajax({
 			type : "POST",
-			url : "/user/mail-confirm",
+			url : "/user/email-duplicate-check",
 			data : {
 				"email" : $email.val()
 			},
 			success : function(data){
-				alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-				chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
+				if (data === 200) {
+						$.ajax({
+							type : "POST",
+							url : "/user/mail-confirm",
+							data : {
+								"email" : $email.val()
+							},
+							success : function(data){
+								alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+								chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
+							}
+						});
+					} else {
+					alert('사용중인 이메일 입니다.');
+				}
+			}
+			,error: function(){
+				alert('서버 에러입니다.');
 			}
 		});
 	});
@@ -223,7 +261,7 @@
 				$("#checkEmail").css("background", "#bbbbbb");
 				emailCheck = true;
 			}
-		})
+		});
 	}
 
 </script>

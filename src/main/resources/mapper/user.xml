@@ -23,6 +23,11 @@
 		where username = #{username}
 	</select>
 	
+	<select id="findByEmail" resultType="com.silver.hallofart.dto.UserDto">
+		select * from user_tb 
+		where email = #{email}
+	</select>
+	
 	<update id="updateById">
   		update user_tb set username = #{username}, password = #{password}, email = #{email}, tel = #{tel}, , birth_date = #{birthDate}
   		where id = #{id}
