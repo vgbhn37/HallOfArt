@@ -85,8 +85,9 @@
 	                   					<tr class="contentTr" style="background-color:rgb(230,230,230)">
                    					</c:otherwise>
                    				</c:choose>
+                   					<td><img src="/imagePath/${li.showImg}" style="width: 100%; height: 100%;"></td>
                    					<td style="text-align: center;">내용</td>
-                   					<td colspan="4" style="padding: 10px;">${li.content}</td>
+                   					<td colspan="3" style="padding: 10px;">${li.content}</td>
                    				</tr>
                    			</c:forEach>
                    		</table>

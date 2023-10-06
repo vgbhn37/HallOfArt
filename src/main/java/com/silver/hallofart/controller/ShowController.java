@@ -51,7 +51,7 @@ public class ShowController {
 	public String applying(Show show) {
 		System.out.println("applying show : "+show);
 		showService.insertShow(show);
-		return "redirect:applyShow";
+		return "redirect:apply";
 	}
 	
 	@PostMapping("/schedule_proc")
@@ -66,7 +66,7 @@ public class ShowController {
 	
 	@PostMapping("/upload")
 	@ResponseBody
-	public String upload(@RequestPart("showImg") 
+	public String upload(@RequestPart("uploadImg") 
 			MultipartFile[] uploadfile, Model model) {
 
 		List<FileDto> list = new ArrayList<>();

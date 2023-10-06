@@ -188,15 +188,15 @@
 	   			<tr>
 	   				<td style="width: 40%; min-width: 150px;">공연/전시 이미지</td>
 	   				<td>
-	   					<label for="showImg">
-	   						<input type="file" id="showImg" name="showImg" accept="image/*" multiple="multiple">
-	   						<button id="showImgBtn" style="width:50px;">저장</button>
+	   					<label for="uploadImg">
+	   						<input type="file" id="uploadImg" name="uploadImg" accept="image/*" multiple="multiple" style="width: 250px">
+	   						<button id="uploadImgBtn" style="width:50px;">저장</button>
 		   				</label>
    					</td>
 	   			</tr>
-	   			<tr>
+	   			<tr id="thumbTr">
 	   				<td>미리보기</td>
-	   				<td id="thumbTd">
+	   				<td id="thumbTd" style="height: 300px; padding: 10px; background-color: #eee">
 	   				</td>
 	   			</tr>
 			</table>
@@ -210,6 +210,7 @@
        						<option value="1">1 : 공연</option>
        						<option value="2">2 : 전시</option>
        					</select>
+       					<input type="hidden" id="showImg" name="showImg">
     					</td>
        			</tr>
        			<tr>
@@ -289,15 +290,16 @@
 	<%@ include file="../layout/footer.jsp" %>
 	<script>
 	$(document).ready(function(){
-		let showImg = null;
-		$("#showImg").on("change", function(e){
-			showImg = e.target.files[0];
-			console.log(showImg);
+		let uploadImg = null;
+		$("#uploadImg").on("change", function(e){
+			uploadImg = e.target.files[0];
+			console.log(uploadImg);
 		});
-		$("#showImgBtn").on("click", function(){
-			var formData = new FormData();
+		$("#thumbTr").hide();
+		$("#uploadImgBtn").on("click", function(){
+			let formData = new FormData();
 			if(showImg!=null){
-				formData.append('showImg', showImg);
+				formData.append('uploadImg', uploadImg);
 				console.log("formData : "+formData);
 				
 				$.ajax({
@@ -308,9 +310,13 @@
 					contentType: false,
 					success: function(data){
 						console.log("업로드 성공 : "+data);
-						let thumb = document.createElement("p");
-						thumb.innerText = "이름 : "+data;
+						let thumb = document.createElement("img");
+						thumb.src = "/imagePath/"+data;
+						thumb.style.width = "100%";
+						thumb.style.height = "100%";
 						$("#thumbTd").append(thumb);
+						$("#thumbTr").show();
+						$("#showImg").val(data);
 					},
 					error: function(e){
 						console.log("error : "+e);
