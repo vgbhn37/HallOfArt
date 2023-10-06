@@ -91,7 +91,24 @@
 	let idCheck = false;
 
 	$('#checkId').on('click', () => {
-			alert('중복체크 클릭.');		
+// 		$.ajax({
+// 			type : "POST",
+// 			url : "/user/duplicate-check",
+// 			data : {
+// 				"email" : $email.val()
+// 			},
+// 			success : function(data){
+// 				if (data === 200) {
+					
+// 					};
+// 				} else {
+					
+// 				}
+// 			}
+// 			,error: function(){
+// 				alert('비밀번호는 영대소문자, 숫자로 구성된 8글자 이상이어야 합니다.');
+// 			}
+// 		});
 	});
 
 	$('.signUpForm').on('submit', () => {
@@ -179,7 +196,7 @@
 				alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
 				chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
 			}
-		})
+		});
 	});
 	
 	function chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt){

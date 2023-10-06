@@ -3,7 +3,9 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class UserController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private HttpServletRequest request;
+	
 	@GetMapping("/sign-up")
 	public String signUp() {
 		return "user/signUp";
@@ -52,6 +57,8 @@ public class UserController {
 	
 	@GetMapping("/sign-in")
 	public String signIn() {
+		String uri = request.getHeader("Referer");
+		session.setAttribute("beforeLogin", uri);
 		return "user/signIn";
 	}
 	
@@ -68,6 +75,18 @@ public class UserController {
 	   String code = mailService.sendSimpleMessage(email);
 	   log.info("인증코드 : " + code);
 	   return code;
+	}
+	
+	@PostMapping("/duplicate-check")
+	public ResponseEntity<Integer> duplicateCheck(@RequestParam("username") String username) {
+		log.info("UserController ===> duplicateCheck ====> start");
+		if(userService.searchUsername(username)!=null) {
+			log.info("UserController ====> 아이디 사용불가");
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}else {
+			log.info("UserController ====> 아이디 사용가능");
+			return ResponseEntity.status(HttpStatus.OK).body(200);
+		}
 	}
 	
 	@PostMapping("/sign-up")
@@ -114,7 +133,12 @@ public class UserController {
 		
 		session.setAttribute("user", user);
 		
-		return "redirect:/";
+		String uri = (String) session.getAttribute("beforeLogin");
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    	return "redirect:"+uri;
+	    } else {
+	    	return "redirect:/";
+	    }
 		
 	}
 	
@@ -210,7 +234,13 @@ public class UserController {
 		
 		session.setAttribute("user", oldUser);
 		
-		return "redirect:/";
+		String uri = (String) session.getAttribute("beforeLogin");
+		log.info("===================================== URI "+ uri);
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    	return "redirect:"+uri;
+	    } else {
+	    	return "redirect:/";
+	    }
 	}
 	
 }
