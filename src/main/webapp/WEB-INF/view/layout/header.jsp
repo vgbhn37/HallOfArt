@@ -12,7 +12,7 @@
 	rel='stylesheet' type='text/css'>
 <!-- <link rel="stylesheet" href="../resources/css/style.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -50,13 +50,13 @@
 					<div class="col-md-4 d-flex">
 						<div class="social-media">
 							<p class="mx-auto mt-5 d-flex">
-								<a href="#"
+								<a href="https://www.facebook.com/SeoulArtsCenter.Korea" target="_blank"
 									class="d-flex align-items-center justify-content-center"><span
 									class="fa-brands fa-facebook"><i class="sr-only">Facebook</i></span></a> <a
-									href="#"
+									href="https://twitter.com/I_Love_SAC" target="_blank"
 									class="d-flex align-items-center justify-content-center"><span
 									class="fa-brands fa-twitter"><i class="sr-only">Twitter</i></span></a> <a
-									href="#"
+									href="https://www.instagram.com/seoul_arts_center/" target="_blank"
 									class="d-flex align-items-center justify-content-center"><span
 									class="fa-brands fa-instagram"><i class="sr-only">Instagram</i></span></a>
 							</p>

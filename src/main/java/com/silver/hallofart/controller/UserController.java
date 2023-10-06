@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.silver.hallofart.dto.KakaoProfile;
 import com.silver.hallofart.dto.OAuthToken;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
+import com.silver.hallofart.service.MailService;
 import com.silver.hallofart.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@Autowired
 	private HttpSession session;
@@ -56,10 +61,20 @@ public class UserController {
 		return "redirect:/user/sign-in";
 	}
 	
+	// 이메일 인증
+	@PostMapping("/mail-confirm")
+	@ResponseBody
+	String mailConfirm(@RequestParam("email") String email) throws Exception {
+	   String code = mailService.sendSimpleMessage(email);
+	   log.info("인증코드 : " + code);
+	   return code;
+	}
+	
 	@PostMapping("/sign-up")
 	public String signUpProcess(UserDto userDto) {
 		
 		log.info("userDto : "+userDto);
+		
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
 			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
@@ -148,8 +163,8 @@ public class UserController {
 			log.info("가입 이력이 없으므로 카카오 api 정보를 기반으로 회원 가입 진행 후 로그인");
 			
 			String email = kakaoProfile.getKakaoAccount().getEmail();
-			StringBuilder tel = new StringBuilder("000-0000-0000");
-			Date date = Date.valueOf("1000-01-01");
+			StringBuilder tel = new StringBuilder("999-9999-9999");
+			Date date = Date.valueOf("3000-01-01");
 			try {
 				tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
 				tel.delete(0, 4);

@@ -4,33 +4,6 @@
 <%@	include file="../layout/header.jsp"%>
 <!-- --------------------------------------------------------- -->
 
-<!-- <h1>회원가입</h1> -->
-<!-- <div class="bg-light p-md-5 h-75"> -->
-<!--        <form action="/user/sign-up" method="post" class="signUpForm"> -->
-<!--            <div class="form-group"> -->
-<!--              <label for="username">ID</label> -->
-<!--              <input type="text" class="form-control" placeholder="아이디 입력" id="username" name="username"> -->
-<!--            </div> -->
-<!--            <div class="form-group"> -->
-<!--              <label for="pwd">Password</label> -->
-<!--              <input type="password" class="form-control" placeholder="비밀번호 입력" id="password" name="password"> -->
-<!--            </div> -->
-<!--            <div class="form-group"> -->
-<!--              <label for="pwd">Email</label> -->
-<!--              <input type="email" class="form-control" placeholder="이메일 입력 ex)hjm8333@naver.com" id="email" name="email"> -->
-<!--            </div> -->
-<!--            <div class="form-group"> -->
-<!--              <label for="pwd">Tel</label> -->
-<!--              <input type="text" class="form-control" placeholder="전화번호 입력 ex)01040618333" id="tel" name="tel"> -->
-<!--            </div> -->
-<!--            <div class="form-group"> -->
-<!--              <label for="pwd">BirthDate</label> -->
-<!--              <input type="text" class="form-control" placeholder="생년월일 입력 ex)1989-11-12" id="birthDate" name="birthDate"> -->
-<!--            </div> -->
-<!--            <button type="submit" class="btn btn-primary">Submit</button> -->
-<!--          </form> -->
-<!--    </div> -->
-
 <div
 	style="background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../resources/images/1122.jpg'); background-size: contain; padding: 62.5px 0; font-family: 'NanumSquareRound';">
 	<div class="container">
@@ -53,34 +26,45 @@
 									</div>
 									<!--                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">내용</h5> -->
 									<div class="form-outline mb-0">
-										<input type="text" id="username" name="username" placeholder="아이디 입력"
-											class="form-control form-control" /> <label
-											class="form-label" for="username">아이디</label>
+										<label class="form-label my-0" for="username">아이디</label>
+										<div style="display: flex;">
+											<input style="width: 79%" type="text" id="username" name="username" placeholder="아이디 입력" class="form-control form-control" /> 
+											<button class="btn btn-outline-primary ml-1" type="button" id="checkId">중복검사</button>
+										</div>
 									</div>
 									<div class="form-outline mb-0">
+									<label class="form-label my-0" for="password">비밀번호</label>
 										<input type="password" id="password" name="password" placeholder="비밀번호 입력"
-											class="form-control form-control" /> <label
-											class="form-label" for="password">비밀번호</label>
+											class="form-control form-control" /> 
 									</div>
 									<div class="form-outline mb-0">
+									<label class="form-label my-0" for="password2">비밀번호 확인</label>
 										<input type="password" id="password2" name="password2" placeholder="비밀번호 입력"
-											class="form-control form-control" /> <label
-											class="form-label" for="password2">비밀번호 확인</label>
+											class="form-control form-control" /> 
 									</div>
+									
 									<div class="form-outline mb-0">
-										<input type="email" id="email" name="email" placeholder="ex) hjm8333@naver.com"
-											class="form-control form-control" /> <label
-											class="form-label" for="email">이메일</label>
+										<label class="form-label my-0" for="email">이메일</label>
+										<div style="display: flex;">
+											<input style="width: 79%" type="email" id="email" name="email" placeholder="ex) hjm8333@naver.com" class="form-control form-control" />
+											<button class="btn btn-outline-primary ml-1" type="button" id="checkEmail">인증받기</button>
+										</div>
 									</div>
+									
 									<div class="form-outline mb-0">
+										<label class="form-label my-0" for="emconfirm" id="emailconfirmTxt">인증번호</label>
+										<input type="text" id="emconfirm" placeholder="인증번호 입력" class="form-control form-control"/> 
+									</div>
+									
+									<div class="form-outline mb-0">
+									<label class="form-label my-0" for="tel">전화번호</label>
 										<input type="text" id="tel" name="tel" placeholder="ex) 01040618333"
-											class="form-control form-control" /> <label
-											class="form-label" for="tel">전화번호</label>
+											class="form-control form-control" /> 
 									</div>
 									<div class="form-outline mb-0">
+									<label class="form-label my-0" for="birthDate">생년월일</label>
 										<input type="text" id="birthDate" name="birthDate" placeholder="ex) 1989-11-12"
-											class="form-control form-control" /> <label
-											class="form-label" for="birthDate">생년월일</label>
+											class="form-control form-control" /> 
 									</div>
 									<div class="pt-1 mb-4">
 										<button class="btn btn-dark btn-lg btn-block"
@@ -102,6 +86,13 @@
 </div>
 
 <script>
+
+	let emailCheck = false;
+	let idCheck = false;
+
+	$('#checkId').on('click', () => {
+			alert('중복체크 클릭.');		
+	});
 
 	$('.signUpForm').on('submit', () => {
 	
@@ -142,7 +133,9 @@
 		const dateRegex4 = /^(19|20)\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/; // YYYY-MM-DD 각 자리에 유효한 생년월일인지 확인
 	
 		if (dateRegex.test(dateval) || dateRegex2.test(dateval)) {
-			if (dateRegex3.test(dateval) || dateRegex4.test(dateval)) return true;
+			if (dateRegex3.test(dateval) || dateRegex4.test(dateval)) {
+				
+			}
 			else {
 				alert('생년월일 숫자를 확인해주세요');
 				return false;
@@ -152,8 +145,70 @@
 			$('#birthDate').focus();
 			return false
 		}
+		
+		if(!emailCheck) {
+			alert('이메일 인증을 진행해주세요');
+			$('#email').focus();
+			return false;
+		}
 	
 	});
+	
+	var $email = $("#email");
+	var $checkEmail = $("#checkEmail"); // 인증번호 발송 버튼
+	var $emailconfirm = $("#emconfirm"); // 인증번호 확인input
+	var $emailconfirmTxt = $("#emailconfirmTxt"); // 인증번호 확인 txt
+	
+	$checkEmail.click(function() {
+
+		const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		
+		if(!emailRegex.test($email.val())) {
+			alert('이메일 형식을 확인해주세요');
+			$('#email').focus();
+			return false;
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "/user/mail-confirm",
+			data : {
+				"email" : $email.val()
+			},
+			success : function(data){
+				alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+				chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
+			}
+		})
+	});
+	
+	function chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt){
+		$emailconfirm.on("keyup", function(){
+			if (data != $emailconfirm.val()) {
+				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+				$("#emconfirmchk").css({
+					"color" : "#FA3E3E",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				})
+			} else {
+				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+				$("#emconfirmchk").css({
+					"color" : "#0D6EFD",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				})
+				$("#emconfirm").prop("disabled", true);
+				$("#emconfirm").css("background", "#bbbbbb");
+				$("#email").prop("readonly", true);
+				$("#email").css("background", "#bbbbbb");
+				$("#checkEmail").prop("disabled", true);
+				$("#checkEmail").css("background", "#bbbbbb");
+				emailCheck = true;
+			}
+		})
+	}
+
 </script>
 
 
