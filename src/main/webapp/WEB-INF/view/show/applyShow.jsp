@@ -38,19 +38,8 @@
 		background-color: white;
 		box-shadow: inset 0px 5px 10px 0px rgba(128, 128, 128, 0.3);
 		display: flex;
+		flex-direction: column;
 		overflow: hidden;
-	}
-	.content_date{
-		flex: 0 0 400px;
-/* 		background-color: lightpink; */
-		text-align: center;
-		margin: auto;
-	}
-	.content_list{
-		flex: 0 0 500px;
-		min-height: 800px;
-/* 		background-color: lightblue; */
-		margin: auto;
 	}
 	#list_tb{
 		border: 1px solid grey;
@@ -79,11 +68,13 @@
 		border: 1px solid #999;
 		height: 75%;
 	}
-	#insertShowTb{
+	.insertShowTb{
+		max-width: 800px;
+		width: 80%;
+		text-align: center;
 		margin: auto;
-		margin-top: 50px;
 	}
-	#insertShowTb td{
+	.insertShowTb td{
  		height: 35px;
 		padding: 0px 10px;
 	}
@@ -107,6 +98,9 @@
 		height: 100%;
 		margin: auto;
 		margin-top: 8px;
+	}
+	#showImg{
+		width: 250px;
 	}
 </style>
 
@@ -184,15 +178,33 @@
 <%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
 	
 	<div class="content">
-		<form method="post" id="apply_frm" action="apply" style="width:100%">
-  			<table id="insertShowTb">
-       			<tr>
-					<td colspan="2"  style="text-align: center;">
+		<form method="post" id="upload" action="upload" onsubmit="return false;" style="width:100%" enctype="multipart/form-data">
+			<table class="insertShowTb" style="margin-top: 50px;">
+    			<tr>
+    				<td colspan="2">
        					<h3>공연 정보</h3>
-					</td>
-       			</tr>
+    				</td>
+    			</tr>
+	   			<tr>
+	   				<td style="width: 40%; min-width: 150px;">공연/전시 이미지</td>
+	   				<td>
+	   					<label for="showImg">
+	   						<input type="file" id="showImg" name="showImg" accept="image/*" multiple="multiple">
+	   						<button id="showImgBtn" style="width:50px;">저장</button>
+		   				</label>
+   					</td>
+	   			</tr>
+	   			<tr>
+	   				<td>미리보기</td>
+	   				<td id="thumbTd">
+	   				</td>
+	   			</tr>
+			</table>
+		</form>
+		<form method="post" id="apply_frm" action="apply" style="width:100%">
+  			<table class="insertShowTb">
        			<tr>
-       				<td>공연/전시 유형</td>
+       				<td style="width: 40%; min-width: 150px;">공연/전시 유형</td>
        				<td>
        					<select name="showTypeId1">
        						<option value="1">1 : 공연</option>
@@ -207,10 +219,6 @@
        			<tr>
        				<td>공연/전시 내용</td>
        				<td><textarea name="content"></textarea></td>
-       			</tr>
-       			<tr>
-       				<td>공연/전시 이미지</td>
-       				<td><input type="file" id="show_img" name="showImg"></td>
        			</tr>
        			<tr>
        				<td>시작 날짜</td>
@@ -279,5 +287,40 @@
    		</form>
 	</div>
 	<%@ include file="../layout/footer.jsp" %>
+	<script>
+	$(document).ready(function(){
+		let showImg = null;
+		$("#showImg").on("change", function(e){
+			showImg = e.target.files[0];
+			console.log(showImg);
+		});
+		$("#showImgBtn").on("click", function(){
+			var formData = new FormData();
+			if(showImg!=null){
+				formData.append('showImg', showImg);
+				console.log("formData : "+formData);
+				
+				$.ajax({
+					url: "upload",
+					type: "post",
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(data){
+						console.log("업로드 성공 : "+data);
+						let thumb = document.createElement("p");
+						thumb.innerText = "이름 : "+data;
+						$("#thumbTd").append(thumb);
+					},
+					error: function(e){
+						console.log("error : "+e);
+					}
+				});// end of ajax
+			}else{
+				alert("showImg is null");
+			}
+		})
+	});
+	</script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.silver.hallofart.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.silver.hallofart.dto.FileDto;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.ShowService;
 
@@ -57,5 +62,26 @@ public class ShowController {
 		System.out.println(list);
 
 		return list;
+	}
+	
+	@PostMapping("/upload")
+	@ResponseBody
+	public String upload(@RequestPart("showImg") 
+			MultipartFile[] uploadfile, Model model) {
+
+		List<FileDto> list = new ArrayList<>();
+
+		for (MultipartFile file : uploadfile) {			
+			FileDto dto = new FileDto( file.getOriginalFilename(), file.getContentType() );	
+			list.add(dto);
+			File newFileName = new File(dto.getFileName());
+	        
+			try {
+				file.transferTo(newFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list.get(0).getFileName();
 	}
 }

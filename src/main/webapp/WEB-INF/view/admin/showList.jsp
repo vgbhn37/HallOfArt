@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
+    <title>HallOfArt - Admin</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/admin_styles.css" rel="stylesheet" />
@@ -113,6 +113,7 @@
 	    		let content = $(this).parent().next(".contentTr");
 	    		content.toggle();
 	    	});
+	    	
 	    });
 	</script>
 </body>
