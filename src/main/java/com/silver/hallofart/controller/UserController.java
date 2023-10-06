@@ -3,7 +3,6 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -89,11 +88,22 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping("/email-duplicate-check")
+	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
+		log.info("UserController ===> duplicateCheck ====> start");
+		if(userService.searchEmail(email)!=null) {
+			log.info("UserController ====> 이메일 사용불가");
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}else {
+			log.info("UserController ====> 이메일 사용가능");
+			return ResponseEntity.status(HttpStatus.OK).body(200);
+		}
+	}
+	
 	@PostMapping("/sign-up")
 	public String signUpProcess(UserDto userDto) {
 		
 		log.info("userDto : "+userDto);
-		
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
 			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
@@ -235,7 +245,6 @@ public class UserController {
 		session.setAttribute("user", oldUser);
 		
 		String uri = (String) session.getAttribute("beforeLogin");
-		log.info("===================================== URI "+ uri);
 	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
 	    	return "redirect:"+uri;
 	    } else {
