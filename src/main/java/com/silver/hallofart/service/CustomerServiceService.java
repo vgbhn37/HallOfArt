@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
@@ -56,8 +57,8 @@ public class CustomerServiceService {
 		return inquiryList;
 	}
 
-	public int countInquiryPage(Pagination pagination) {
-		int count = customerServiceRepository.countInquiry(pagination);
+	public int countInquiryPage(PagingDto paging) {
+		int count = customerServiceRepository.countInquiry(paging);
 		return count;
 	}
 
@@ -66,13 +67,12 @@ public class CustomerServiceService {
 	}
 
 	public void insertInquiryAnswer(InquiryAnswer inquiryAnswer) {
-		System.out.println(inquiryAnswer.getInquiryId());
+		//inquiry테이블에 답변 여부 수정
+		customerServiceRepository.modifyinquiryAnswer(inquiryAnswer.getInquiryId());
 		customerServiceRepository.insertInquiryAnswer(inquiryAnswer);
 	}
 
 	public InquiryAnswer findInquiryAnswer(Integer inquiryId) {
-		//inquiry테이블에 답변 여부 수정
-		customerServiceRepository.modifyinquiryAnswer(inquiryId);
 		return customerServiceRepository.findInquiryAnswer(inquiryId);
 	}
 
@@ -83,4 +83,16 @@ public class CustomerServiceService {
 	public void deleteInquiry(Integer id) {
 		customerServiceRepository.deleteInquiry(id);
 	}
+
+	@Transactional
+	public int changeAnswer(Integer id) {
+		int result = customerServiceRepository.changeAnswer(id);
+		return result;
+	}
+	
+	@Transactional
+	public void deleteAnswer(Integer id) {
+		customerServiceRepository.deleteAnswer(id);	
+	}
+
 }

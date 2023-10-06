@@ -2,6 +2,8 @@ package com.silver.hallofart.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
+import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Inquiry;
 import com.silver.hallofart.repository.model.InquiryAnswer;
@@ -21,6 +24,9 @@ import com.silver.hallofart.service.CustomerServiceService;
 @Controller
 @RequestMapping("/customerservice")
 public class CustomerServiceController {
+	
+	@Autowired
+	HttpSession session;
 	
 	@Autowired
 	private CustomerServiceService customerServiceService;
@@ -91,11 +97,12 @@ public class CustomerServiceController {
 	@GetMapping("/inquiry")
 	public String inquiry(Model model, @ModelAttribute("paging") PagingDto paging, @RequestParam(value="page", 
 		    required = false, defaultValue="1")int page) {
+		UserDto user = (UserDto)session.getAttribute("user");
 		paging.setPage(page);
-		paging.setUserId(1);
+		paging.setUserId(user.getId());
 		Pagination pagination = new Pagination();
 		pagination.setPaging(paging);
-		pagination.setArticleTotalCount(customerServiceService.countInquiryPage(pagination));
+		pagination.setArticleTotalCount(customerServiceService.countInquiryPage(paging));
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("inquiryList", customerServiceService.findInquiry(paging));
 		return "customerservice/inquiry";
@@ -147,5 +154,10 @@ public class CustomerServiceController {
 		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + inquiryAnswer.getInquiryId();
 	}
 	
-
+	@GetMapping("/inquiry/answerDelete")
+	public String answerDelete(@RequestParam("id")Integer id, @ModelAttribute("page") int page) {
+		customerServiceService.changeAnswer(id);
+		customerServiceService.deleteAnswer(id);
+		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + id;
+	}
 }
