@@ -118,10 +118,8 @@
 			return;
 		}		
 	    const requestOptions = {
-	            method: 'POST',
-	            headers: {
-	                'Content-Type': 'application/json'
-	            }
+	            method: 'GET',
+	            
 	        };
 
 	    fetch('/booking/select-time/'+showtimeId , requestOptions)
@@ -168,6 +166,7 @@
 	                 	
 	                }
 	                else if(seat.showTbId == null && isSelected===true){
+	                	//예매가 되지는 않았지만 선택한 좌석 리스트에 있는 좌석
 	                	seatElement.classList.add('selected_seat');
 	                }
 	                else {   
@@ -243,7 +242,7 @@
 			} else{
 				//선택된 좌석들을 output에 출력
 				selectedSeats.forEach(seat => {
-					//card 클래스 div 삽입
+					//card 클래스 div 생성
 					const cardDiv = document.createElement('div');
 					cardDiv.style.margin = '10px';
 					cardDiv.classList.add('card');
@@ -283,7 +282,6 @@
 		
 		// 예매성공 페이지로 이동
 	 	function moveToBookingSuccessPage(){
-	 		   console.log(JSON.stringify({ selectedSeats }));
 			   const requestOptions = {
 			        	method: 'POST',
 			            headers: {

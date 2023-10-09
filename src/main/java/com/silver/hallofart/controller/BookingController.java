@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silver.hallofart.dto.BookedSeatDto;
+import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.dto.UserDto;
@@ -63,10 +64,14 @@ public class BookingController {
 	}
 
 	// 해당 showtime의 좌석리스트
-	@PostMapping("/booking/select-time/{showTimeId}")
+	@GetMapping("/booking/select-time/{showTimeId}")
 	@ResponseBody
-	public List<SeatStatusDto> seatList(@PathVariable Integer showTimeId) {
-
+	public List<SeatStatusDto> seatList(@PathVariable Integer showTimeId, HttpServletRequest request) {
+		// 주소창에 직접 입력시 오류 발생
+		if (request.getHeader("REFERER") == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
 		// 인증 및 유효성 검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
@@ -103,7 +108,8 @@ public class BookingController {
 		}
 		return "success";
 	}
-
+	
+	// 예약 성공 알림 페이지 -> 결제 대기 리스트 페이지로 넘어감
 	@GetMapping("/booking/success")
 	public String bookingSuccess(HttpServletRequest request) {
 		// 주소창에 직접 입력시 오류 발생
@@ -112,7 +118,8 @@ public class BookingController {
 		}
 		return "booking/success";
 	}
-
+	
+	// 결제 대기 리스트
 	@GetMapping("/user/payList/{id}")
 	public String payList(@PathVariable int id, Model model) {
 
@@ -131,7 +138,8 @@ public class BookingController {
 
 		return "/user/payList";
 	}
-
+	
+	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
 	@DeleteMapping("/booking/delete/{id}")
 	@ResponseBody
 	public String deleteBooking(@PathVariable Integer id) {
@@ -148,5 +156,14 @@ public class BookingController {
 		
 		return "success";
 	}
-
+	
+	// 결제
+	@PostMapping("/booking/payment_proc")
+	@ResponseBody
+	public String PaymentProc(@RequestBody PaymentDto paymentDto) {
+		
+		System.out.println(paymentDto.getImpUid());
+		System.out.println(paymentDto.getMerchantUid());
+		return "success";
+	}
 }
