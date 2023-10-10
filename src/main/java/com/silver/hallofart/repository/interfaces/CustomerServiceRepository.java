@@ -45,4 +45,8 @@ public interface CustomerServiceRepository {
 	public int changeAnswer(Integer id);
 
 	public void deleteAnswer(Integer id);
+
+	public List<Announcement> findAnnouncement(PagingDto paging);
+
+	public int countPageClassification(PagingDto paging);
 }

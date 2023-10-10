@@ -7,6 +7,10 @@
 		select * from announcement_tb order by created_at desc limit #{offset}, #{recordSize}
 	</select>
 	
+	<select id="findAnnouncement" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Announcement">
+		select * from announcement_tb where classification = #{classification} order by created_at desc limit #{offset}, #{recordSize}
+	</select>
+	
 	<select id="findAnnouncementById" resultType="Announcement">
 		select * from announcement_tb where id = #{id}
 	</select>
@@ -17,6 +21,10 @@
 	
 	<select id="countInquiry" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
 		select count(*) from inquiry_tb where user_id = #{userId}
+	</select>
+	
+	<select id="countPageClassification" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from announcement_tb where classification = #{classification}
 	</select>
 	
 	<select id="findInquiryByUserId" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Inquiry">

@@ -95,4 +95,14 @@ public class CustomerServiceService {
 		customerServiceRepository.deleteAnswer(id);	
 	}
 
+	public List<Announcement> selectAnnouncement(PagingDto paging) {
+		List<Announcement> announcementList = customerServiceRepository.findAnnouncement(paging);
+		return announcementList;
+	}
+
+	public int countPageClassification(PagingDto paging) {
+		int count = customerServiceRepository.countPageClassification(paging);
+		return count;
+	}
+
 }

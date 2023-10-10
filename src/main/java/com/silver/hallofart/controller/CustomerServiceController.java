@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.silver.hallofart.dto.ClassificationDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.UserDto;
@@ -32,22 +34,51 @@ public class CustomerServiceController {
 	private CustomerServiceService customerServiceService;
 	
 	//공지사항
-	//주소설계 : http://localhost:80/customerservice/announcement
 	@GetMapping("/announcement")
 	public String announcement(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
-		    required = false, defaultValue="1")int page, Model model) {
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification, Model model) {
 		paging.setPage(page);
 		Pagination pagination = new Pagination();
 		pagination.setPaging(paging);
 		pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
 		List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
-		model.addAttribute("pagination", pagination);
 		model.addAttribute("announcementList", announcementList);
+		model.addAttribute("pagination", pagination);
 		return "customerservice/announcement";
 	}
 	
+	//공지사항 ajax활용
+	@GetMapping("/announcement/classification")
+	@ResponseBody
+	public ClassificationDto announcementClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification) {
+		paging.setPage(page);
+		paging.setClassification(classification);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		ClassificationDto classificationDto = new ClassificationDto();
+		//분류가 전체일 떄
+		if(classification.equals("전체")) {
+			pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
+			List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
+			classificationDto.setAnnouncementList(announcementList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		} 
+		//분류값이 있을 때
+		else {
+			pagination.setArticleTotalCount(customerServiceService.countPageClassification(paging));
+			paging.setClassification(classification);
+			List<Announcement> announcementList = customerServiceService.selectAnnouncement(paging);
+			classificationDto.setAnnouncementList(announcementList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		}
+	}
+	
 	//공지사항 작성
-	//TODO : 관리자만 가능하게
 	@GetMapping("/announcement/write")
 	public String announcementWrite() {
 		return "customerservice/announcementWrite";
