@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@	include file="layout/header.jsp"%>
+<%@	include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- --------------------------------------------------------- -->
 <div class="container my-5">
 	<h2>티켓 리스트</h2>
@@ -29,7 +29,7 @@
 
 
 <!-- --------------------------------------------------------- -->
-<%@ include file="layout/footer.jsp"%>
+<%@	include file="/WEB-INF/view/layout/footer.jsp"%>
 
 <script>
 	function requestRefund(id){
