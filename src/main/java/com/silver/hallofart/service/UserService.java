@@ -42,4 +42,8 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 	
+	public UserDto searchEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
 }

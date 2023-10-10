@@ -16,4 +16,31 @@
 		select name from hall_tb h join show_tb s on h.id = s.hall_tb_id
 		where s.id = #{showId};
 	</select>
+	<select id = "findSeatNameBySeatId" resultType="String">
+		select seat_name from seat_tb where id = #{id}
+	</select>
+	<select id = "findShowTimeByShowTimeId" resultType="java.sql.Timestamp">
+		select start_time from show_time_tb where id = #{id}
+	</select>
+	<select id = "findShowTitleByShowId" resultType="String">
+		select title from show_tb where id = #{id}
+	</select>
+	<select id = "findPriceByShowId" resultType="Integer">
+		select price from show_tb where id=#{id}
+	</select>
+	<select id = "findBookingByshowTimeIdAndseatId" resultType="Booking">
+		select * from booking_tb where show_time_tb_id = #{showTimeId} and seat_tb_id = #{seatId} and status != "취소"
+	</select>
+	<select id = "findWaitingPaymentBookingByUserId" resultType="Booking">
+		select * from booking_tb where user_tb_id = #{userId} and status = "결제 대기"
+	</select>
+	<insert id = "insertBookingInfo">
+		insert into booking_tb (status, user_tb_id, seat_tb_id, show_time_tb_id, show_tb_id)
+		values (#{status}, #{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId})
+	</insert>
+	<delete id = "deleteBookingById">
+		delete from booking_tb where id = #{id}
+	</delete>
+	
+	
 </mapper>

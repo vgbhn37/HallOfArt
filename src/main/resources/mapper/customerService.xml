@@ -15,8 +15,8 @@
 		select count(*) from announcement_tb
 	</select>
 	
-	<select id="countInquiry" parameterType="com.silver.hallofart.dto.Pagination" resultType="int">
-		select count(*) from inquiry_tb
+	<select id="countInquiry" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from inquiry_tb where user_id = #{userId}
 	</select>
 	
 	<select id="findInquiryByUserId" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Inquiry">
@@ -25,6 +25,10 @@
 	
 	<select id="findInquiryById" resultType="Inquiry">
 		select * from inquiry_tb where id = #{id}
+	</select>
+	
+	<select id="findInquiryAnswer" resultType="InquiryAnswer">
+		select * from inquiry_answer_tb where inquiry_id = #{inquiryId}
 	</select>
 	
 	<insert id="insertAnnouncement">
@@ -37,12 +41,37 @@
 		values(#{classification}, #{title}, #{content}, #{file}, now(), #{answer}, #{user_id})
 	</insert>
 	
+	<insert id="insertInquiryAnswer">
+		insert into inquiry_answer_tb(title, content, file, created_at, inquiry_id) 
+		values(#{title}, #{content}, #{file}, now(), #{inquiryId})
+	</insert>
+	
 	<update id="updateAnnouncement">
 		update announcement_tb set title = #{title}, classification = #{classification}, 
 		content = #{content}, file = #{file} where id = #{id}
 	</update>
 	
+	<update id="modifyinquiryAnswer">
+		update inquiry_tb set answer = 1 where id = #{inquiryId}
+	</update>
+	
+	<update id="changeAnswer">
+		update inquiry_tb set answer = 0 where id = #{id}
+	</update>
+	
+	<update id="updateInquiry">
+		update inquiry_tb set title = #{title}, classification = #{classification}, content = #{content} where id = #{id}
+	</update>
+	
 	<delete id="deleteAnnouncement">
 		delete from announcement_tb where id = #{id}
+	</delete>
+	
+	<delete id="deleteInquiry">
+		delete from inquiry_tb where id = #{id}
+	</delete>
+	
+	<delete id="deleteAnswer">
+		delete from inquiry_answer_tb where inquiry_id = #{id}
 	</delete>
 </mapper>

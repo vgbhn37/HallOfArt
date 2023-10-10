@@ -26,6 +26,7 @@
 				<th>분류</th>
 				<th>내용</th>
 				<th>날짜</th>
+				<th>답변여부</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,6 +35,16 @@
 					<td><a href="#">${inquiry.classification}</a></td>
 					<td><a href="/customerservice/inquiry/detail?page=${paging.page}&id=${inquiry.id}">${inquiry.title}</a></td>
 					<td><a href="#">${inquiry.createdAt}</a></td>
+					<td>
+						<c:choose>
+						<c:when test="${inquiry.answer == 1}">
+							답변완료
+						</c:when>
+						<c:otherwise>
+							답변미완료
+						</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>

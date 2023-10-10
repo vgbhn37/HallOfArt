@@ -3,8 +3,8 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.silver.hallofart.dto.KakaoProfile;
 import com.silver.hallofart.dto.OAuthToken;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
+import com.silver.hallofart.service.MailService;
 import com.silver.hallofart.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +41,13 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
+	private MailService mailService;
+	
+	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private HttpServletRequest request;
 	
 	@GetMapping("/sign-up")
 	public String signUp() {
@@ -48,6 +56,8 @@ public class UserController {
 	
 	@GetMapping("/sign-in")
 	public String signIn() {
+		String uri = request.getHeader("Referer");
+		session.setAttribute("beforeLogin", uri);
 		return "user/signIn";
 	}
 	
@@ -57,13 +67,46 @@ public class UserController {
 		return "redirect:/user/sign-in";
 	}
 	
+	// 이메일 인증
+	@PostMapping("/mail-confirm")
+	@ResponseBody
+	String mailConfirm(@RequestParam("email") String email) throws Exception {
+	   String code = mailService.sendSimpleMessage(email);
+	   log.info("인증코드 : " + code);
+	   return code;
+	}
+	
+	@PostMapping("/duplicate-check")
+	public ResponseEntity<Integer> duplicateCheck(@RequestParam("username") String username) {
+		log.info("UserController ===> duplicateCheck ====> start");
+		if(userService.searchUsername(username)!=null) {
+			log.info("UserController ====> 아이디 사용불가");
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}else {
+			log.info("UserController ====> 아이디 사용가능");
+			return ResponseEntity.status(HttpStatus.OK).body(200);
+		}
+	}
+	
+	@PostMapping("/email-duplicate-check")
+	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
+		log.info("UserController ===> duplicateCheck ====> start");
+		if(userService.searchEmail(email)!=null) {
+			log.info("UserController ====> 이메일 사용불가");
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}else {
+			log.info("UserController ====> 이메일 사용가능");
+			return ResponseEntity.status(HttpStatus.OK).body(200);
+		}
+	}
+	
 	@PostMapping("/sign-up")
 	public String signUpProcess(UserDto userDto) {
 		
 		log.info("userDto : "+userDto);
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
-			throw new CustomRestfulException("유저 네임을 입력하십시오", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
 			throw new CustomRestfulException("패스워드를 입력하십시오", HttpStatus.BAD_REQUEST);
@@ -87,11 +130,11 @@ public class UserController {
 	public String signInProc(UserDto userDto) {
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
-			throw new CustomRestfulException("username을 입력하십셔", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		
 		if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
-			throw new CustomRestfulException("password을 입력하십셔", HttpStatus.BAD_REQUEST);
+			throw new CustomRestfulException("패스워드를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
 		
 		UserDto user = userService.signIn(userDto);
@@ -100,7 +143,12 @@ public class UserController {
 		
 		session.setAttribute("user", user);
 		
-		return "redirect:/";
+		String uri = (String) session.getAttribute("beforeLogin");
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    	return "redirect:"+uri;
+	    } else {
+	    	return "redirect:/";
+	    }
 		
 	}
 	
@@ -149,8 +197,8 @@ public class UserController {
 			log.info("가입 이력이 없으므로 카카오 api 정보를 기반으로 회원 가입 진행 후 로그인");
 			
 			String email = kakaoProfile.getKakaoAccount().getEmail();
-			StringBuilder tel = new StringBuilder("000-0000-0000");
-			Date date = Date.valueOf("1000-01-01");
+			StringBuilder tel = new StringBuilder("999-9999-9999");
+			Date date = Date.valueOf("3000-01-01");
 			try {
 				tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());
 				tel.delete(0, 4);
@@ -196,7 +244,12 @@ public class UserController {
 		
 		session.setAttribute("user", oldUser);
 		
-		return "redirect:/";
+		String uri = (String) session.getAttribute("beforeLogin");
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    	return "redirect:"+uri;
+	    } else {
+	    	return "redirect:/";
+	    }
 	}
 	
 }
