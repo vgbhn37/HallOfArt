@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.silver.hallofart.dto.AdminDto;
+import com.silver.hallofart.dto.Pagination;
+import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.repository.interfaces.AdminRepository;
 import com.silver.hallofart.repository.model.Show;
@@ -15,8 +17,8 @@ public class AdminService {
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	public List<Show> findAll(){
-		List<Show> list = adminRepository.findAll();
+	public List<Show> findAll(PagingDto paging){
+		List<Show> list = adminRepository.findAll(paging);
 		return list;
 	}
 	
@@ -27,11 +29,23 @@ public class AdminService {
 	public AdminDto findCountAll() {
 		return adminRepository.findCountAll();
 	}
-	public List<PaymentDto> findMerchantAll() {
-		return adminRepository.findMerchantAll();
+	public List<PaymentDto> findMerchantAll(PagingDto paging) {
+		return adminRepository.findMerchantAll(paging);
 	}
 	
-	public List<AdminDto> findBookingAll() {
-		return adminRepository.findBookingAll();
+	public List<AdminDto> findBookingAll(PagingDto paging) {
+		return adminRepository.findBookingAll(paging);
+	}
+	
+	public int countShow(Pagination pagination) {
+		return adminRepository.countShow(pagination);
+	}
+	
+	public int countBooking(Pagination pagination) {
+		return adminRepository.countBooking(pagination);
+	}
+	
+	public int countPayment(Pagination pagination) {
+		return adminRepository.countPayment(pagination);
 	}
 }

@@ -8,15 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.silver.hallofart.dto.AdminDto;
+import com.silver.hallofart.dto.Pagination;
+import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
+import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.AdminService;
+import com.silver.hallofart.service.CustomerServiceService;
 import com.silver.hallofart.service.ShowService;
 
 @Controller
@@ -29,13 +35,18 @@ public class AdminController {
 	@Autowired
 	public ShowService showService;
 	
+	@Autowired
+	public CustomerServiceService customerService;
+	
 	@GetMapping({"/main","/"})
-	public String main(Model model) {
+	public String main(@ModelAttribute("paging") PagingDto paging , 
+							  @RequestParam(value="page", required = false, defaultValue="1")int page, 
+							  Model model) {
 		
 		AdminDto count = service.findCountAll();
 		model.addAttribute("count", count);
 		
-		List<Show> list = service.findAll();
+		List<Show> list = service.findAll(paging);
 		model.addAttribute("list", list);
 		
 		return "admin/main";
@@ -70,9 +81,16 @@ public class AdminController {
 	}
 	
 	@GetMapping("/showList")
-	public String showList(Model model) {
+	public String showList(@ModelAttribute("paging") PagingDto paging , 
+									@RequestParam(value="page", required = false, defaultValue="1")int page, 
+									Model model) {
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(service.countShow(pagination));
 		
-		List<Show> list = service.findAll();
+		model.addAttribute("pagination", pagination);
+		List<Show> list = service.findAll(paging);
 		model.addAttribute("list", list);
 		return "admin/showList";
 	}
@@ -104,15 +122,31 @@ public class AdminController {
 	}
 
 	@GetMapping("/bookList")
-	public String bookList(Model model) {
-		List<AdminDto> list = service.findBookingAll();
+	public String bookList(@ModelAttribute("paging") PagingDto paging , 
+									@RequestParam(value="page", required = false, defaultValue="1")int page, 
+									Model model) {
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(service.countBooking(pagination));
+		
+		model.addAttribute("pagination", pagination);
+		List<AdminDto> list = service.findBookingAll(paging);
 		model.addAttribute("list", list);
 		return "admin/bookList";
 	}
 
 	@GetMapping("/merchantList")
-	public String merchantList(Model model) {
-		List<PaymentDto> list = service.findMerchantAll();
+	public String merchantList(@ModelAttribute("paging") PagingDto paging , 
+										  @RequestParam(value="page", required = false, defaultValue="1")int page, 
+										  Model model) {
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(service.countPayment(pagination));
+		
+		model.addAttribute("pagination", pagination);
+		List<PaymentDto> list = service.findMerchantAll(paging);
 		model.addAttribute("list", list);
 		return "admin/merchantList";
 	}

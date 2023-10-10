@@ -34,6 +34,9 @@
 	.contentTr{
 		text-align: left;
 	}
+	.pagination{
+		justify-content: center;
+	}
 </style>
 
 </head>
@@ -62,7 +65,20 @@
                    					</c:otherwise>
                    				</c:choose>
                    					<td>${li.id}</td>
-                   					<td>${li.showTypeId1}</td>
+                   					<td>
+		                   				<c:choose>
+		                   					<c:when test="${li.showTypeId1==1}">
+				                   				공연
+		                   					</c:when>
+		                   					<c:when test="${li.showTypeId1==2}">
+				                   				전시
+		                   					</c:when>
+		                   					<c:otherwise>
+				                   				해당없음 ( ${li.showTypeId1} )
+		                   					</c:otherwise>
+		                   				</c:choose>
+                   						
+              						</td>
                    					<td class="titleTd">${li.title}</td>
                    					<td>${li.startDate} ~ ${li.endDate}</td>
                    					<td>
@@ -91,6 +107,35 @@
                    				</tr>
                    			</c:forEach>
                    		</table>
+		                <div class="paging">
+							<form action="showList" name="pageForm">
+								<div class="text-center clearfix">
+									<ul class="pagination" id="pagination">
+										<c:if test="${pagination.prev}">
+											<li class="page-item "><a class="page-link" href="#"
+												data-page="${pagination.beginPage-1}">Prev</a></li>
+										</c:if>
+					
+										<c:forEach var="num" begin="${pagination.beginPage}"
+											end="${pagination.endPage}">
+											<li class="${pagination.paging.page == num ? 'age-item active' : ''}"
+												page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
+										</c:forEach>
+					
+										<c:if test="${pagination.next}">
+											<li class="page-item"><a class="page-link" href="#"
+												data-page="${pagination.endPage+1}">Next</a></li>
+										</c:if>
+									</ul>
+					
+									<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+									<input type="hidden" name="page" value="${pagination.paging.page}">
+									<input type="hidden" name="recordSize"
+										value="${pagination.paging.recordSize}">
+					
+								</div>
+							</form>
+						</div>
                     </div>
                 </div>
             </main>
@@ -115,6 +160,14 @@
 	    		content.toggle();
 	    	});
 	    	
+	    	$('#pagination').on('click', 'a', function(e) {
+				e.preventDefault();
+				console.log($(this));
+				const value = $(this).data('page');
+				console.log(value);
+				document.pageForm.page.value = value;
+				document.pageForm.submit();
+			});
 	    });
 	</script>
 </body>

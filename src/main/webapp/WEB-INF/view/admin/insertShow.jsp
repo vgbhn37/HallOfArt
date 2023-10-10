@@ -34,7 +34,8 @@
 	.contentTr{
 		text-align: left;
 	}
-	.content{
+	.insert_content{
+		border: 1px solid black;
 		width: 85%;
 		min-height: 800px;
 		padding: 0 40px;
@@ -98,7 +99,8 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <div class="content">
+	                <h1 class="mt-4">공연/전시 입력</h1>
+                    <div class="insert_content">
 						<form method="post" id="upload" action="upload" onsubmit="return false;" style="width:100%" enctype="multipart/form-data">
 							<table class="insertShowTb" style="margin-top: 50px;">
 				    			<tr>
