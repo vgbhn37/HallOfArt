@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.silver.hallofart.dto.AdminDto;
+import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.repository.interfaces.AdminRepository;
 import com.silver.hallofart.repository.model.Show;
 
@@ -25,5 +26,12 @@ public class AdminService {
 	
 	public AdminDto findCountAll() {
 		return adminRepository.findCountAll();
+	}
+	public List<PaymentDto> findMerchantAll() {
+		return adminRepository.findMerchantAll();
+	}
+	
+	public List<AdminDto> findBookingAll() {
+		return adminRepository.findBookingAll();
 	}
 }

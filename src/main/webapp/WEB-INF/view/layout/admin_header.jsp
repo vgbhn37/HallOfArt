@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,8 +54,10 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="showList">공연/전시 조회</a>
-                                    <a class="nav-link" href="layout-sidenav-light">Light Sidenav</a>
+                                    <a class="nav-link" href="showList">조회</a>
+                                    <a class="nav-link" href="insertShow">입력</a>
+                                    <a class="nav-link" href="bookList">예매 현황</a>
+                                    <a class="nav-link" href="merchantList">결제 현황</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -88,20 +91,18 @@
                                     </div>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="tables">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        HallOfArt
+                        <c:choose>
+							<c:when test="${empty user}">
+								HallOfArt
+							</c:when>
+							<c:otherwise>
+								${user.username}
+							</c:otherwise>
+						</c:choose>
                     </div>
                 </nav>
             </div>

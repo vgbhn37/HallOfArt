@@ -30,4 +30,16 @@
 		from dual
 	</select>
 	
+	<select id="findBookingAll" resultType="com.silver.hallofart.dto.AdminDto">
+		select s.title, b.seat_tb_id, p.reg_date, FORMAT(p.amount,0) amount
+		from booking_tb b
+		join show_tb s on s.id = b.show_tb_id
+		join payment_tb p on b.merchant_id = p.merchant_id
+	</select>
+
+	<select id="findMerchantAll" resultType="com.silver.hallofart.dto.PaymentDto">
+		select merchant_id, imp_id, reg_date, FORMAT(amount,0) amount
+		from payment_tb
+	</select>
+	
 </mapper>

@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PaymentDto {
-	private String impUid;
-	private String merchantUid;
+	private String impId;
+	private String merchantId;
+	private String regDate;
+	private int amount;
 }

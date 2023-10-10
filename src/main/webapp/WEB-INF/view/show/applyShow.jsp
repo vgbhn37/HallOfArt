@@ -104,10 +104,6 @@
 	}
 </style>
 
-<script>
-	
-</script>
-
 </head>
 <body>
 	<div class="nav">
@@ -407,7 +403,7 @@
 		$("#thumbTr").hide();
 		$("#uploadImgBtn").on("click", function(){
 			let formData = new FormData();
-			alert($("#uploadImg").val());
+// 			alert($("#uploadImg").val());
 			if($("#uploadImg").val().length!=0){
 				formData.append('uploadImg', uploadImg);
 				console.log("formData : "+formData);

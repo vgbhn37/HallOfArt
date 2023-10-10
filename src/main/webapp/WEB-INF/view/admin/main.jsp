@@ -177,8 +177,11 @@
         		
         		$("#merchantHeader").on("click", function(){       			
 	        		let password = prompt("비밀번호를 입력해주세요");
-        			alert(password);
-	        		$("#merchantDiv").show();
+        			if(password=='1234'){
+		        		$("#merchantDiv").show();
+        			}else{
+        				alert('패스워드가 일치하지 않습니다');        				
+        			}
         		});
         		
         	});
