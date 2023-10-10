@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.silver.hallofart.dto.AdminDto;
 import com.silver.hallofart.repository.interfaces.AdminRepository;
 import com.silver.hallofart.repository.model.Show;
 
@@ -20,5 +21,9 @@ public class AdminService {
 	
 	public int updateStatus(int id, String showStatus) {
 		return adminRepository.updateStatus(id, showStatus);
+	}
+	
+	public AdminDto findCountAll() {
+		return adminRepository.findCountAll();
 	}
 }

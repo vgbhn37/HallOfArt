@@ -45,7 +45,7 @@
 			show_tb_id, hall_tb_id, user_tb_id, rental_start_time, rental_end_time	
 		)
 	  	values(
-	  		#{showTbId}, #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime}
+	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime}
   		)
 	</insert>
 </mapper>

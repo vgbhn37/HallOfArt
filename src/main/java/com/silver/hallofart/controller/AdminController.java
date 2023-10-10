@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.silver.hallofart.dto.AdminDto;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.AdminService;
 
@@ -20,8 +20,15 @@ public class AdminController {
 	@Autowired
 	public AdminService service;
 	
-	@GetMapping("/main")
-	public String main() {
+	@GetMapping({"/main","/"})
+	public String main(Model model) {
+		
+		AdminDto count = service.findCountAll();
+		model.addAttribute("count", count);
+		
+		List<Show> list = service.findAll();
+		model.addAttribute("list", list);
+		
 		return "admin/main";
 	}
 	@GetMapping("/login")

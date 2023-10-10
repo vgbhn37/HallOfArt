@@ -152,6 +152,7 @@
   						<c:choose>
 							<c:when test="${empty user}">
 								비로그인
+								<input type="hidden" id="userTbIdd" value="">
 							</c:when>
 							<c:otherwise>
 								id : <c:out value="${user.id}"></c:out>
@@ -182,11 +183,11 @@
        			</tr>
        			<tr>
        				<td>시작 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker1" name="startDate"></td>
+       				<td><input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off"></td>
        			</tr>
        			<tr>
        				<td>종료 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker2" name="endDate"></td>
+       				<td><input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off"></td>
        			</tr>
        			<tr>
        				<td>공연/전시 시간</td>
@@ -406,7 +407,8 @@
 		$("#thumbTr").hide();
 		$("#uploadImgBtn").on("click", function(){
 			let formData = new FormData();
-			if(showImg!=null){
+			alert($("#uploadImg").val());
+			if($("#uploadImg").val().length!=0){
 				formData.append('uploadImg', uploadImg);
 				console.log("formData : "+formData);
 				
@@ -422,6 +424,7 @@
 						thumb.src = "/imagePath/"+data;
 						thumb.style.width = "100%";
 						thumb.style.height = "100%";
+						$("#thumbTd").empty();
 						$("#thumbTd").append(thumb);
 						$("#thumbTr").show();
 						$("#showImg").val(data);
@@ -431,7 +434,7 @@
 					}
 				});// end of ajax
 			}else{
-				alert("showImg is null");
+				alert("이미지가 선택되지 않았습니다");
 			}
 		})
 	});
