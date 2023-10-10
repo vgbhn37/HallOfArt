@@ -1,15 +1,20 @@
 package com.silver.hallofart.controller;
 
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.h2.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +37,6 @@ import com.silver.hallofart.service.BookingService;
 import com.silver.hallofart.service.ShowService;
 
 @Controller
-
 public class BookingController {
 
 	@Autowired
@@ -131,12 +135,20 @@ public class BookingController {
 		if (user.getId() != id) {
 			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
 		}
-
+		
+		
 		// 결제 대기 상태인 예약테이블 리스트를 가져와서 뿌림
 		List<BookedSeatDto> payList = bookingService.findpaymentListByUserId(id);
 		model.addAttribute("payList", payList);
 
 		return "/user/payList";
+	}
+	
+	@GetMapping("/user/ticketList")
+	public String ticketList() {
+		
+		
+		return "/user/ticketList";
 	}
 	
 	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
@@ -157,13 +169,4 @@ public class BookingController {
 		return "success";
 	}
 	
-	// 결제
-	@PostMapping("/booking/payment_proc")
-	@ResponseBody
-	public String PaymentProc(@RequestBody PaymentDto paymentDto) {
-		
-		System.out.println(paymentDto.getImpId());
-		System.out.println(paymentDto.getMerchantId());
-		return "success";
-	}
 }

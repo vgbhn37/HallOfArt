@@ -83,8 +83,17 @@ public class BookingService {
 		return findpaymentListByUserId;
 	}
 	
-	public int deleteBookingById(Integer id) {
-		
+	public void updateBookingToSuccess(List<Integer> seatIds) {
+		for (Integer id : seatIds) {
+			bookingRepository.updateBookingToRefund(id);
+		}
+	}
+	
+	public void updateBookingToRefund(Integer id) {
+		bookingRepository.updateBookingToRefund(id);
+	}
+	
+	public int deleteBookingById(Integer id) {	
 		return bookingRepository.deleteBookingById(id);
 	}
 }
