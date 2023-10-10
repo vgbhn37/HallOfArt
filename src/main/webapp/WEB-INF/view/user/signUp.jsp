@@ -15,7 +15,7 @@
 						<div class="col-md-6 col-lg-5 d-none d-md-block">
 							<img src="../resources/images/img34.png" alt="login form"
 								class="img-fluid"
-								style="border-radius: 1rem 0 0 1rem; max-width: 115.5%;" />
+								style="border-radius: 1rem 0 0 1rem; max-width: 115.5%; height: 669px;" />
 						</div>
 						<div class="col-md-6 col-lg-7 d-flex align-items-center">
 							<div class="card-body text-black" style="padding: 0.5rem 3rem;">
@@ -52,17 +52,23 @@
 									</div>
 									
 									<div class="form-outline mb-0">
-										<label class="form-label my-0" for="emconfirm" id="emailconfirmTxt">인증번호</label>
-										<input type="text" id="emconfirm" placeholder="인증번호 입력" class="form-control form-control"/> 
+										<label class="form-label my-0" for="emconfirm" id="emailconfirmTxt">이메일 인증번호</label> <span id='timer2'> </span>
+										<input type="text" id="emconfirm" placeholder="이메일 인증번호 입력" class="form-control form-control"/> 
 									</div>
 									
 									<div class="form-outline mb-0">
-										<label class="form-label my-0" for="tel">전화번호</label>
+										<label class="form-label my-0" for="tel">휴대전화 번호</label>
 										<div style="display: flex;">
 											<input style="width: 79%" type="text" id="tel" name="tel" placeholder="ex) 01040618333" class="form-control form-control" />
 											<button class="btn btn-outline-primary ml-1" type="button" id="checkTel">인증받기</button>
 										</div> 
 									</div>
+									
+									<div class="form-outline mb-0">
+										<label class="form-label my-0" for="telconfirm" id="telconfirmTxt">휴대전화 인증번호</label> <span id='timer1'> </span>
+										<input type="text" id="telconfirm" placeholder="휴대전화 인증번호 입력" class="form-control form-control"/> 
+									</div>
+									
 									<div class="form-outline mb-0">
 									<label class="form-label my-0" for="birthDate">생년월일</label>
 										<input type="text" id="birthDate" name="birthDate" placeholder="ex) 1989-11-12"
@@ -91,6 +97,9 @@
 
 	let emailCheck = false;
 	let idCheck = false;
+	let telCheck = false;
+	let startTime1;
+	let startTime2;
 
 	$('#checkId').on('click', () => {
 
@@ -120,7 +129,7 @@
 							"color" : "#0D6EFD",
 							"font-weight" : "bold",
 							"font-size" : "12px"
-						})
+						});
 						$("#checkId").prop("disabled", true);
 						$("#checkId").css("background", "#bbbbbb");
 						$("#username").prop("readonly", true);
@@ -134,6 +143,139 @@
 			}
 		});
 	});
+	
+	var $tel = $("#tel");
+	var $checkTel = $("#checkTel"); 
+	var $telconfirm = $("#telconfirm");
+	var $telconfirmTxt = $("#telconfirmTxt");
+	let interval1;
+	
+	$('#checkTel').on('click', () => {
+
+		let telval = $('#tel').val();
+// 		let telvalcheck = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // - 있어도 없어도 되게
+		let telvalcheck = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
+		
+		if (!telvalcheck.test(telval)) {
+			alert('전화번호 양식이 맞지 않습니다 ex) 01040618333');
+			$('#tel').focus();
+			return false
+		} 
+		
+		$.ajax({
+			type : "POST",
+			url : "/user/tel-duplicate-check",
+			data : {
+				"tel" : telval
+			},
+			success : function(data){
+				if (data === 200) {
+					$.ajax({
+						type : "POST",
+						url : "/user/sms-confirm",
+						data : {
+							"tel" : $tel.val()
+						},
+						success : function(data){
+							alert("해당 휴대전화로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
+							$telconfirmTxt.html("<span id='telconfirmchk'>인증번호가 발송되었습니다</span>");
+							$("#telconfirmchk").css({
+								"color" : "green",
+								"font-weight" : "bold",
+								"font-size" : "12px"
+							});
+							
+							$("#timer1").css({
+								"color" : "#7800f7",
+								"font-weight" : "bold",
+								"font-size" : "12px"
+							});
+
+							startTime1 = new Date().getTime() + 5 * 60 * 1000;
+							interval1 = setInterval(updateTimer1, 1000);
+// 							updateTimer1();
+							
+							chkTelConfirm(data, $telconfirm, $telconfirmTxt);
+						}
+					});
+					} else {
+					alert('사용중인 전화번호 입니다.');
+				}
+			}
+			,error: function(){
+				alert('서버 에러입니다.');
+			}
+		});
+
+	});
+	
+	function updateTimer1() {
+		  
+		  const currentTime = new Date().getTime();
+		  const timeDifference = startTime1 - currentTime;
+
+		  if (timeDifference <= 0) {
+		    $("#timer1").text("시간 종료");
+		    $("#timer1").css({
+				"color" : "red"
+			});
+		    $telconfirmTxt.html("<span id='telconfirmchk'>시간이 초과되었습니다</span>");
+		    $("#telconfirmchk").css({
+				"color" : "#FA3E3E",
+				"font-weight" : "bold",
+				"font-size" : "12px"
+			});
+		    clearInterval(interval1);
+		  } else {
+		    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+		    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+		    $("#timer1").text(minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
+		  }
+		}
+	
+	function chkTelConfirm(data, $telconfirm, $telconfirmTxt){
+		$telconfirm.on("keyup", function(){
+			$("#tel").prop("readonly", true);
+			$("#tel").css("background", "#bbbbbb");
+			if ($("#timer1").text() === "시간 종료") {
+				$telconfirmTxt.html("<span id='telconfirmchk'>시간이 초과되었습니다</span>");
+				$("#telconfirmchk").css({
+					"color" : "#FA3E3E",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				});
+				$("#timer1").css({
+					"color" : "white",
+				});
+				clearInterval(interval1);
+				return false;
+			}
+			if (data != $telconfirm.val()) {
+				$telconfirmTxt.html("<span id='telconfirmchk'>인증번호가 잘못되었습니다</span>");
+				$("#telconfirmchk").css({
+					"color" : "#FA3E3E",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				});
+			} else {
+				clearInterval(interval1);
+				$telconfirmTxt.html("<span id='telconfirmchk'>인증번호 확인 완료</span>");
+				$("#telconfirmchk").css({
+					"color" : "#0D6EFD",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				});
+				$("#timer1").css({
+					"display" : "none"
+				});
+				$("#telconfirm").prop("disabled", true);
+				$("#telconfirm").css("background", "#bbbbbb");
+				$("#checkTel").prop("disabled", true);
+				$("#checkTel").css("background", "#bbbbbb");
+				telCheck = true;
+			}
+		});
+	}
 
 	$('.signUpForm').on('submit', () => {
 	
@@ -190,6 +332,12 @@
 			$('#email').focus();
 			return false;
 		}
+		
+		if(!telCheck) {
+			alert('핸드폰 인증을 진행해주세요');
+			$('#tel').focus();
+			return false;
+		}
 	
 	});
 	
@@ -197,13 +345,14 @@
 	var $checkEmail = $("#checkEmail"); // 인증번호 발송 버튼
 	var $emailconfirm = $("#emconfirm"); // 인증번호 확인input
 	var $emailconfirmTxt = $("#emailconfirmTxt"); // 인증번호 확인 txt
+	let interval2;
 	
 	$checkEmail.click(function() {
 
 		const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		
 		if(!emailRegex.test($email.val())) {
-			alert('이메일 형식을 확인해주세요');
+			alert('이메일 형식을 확인해주세요 ex) hjm8333@naver.com');
 			$('#email').focus();
 			return false;
 		}
@@ -223,7 +372,24 @@
 								"email" : $email.val()
 							},
 							success : function(data){
-								alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+								alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
+								$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 발송되었습니다</span>")
+								$("#emconfirmchk").css({
+									"color" : "green",
+									"font-weight" : "bold",
+									"font-size" : "12px"
+								});
+								
+								$("#timer2").css({
+									"color" : "#7800f7",
+									"font-weight" : "bold",
+									"font-size" : "12px"
+								});
+
+								startTime2 = new Date().getTime() + 5 * 60 * 1000;
+								interval2 = setInterval(updateTimer2, 1000);
+// 								updateTimer2();
+								
 								chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt);
 							}
 						});
@@ -237,26 +403,67 @@
 		});
 	});
 	
+	function updateTimer2() {
+		  
+		  const currentTime = new Date().getTime();
+		  const timeDifference = startTime2 - currentTime;
+
+		  if (timeDifference <= 0) {
+		    $("#timer2").text("시간 종료");
+		    $("#timer2").css({
+				"color" : "red"
+			});
+		    $emailconfirmTxt.html("<span id='emconfirmchk'>시간이 초과되었습니다</span>");
+		    $("#emconfirmchk").css({
+				"color" : "#FA3E3E",
+				"font-weight" : "bold",
+				"font-size" : "12px"
+			});
+		    clearInterval(interval2);
+		  } else {
+		    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+		    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+		    $("#timer2").text(minutes + ":" + (seconds < 10 ? '0' : '') + seconds);
+		  }
+		}
+	
 	function chkEmailConfirm(data, $emailconfirm, $emailconfirmTxt){
 		$emailconfirm.on("keyup", function(){
-			if (data != $emailconfirm.val()) {
-				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+			$("#email").prop("readonly", true);
+			$("#email").css("background", "#bbbbbb");
+			if ($("#timer2").text() === "시간 종료") {
+				$emailconfirmTxt.html("<span id='emconfirmchk'>시간이 초과되었습니다</span>");
 				$("#emconfirmchk").css({
 					"color" : "#FA3E3E",
 					"font-weight" : "bold",
 					"font-size" : "12px"
-				})
+				});
+				$("#timer2").css({
+					"color" : "white",
+				});
+				clearInterval(interval2);
+				return false;
+			}
+			if (data != $emailconfirm.val()) {
+				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>");
+				$("#emconfirmchk").css({
+					"color" : "#FA3E3E",
+					"font-weight" : "bold",
+					"font-size" : "12px"
+				});
 			} else {
-				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+				clearInterval(interval2);
+				$emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>");
 				$("#emconfirmchk").css({
 					"color" : "#0D6EFD",
 					"font-weight" : "bold",
 					"font-size" : "12px"
-				})
+				});
+				$("#timer2").css({
+					"display" : "none"
+				});
 				$("#emconfirm").prop("disabled", true);
 				$("#emconfirm").css("background", "#bbbbbb");
-				$("#email").prop("readonly", true);
-				$("#email").css("background", "#bbbbbb");
 				$("#checkEmail").prop("disabled", true);
 				$("#checkEmail").css("background", "#bbbbbb");
 				emailCheck = true;

@@ -28,6 +28,7 @@ import com.silver.hallofart.dto.OAuthToken;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.service.MailService;
+import com.silver.hallofart.service.SmsService;
 import com.silver.hallofart.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private SmsService smsService;
 	
 	@Autowired
 	private HttpSession session;
@@ -67,13 +71,26 @@ public class UserController {
 		return "redirect:/user/sign-in";
 	}
 	
+	@PostMapping("/sms-confirm")
+	@ResponseBody
+	int smsConfirm(@RequestParam("tel") String tel) throws Exception {
+		
+//		int code = smsService.send(tel);
+//		log.info("인증코드 : " + code);
+//		return code;
+		
+		int code = (int) ((Math.random() * 99999) + 10000);
+		log.info("인증코드 : " + code);
+		return code; // ==> 인증번호
+	}
+	
 	// 이메일 인증
 	@PostMapping("/mail-confirm")
 	@ResponseBody
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
-	   String code = mailService.sendSimpleMessage(email);
-	   log.info("인증코드 : " + code);
-	   return code;
+	    String code = mailService.sendSimpleMessage(email);
+	    log.info("인증코드 : " + code);
+	    return code;
 	}
 	
 	@PostMapping("/duplicate-check")
@@ -90,12 +107,24 @@ public class UserController {
 	
 	@PostMapping("/email-duplicate-check")
 	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
-		log.info("UserController ===> duplicateCheck ====> start");
+		log.info("UserController ===> email duplicateCheck ====> start");
 		if(userService.searchEmail(email)!=null) {
 			log.info("UserController ====> 이메일 사용불가");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
 		}else {
 			log.info("UserController ====> 이메일 사용가능");
+			return ResponseEntity.status(HttpStatus.OK).body(200);
+		}
+	}
+	
+	@PostMapping("/tel-duplicate-check")
+	public ResponseEntity<Integer> telDuplicateCheck(@RequestParam("tel") String tel) {
+		log.info("UserController ===> tel duplicateCheck ====> start");
+		if(userService.searchTel(tel)!=null) {
+			log.info("UserController ====> 전화번호 사용불가");
+			return ResponseEntity.status(HttpStatus.OK).body(400);
+		}else {
+			log.info("UserController ====> 전화번호 사용가능");
 			return ResponseEntity.status(HttpStatus.OK).body(200);
 		}
 	}
@@ -197,7 +226,7 @@ public class UserController {
 			log.info("가입 이력이 없으므로 카카오 api 정보를 기반으로 회원 가입 진행 후 로그인");
 			
 			String email = kakaoProfile.getKakaoAccount().getEmail();
-			StringBuilder tel = new StringBuilder("999-9999-9999");
+			StringBuilder tel = new StringBuilder("99999999999");
 			Date date = Date.valueOf("3000-01-01");
 			try {
 				tel = new StringBuilder(kakaoProfile.getKakaoAccount().getPhoneNumber());

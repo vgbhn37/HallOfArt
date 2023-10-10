@@ -46,4 +46,8 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 	
+	public UserDto searchTel(String tel) {
+		return userRepository.findByTel(tel);
+	}
+	
 }
