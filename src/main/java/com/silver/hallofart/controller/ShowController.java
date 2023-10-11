@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.silver.hallofart.dto.FileDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
+import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Seat;
@@ -47,7 +48,7 @@ public class ShowController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam Integer id, Model model) {
-		Show show = showService.showById(id);
+		ShowDetailDto show = showService.showById(id);
 		model.addAttribute("show", show);
 		return "show/detail";
 	}

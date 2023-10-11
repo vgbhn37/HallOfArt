@@ -1,59 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@	include file="../layout/header.jsp" %>
+<!-- --------------------------------------------------------- -->
 <style>
-	body{
-		margin: 0; padding: 2px;
-		background-color: #444;
-	}
-	.nav{
-		background-color: #444;
-		width: 100%;
-		height: 100px;
-	}
-	.banner{
-		width: 85%;
-		height: 220px;
-		background-image: url("https://picsum.photos/2000/600");
-		padding: 40px;
-		margin: auto;
-	}
-	.detail_content{
-		width: 85%;
-		min-height: 800px;
-		background-color: white;
-		padding: 40px;
-		margin: auto;
-		overflow: hidden;
+	.detail-content{
 		display: flex;
+		margin: 20px auto;
+		justify-content: center;
 	}
 	.detail_img{
-		display: inline-block;
-		margin: auto;
-		width: 400px;
-		height: 600px;
-		padding: 10px;
- 		background-color: lightpink; 
-		box-sizing: border-box;
+		margin: 50px;
 	}
 	.detail_info{
-		display: inline-block;
-		margin: auto;
-		width: 400px;
-		min-height: 600px;
-		padding: 30px;
-		background-color: lightblue;
-		box-sizing: border-box;
+		margin: 50px;
 	}
-	.detail_tb th{
-		text-align: left;
+	.detail_tb td{
+		height: 50px;
 	}
 	#booking{
 		display: block;
@@ -63,82 +26,78 @@
 		text-align: center;
 		border-radius: 10px;
 		font-size: 30px;
-		padding-top: 13px;
+		padding-top: 7px;
 		margin: auto;
-		margin-top: 100px;
+		margin-top: 30px;
 		text-decoration: none;
 		color: black;
 	}
 </style>
+<!-- --------------------------------------------------------- -->
+<div class="detail-content">
+	<div class="detail_img">
+		<img src="/imagePath/${show.showImg}" style="width: 500px; height: 500px;">
+	</div>
+	<div class="detail_info">
+		<h2>
+			<c:choose>
+				<c:when test="${show.showTypeId1==1}">
+ 					[공연]
+				</c:when>
+				<c:when test="${show.showTypeId1==2}">
+ 					[전시]
+				</c:when>
+				<c:otherwise>
+ 					[기타 ( ${show.showTypeId1} ) ]
+				</c:otherwise>
+			</c:choose>
+			${show.title}
+		</h2>
+		<p>${show.content}</p>
+		<table class="detail_tb">
+			<tr>
+				<td>기간</td>
+				<th>${show.startDate} ~ ${show.endDate}</th>
+			</tr>
+			<tr>
+				<td>장소</td>
+				<th>${show.name}</th>
+			</tr>
+			<tr>
+				<td>가격</td>
+				<th>${show.price} (원)</th>
+			</tr>
+			<tr>
+				<td>공연 정보</td>
+				<th>${show.showStatus}</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a id="booking" href="#">예매하기</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- --------------------------------------------------------- -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$(document).ready(function(){
-		$("#booking").hover(
-			function(){
-				$("#booking").stop().animate({
-					backgroundColor: "#cef" // 배경색 값을 문자열로 감싸야 합니다.
-				}, 300 );
-			},
-			function(){
-				$("#booking").stop().animate({ // ID 선택자를 빠뜨렸습니다.
-					backgroundColor: "#fff" // 배경색 값을 문자열로 감싸야 합니다.
-				}, 300 );			
-			}
-		);
-	});
+//게시하기 버튼 애니메이션
+$(document).ready(function(){
+	$("#booking").hover(
+		function(){
+			$("#booking").stop().animate({
+				backgroundColor: "#cef"
+			}, 300 );
+		},
+		function(){
+			$("#booking").stop().animate({
+				backgroundColor: "#fff"
+			}, 300 );			
+		}
+	);
+});
 </script>
-</head>
-<body>
-	<div class="nav">
-		<button type="button">메뉴</button>
-		<button type="button">로그인</button>
-		<button type="button">회원가입</button>
-	</div>
-	<div class="banner">
-	</div>
-<%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
-	<div class="detail_content">
-		<div class="detail_img">
-				<img src="https://picsum.photos/400/600" style="width: 100%; height: 100%;">
-		</div>
-		<div class="detail_info">
-			<h2>[작품 종류]${show.title}</h2>
-			<p>${show.content}</p>
-			<table class="detail_tb">
-				<tr>
-					<td>기간</td>
-					<th>${show.startDate} ~ ${show.endDate}</th>
-				</tr>
-				<tr>
-					<td>시간 ?</td>
-					<th>10:00 ~ 19:00 (※ 매주 월요일 휴관)</th>
-				</tr>
-				<tr>
-					<td>장소 ?</td>
-					<th>한가람미술관 제7전시실</th>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<th>${show.price} (원)</th>
-				</tr>
-				<tr>
-					<td>공연 정보</td>
-					<th>${show.showStatus}</th>
-				</tr>
-				<tr>
-					<td>주최 ?</td>
-					<th>유연홍</th>
-				</tr>
-				<tr>
-					<td>문의 ?</td>
-					<th>1668-1352</th>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<a id="booking" href="#">예매하기</a>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</body>
-</html>
+<!-- --------------------------------------------------------- -->
+<%@ include file="../layout/footer.jsp" %>

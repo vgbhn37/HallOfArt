@@ -1,9 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@	include file="../layout/header.jsp" %>
-<!-- --------------------------------------------------------- -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <style>
+	body{
+		margin: 0; padding: 2px;
+		background-color: #444;
+	}
+	.nav{
+		background-color: #444;
+		width: 100%;
+		height: 100px;
+	}
+	
+	.banner{
+		width: 85%;
+		height: 220px;
+		margin: auto;
+		padding: 0 40px;
+		background-image: url("http://picsum.photos/2000/400");
+	}
+	
 	.content{
 		width: 85%;
 		min-height: 800px;
@@ -77,7 +103,19 @@
 		width: 250px;
 	}
 </style>
-<!-- --------------------------------------------------------- -->
+
+</head>
+<body>
+	<div class="nav">
+		<button type="button">메뉴</button>
+		<button type="button">로그인</button>
+		<button type="button">회원가입</button>
+	</div>
+	<div class="banner">
+		
+	</div>
+<%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
+	
 	<div class="content">
 		<form method="post" id="upload" action="upload" onsubmit="return false;" style="width:100%" enctype="multipart/form-data">
 			<table class="insertShowTb" style="margin-top: 50px;">
@@ -219,10 +257,8 @@
    			</table>
    		</form>
 	</div>
-<!-- --------------------------------------------------------- -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
+	<%@ include file="../layout/footer.jsp" %>
+	<script>
 	$(document).ready(function() {
 		// datepicker 기본 설정
     	$(".datepicker").datepicker({
@@ -398,6 +434,6 @@
 			}
 		})
 	});
-</script>
-<!-- --------------------------------------------------------- -->
-<%@ include file="../layout/footer.jsp" %>
+	</script>
+</body>
+</html>

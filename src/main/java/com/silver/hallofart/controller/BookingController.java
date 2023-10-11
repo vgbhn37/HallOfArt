@@ -22,6 +22,7 @@ import com.silver.hallofart.dto.BookedSeatDto;
 import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
+import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
@@ -54,7 +55,7 @@ public class BookingController {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
 
-		Show show = showService.showById(showId);
+		ShowDetailDto show = showService.showById(showId);
 		List<ShowTime> showTimeList = bookingService.findShowTime(showId);
 		String hallName = bookingService.findHallNameByShowId(showId);
 		model.addAttribute("show", show);

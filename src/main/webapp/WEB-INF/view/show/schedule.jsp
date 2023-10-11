@@ -10,25 +10,27 @@
 		text-align: center;
 	}
 	.list_tb{
-		border: 1px solid black;
 		width: 900px;
 		margin: 20px auto;
 		text-align: center;
+	}
+	.list_tb td{
+		border-bottom : 1px solid lightgrey;
 	}
 	.pagination{
 		justify-content: center;
 	}
 </style>
 <!-- --------------------------------------------------------- -->
-<h2>일정 검색</h2>
 <div class="schedule_content">
+	<h2>일정 검색</h2>
 
-	날짜 선택
+	날짜 선택 : 
 	<input type="text" class="datepicker" id="datepicker">
 	<button type="button" id="dateSearchBtn">검색</button>
 
 	<table class="list_tb">
-		<tr>
+		<tr style="height: 50px">
 			<td colspan="2" style="width: 50%">제목</td>
 			<td style="width: 10%">입장가격</td>
 			<td style="width: 30%">기간</td>
@@ -37,9 +39,9 @@
 		<c:forEach var="li" items="${list}">
 			<tr>
 				<td style="width: 20%">
-					<img src="/imagePath/${li.showImg}" style="width: 150px; height: 150px;">
+					<img src="/imagePath/${li.showImg}" style="width: 150px; height: 150px; margin: 20px;">
 				</td>
-				<td style="width:30%">${li.title}</td>
+				<td style="width:30%"><a href="detail?id=${li.id}">${li.title}</a></td>
 				<td><fmt:formatNumber value="${li.price}" pattern="#,###"/></td>
 				<td>${li.startDate} ~ ${li.endDate}</td>
 				<td>${li.showStatus}</td>

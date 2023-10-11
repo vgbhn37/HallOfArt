@@ -1,9 +1,9 @@
-package com.silver.hallofart.repository.model;
+package com.silver.hallofart.dto;
 
 import lombok.Data;
 
 @Data
-public class Show {
+public class ShowDetailDto {
 	private Integer id;					// id 키 값
 	private String title;				// 제목
 	private String content;			// 내용
@@ -14,4 +14,5 @@ public class Show {
 	private String showImg;			// 이미지 경로
 	private Integer showTypeId1;	// 공연/전시
 	private Integer hallTbId;			// 장소
+	private String name; 				// 홀 이름 ( A 관 .. )
 }

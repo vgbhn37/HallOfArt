@@ -4,18 +4,21 @@
 
 <mapper namespace="com.silver.hallofart.repository.interfaces.ShowRepository"> 
 
-	<select id="findById" resultType="com.silver.hallofart.repository.model.Show">
-		select id
+	<select id="findById" resultType="com.silver.hallofart.dto.ShowDetailDto">
+		select s.id
 				 ,title
 				 ,content
 				 ,start_date
 				 ,end_date
-				 ,FORMAT(price,0) price
+				 ,price
 				 ,show_status
 				 ,show_img
 				 ,show_type_id1
 				 ,hall_tb_id
-		from show_tb where id=#{id}
+				 ,name
+		from show_tb s
+		join hall_tb h on s.hall_tb_id = h.id
+		where s.id=#{id}
 	</select>
 		
 	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
