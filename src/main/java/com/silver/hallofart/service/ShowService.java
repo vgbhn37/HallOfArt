@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.silver.hallofart.dto.Pagination;
+import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.repository.interfaces.ShowRepository;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
@@ -21,8 +23,8 @@ public class ShowService {
 		return show;
 	}
 	
-	public List<Show> showListByDate(String startDate, String endDate){
-		List<Show> list = showRepository.findByDate(startDate, endDate);
+	public List<Show> showListByDate(String date, int offset, int recordSize){
+		List<Show> list = showRepository.findByDate(date, offset, recordSize);
 		return list;
 	}
 	

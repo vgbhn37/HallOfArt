@@ -19,12 +19,9 @@
 	</select>
 		
 	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
-		select * from show_tb where start_date >= #{startDate} and not start_date > #{endDate}
-		union
-		select * from show_tb where #{endDate} >= end_date and not #{startDate} > end_date 
-		union
-		select * from show_tb where #{startDate} >= start_date and end_date >= #{endDate}
+		select * from show_tb where #{date} >= start_date and end_date >= #{date}
 		order by end_date
+		limit #{offset}, #{recordSize}
 	</select>
 	
 	<insert id="insertShow">

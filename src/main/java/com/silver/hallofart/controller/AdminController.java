@@ -17,7 +17,6 @@ import com.silver.hallofart.dto.AdminDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
-import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Show;
@@ -92,6 +91,7 @@ public class AdminController {
 		model.addAttribute("pagination", pagination);
 		List<Show> list = service.findAll(paging);
 		model.addAttribute("list", list);
+		
 		return "admin/showList";
 	}
 	

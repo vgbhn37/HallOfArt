@@ -1,14 +1,18 @@
 package com.silver.hallofart.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.silver.hallofart.dto.FileDto;
+import com.silver.hallofart.dto.Pagination;
+import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Seat;
 import com.silver.hallofart.repository.model.Show;
+import com.silver.hallofart.service.AdminService;
 import com.silver.hallofart.service.ShowService;
 
 @Controller
@@ -29,6 +36,9 @@ public class ShowController {
 
 	@Autowired
 	private ShowService showService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@GetMapping("/main")
 	public String main() {
@@ -43,7 +53,38 @@ public class ShowController {
 	}
 	
 	@GetMapping("/schedule")
-	public String schedule() {
+	public String scheduleProc(@ModelAttribute("paging") PagingDto paging
+										  ,@RequestParam(value="page", required = false, defaultValue="1") int page
+										  ,@RequestParam(value="date", required = false ) String date
+										  , Model model) {
+		
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(adminService.countShow(pagination));
+		
+		Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
+        String now = dateFormat.format(currentDate);
+        
+        System.out.println("schedule date : "+date+", now : "+now);
+		
+        System.out.println("paging offset : "+paging.getOffset());
+        System.out.println("paging recordSize : "+paging.getRecordSize());
+
+        
+		List<Show> list = null;
+		
+		if(date==null) {
+			list = showService.showListByDate(now, paging.getOffset(), paging.getRecordSize());
+		}else {
+			list = showService.showListByDate(date, paging.getOffset(), paging.getRecordSize());
+		}
+		System.out.println("schedule list : "+list);
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("list", list);
+		
 		return "show/schedule";
 	}
 	
@@ -68,15 +109,6 @@ public class ShowController {
 		return "redirect:apply";
 	}
 	
-	@PostMapping("/schedule_proc")
-	@ResponseBody
-	public List<Show> scheduleProc(String startDate, String endDate) {
-//		System.out.println("scheduleProc 실행됨");
-		List<Show> list = showService.showListByDate(startDate, endDate);
-		System.out.println(list);
-
-		return list;
-	}
 	
 	@PostMapping("/upload")
 	@ResponseBody
