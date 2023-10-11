@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silver.hallofart.dto.BookedSeatDto;
@@ -26,14 +25,11 @@ import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
-import com.silver.hallofart.repository.model.Booking;
-import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.repository.model.ShowTime;
 import com.silver.hallofart.service.BookingService;
 import com.silver.hallofart.service.ShowService;
 
 @Controller
-
 public class BookingController {
 
 	@Autowired
@@ -132,12 +128,20 @@ public class BookingController {
 		if (user.getId() != id) {
 			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
 		}
-
+		
+		
 		// 결제 대기 상태인 예약테이블 리스트를 가져와서 뿌림
 		List<BookedSeatDto> payList = bookingService.findpaymentListByUserId(id);
 		model.addAttribute("payList", payList);
 
 		return "/user/payList";
+	}
+	
+	@GetMapping("/user/ticketList")
+	public String ticketList() {
+		
+		
+		return "/user/ticketList";
 	}
 	
 	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)

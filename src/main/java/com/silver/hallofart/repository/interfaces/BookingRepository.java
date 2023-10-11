@@ -13,10 +13,10 @@ import com.silver.hallofart.repository.model.ShowTime;
 @Mapper
 public interface BookingRepository {
 	
+	//select
 	public List<ShowTime> findShowTimeListByShowId(Integer showId);
 	public List<SeatStatusDto> findSeatListByShowTimeId(Integer showTimeId);
 	public String findHallNameByShowId(Integer showId);
-	public void insertBookingInfo(Booking booking);
 	public Booking findBookingByshowTimeIdAndseatId(@Param("showTimeId")Integer showTimeId, 
 			@Param("seatId")Integer seatId);
 	public List<Booking> findWaitingPaymentBookingByUserId(int id);
@@ -24,5 +24,16 @@ public interface BookingRepository {
 	public Timestamp findShowTimeByShowTimeId(Integer id);
 	public String findShowTitleByShowId(Integer id);
 	public Integer findPriceByShowId(Integer id);
+	public Integer findPriceByBookingId(Integer id);
+	
+	//insert
+	public void insertBookingInfo(Booking booking);
+	
+	//update
+	public void updateBookingToSuccess(Integer id);
+	public void updateBookingToRefund(Integer id);
+	
+	//delete
 	public int deleteBookingById(Integer id);
+	
 }

@@ -16,4 +16,5 @@ public interface UserRepository {
 	public UserDto findByUsernameAndPassword(UserDto signInFormDto);
 	public UserDto findByUsername(String username);
 	public UserDto findByEmail(String email);
+	public UserDto findByTel(String tel);
 }

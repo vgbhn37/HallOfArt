@@ -23,6 +23,14 @@ public class UserService {
 		}
 	}
 	
+	@Transactional
+	public void moidfyUser(UserDto userDto) {
+		int result = userRepository.updateById(userDto);
+		if(result != 1) {
+			throw new CustomRestfulException("회원정보 수정에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	public UserDto signIn(UserDto userDto) {
 		
 		UserDto userEntity = userRepository.findByUsername(userDto.getUsername());
@@ -44,6 +52,14 @@ public class UserService {
 	
 	public UserDto searchEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+	
+	public UserDto searchTel(String tel) {
+		return userRepository.findByTel(tel);
+	}
+	
+	public UserDto searchId(int id) {
+		return userRepository.findById(id);
 	}
 	
 }
