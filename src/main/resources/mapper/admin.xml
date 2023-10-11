@@ -10,7 +10,7 @@
 				 ,content
 				 ,start_date
 				 ,end_date
-				 ,FORMAT(price,0) price
+				 ,price
 				 ,show_status
 				 ,show_img
 				 ,show_type_id1
@@ -32,16 +32,18 @@
 	</select>
 	
 	<select id="findBookingAll" parameterType="com.silver.hallofart.dto.PagingDto"  resultType="com.silver.hallofart.dto.AdminDto">
-		select s.title, b.seat_tb_id, p.reg_date, FORMAT(p.amount,0) amount
+		select s.title, b.seat_tb_id, p.reg_date, p.amount
 		from booking_tb b
 		join show_tb s on s.id = b.show_tb_id
-		join payment_tb p on b.merchant_id = p.merchant_id
+		join payment_tb p on b.payment_tid = p.tid
+		order by p.reg_date desc
 		limit #{offset}, #{recordSize}
 	</select>
 
 	<select id="findMerchantAll" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.dto.PaymentDto">
-		select merchant_id, imp_id, reg_date, FORMAT(amount,0) amount
+		select tid, order_number, reg_date, amount, refunded_amount
 		from payment_tb
+		order by reg_date desc
 		limit #{offset}, #{recordSize}
 	</select>
 	

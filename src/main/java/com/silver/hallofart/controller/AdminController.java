@@ -132,6 +132,7 @@ public class AdminController {
 		
 		model.addAttribute("pagination", pagination);
 		List<AdminDto> list = service.findBookingAll(paging);
+		System.out.println("booklist list : "+list);
 		model.addAttribute("list", list);
 		return "admin/bookList";
 	}

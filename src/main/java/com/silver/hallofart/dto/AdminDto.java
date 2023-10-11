@@ -11,5 +11,5 @@ public class AdminDto {
 	private String title;
 	private int seatTbId;
 	private int amount;
-	private String reg_date;
+	private String regDate;
 }

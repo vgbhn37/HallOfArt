@@ -162,8 +162,8 @@ public class BookingController {
 	@ResponseBody
 	public String PaymentProc(@RequestBody PaymentDto paymentDto) {
 		
-		System.out.println(paymentDto.getImpId());
-		System.out.println(paymentDto.getMerchantId());
+		System.out.println(paymentDto.getTid());
+		System.out.println(paymentDto.getOrderNumber());
 		return "success";
 	}
 }

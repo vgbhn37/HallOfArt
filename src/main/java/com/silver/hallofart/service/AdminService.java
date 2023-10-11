@@ -18,8 +18,7 @@ public class AdminService {
 	private AdminRepository adminRepository;
 	
 	public List<Show> findAll(PagingDto paging){
-		List<Show> list = adminRepository.findAll(paging);
-		return list;
+		return adminRepository.findAll(paging);
 	}
 	
 	public int updateStatus(int id, String showStatus) {

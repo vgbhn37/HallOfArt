@@ -119,8 +119,11 @@
 			                   							<c:when test="${li.showTypeId1 eq 1}">
 															공연
 			                   							</c:when>
+			                   							<c:when test="${li.showTypeId1 eq 2}">
+															전시
+			                   							</c:when>
 			                   							<c:otherwise>
-			                   								전시
+			                   								해당 없음 ( ${li.showTypeId1} )
 			                   							</c:otherwise>
 			                   						</c:choose>
 		                   						</td>
@@ -132,14 +135,16 @@
 			               						</td>
 			                   				</tr>
 		                   				</c:if>
+		                   				<c:if test="${status.count == 5}">
+				                   			<tr>
+				                   				<td style="width:10%">...</td>
+				                   				<td style="width:10%">...</td>
+				                   				<td style="width:25%">...</td>
+				                   				<td style="width:25%">...</td>
+				                   				<td style="width:25%">...</td>
+				                   			</tr>
+			                   			</c:if>
 		                   			</c:forEach>
-		                   			<tr>
-		                   				<td style="width:10%">...</td>
-		                   				<td style="width:10%">...</td>
-		                   				<td style="width:25%">...</td>
-		                   				<td style="width:25%">...</td>
-		                   				<td style="width:25%">...</td>
-		                   			</tr>
 		                   		</table>                         
                             </div>
                         </div>

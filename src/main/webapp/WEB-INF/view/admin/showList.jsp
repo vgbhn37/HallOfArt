@@ -34,6 +34,10 @@
 	.contentTr{
 		text-align: left;
 	}
+	tr{
+		height: 50px;
+		box-sizing: border-box;
+	}
 	.pagination{
 		justify-content: center;
 	}
@@ -168,6 +172,14 @@
 				document.pageForm.page.value = value;
 				document.pageForm.submit();
 			});
+	    	
+	    	$(".titleTd").hover(function(){
+	    		$(this).css("background-color", "bold");
+	    		$(this).parent().css("border", "1px solid black");
+	    	},function(){
+	    		$(this).css("font-weight", "normal");
+	    		$(this).parent().css("border", "none");
+	    	});
 	    });
 	</script>
 </body>

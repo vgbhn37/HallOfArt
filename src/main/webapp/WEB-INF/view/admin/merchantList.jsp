@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +50,11 @@
                     <div class="merchant_content">
                    		<table id="showList">
                    			<tr style="height: 70px; padding-top: 30px;">
-                   				<td style="width:30%">결제 아이디</td>
-                   				<td style="width:20%">imp id</td>
-                   				<td style="width:30%">결제 날짜</td>
+                   				<td style="width:20%">TID</td>
+                   				<td style="width:20%">주문 번호</td>
+                   				<td style="width:20%">결제 날짜</td>
                    				<td style="width:20%">결제 금액</td>
+                   				<td style="width:20%">환불 금액</td>
                    			</tr>
                    			<c:forEach var="li" items="${list}" varStatus="status">
                    				<c:choose>
@@ -63,44 +65,45 @@
 		                   				<tr style="background-color:rgb(230,230,230)">
                    					</c:otherwise>
                    				</c:choose>
-                   					<td>${li.merchantId}</td>
-                   					<td>${li.impId}</td>
+                   					<td>${li.tid}</td>
+                   					<td>${li.orderNumber}</td>
                    					<td>${li.regDate}</td>
-                   					<td>${li.amount}</td>
+                   					<td><fmt:formatNumber value="${li.amount}" pattern="#,###" /></td>
+                   					<td><fmt:formatNumber value="${li.refundedAmount}" pattern="#,###" /></td>
                    				</tr>
                    			</c:forEach>
                    		</table>
-                    </div>
                     <div class="paging">
-					<form action="merchantList" name="pageForm">
-						<div class="text-center clearfix">
-							<ul class="pagination" id="pagination">
-								<c:if test="${pagination.prev}">
-									<li class="page-item "><a class="page-link" href="#"
-										data-page="${pagination.beginPage-1}">Prev</a></li>
-								</c:if>
-			
-								<c:forEach var="num" begin="${pagination.beginPage}"
-									end="${pagination.endPage}">
-									<li
-										class="${pagination.paging.page == num ? 'age-item active' : ''}"
-										page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
-								</c:forEach>
-			
-								<c:if test="${pagination.next}">
-									<li class="page-item"><a class="page-link" href="#"
-										data-page="${pagination.endPage+1}">Next</a></li>
-								</c:if>
-							</ul>
-			
-							<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-							<input type="hidden" name="page" value="${pagination.paging.page}">
-							<input type="hidden" name="recordSize"
-								value="${pagination.paging.recordSize}">
-			
-						</div>
-					</form>
-				</div>
+						<form action="merchantList" name="pageForm">
+							<div class="text-center clearfix">
+								<ul class="pagination" id="pagination">
+									<c:if test="${pagination.prev}">
+										<li class="page-item "><a class="page-link" href="#"
+											data-page="${pagination.beginPage-1}">Prev</a></li>
+									</c:if>
+				
+									<c:forEach var="num" begin="${pagination.beginPage}"
+										end="${pagination.endPage}">
+										<li
+											class="${pagination.paging.page == num ? 'age-item active' : ''}"
+											page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
+									</c:forEach>
+				
+									<c:if test="${pagination.next}">
+										<li class="page-item"><a class="page-link" href="#"
+											data-page="${pagination.endPage+1}">Next</a></li>
+									</c:if>
+								</ul>
+				
+								<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+								<input type="hidden" name="page" value="${pagination.paging.page}">
+								<input type="hidden" name="recordSize"
+									value="${pagination.paging.recordSize}">
+				
+							</div>
+						</form>
+					</div>
+                    </div>
                 </div>
             </main>
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>

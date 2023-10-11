@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,41 +67,40 @@
                    					<td>${li.title}</td>
                    					<td>${li.seatTbId}</td>
                    					<td>${li.regDate}</td>
-                   					<td>${li.amount }</td>
+                   					<td><fmt:formatNumber value="${li.amount}" pattern="#,###" /></td>
                    				</tr>
                    			</c:forEach>
                    		</table>
-                    </div>
                     <div class="paging">
-					<form action="bookList" name="pageForm">
-						<div class="text-center clearfix">
-							<ul class="pagination" id="pagination">
-								<c:if test="${pagination.prev}">
-									<li class="page-item "><a class="page-link" href="#"
-										data-page="${pagination.beginPage-1}">Prev</a></li>
-								</c:if>
-			
-								<c:forEach var="num" begin="${pagination.beginPage}"
-									end="${pagination.endPage}">
-									<li
-										class="${pagination.paging.page == num ? 'age-item active' : ''}"
-										page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
-								</c:forEach>
-			
-								<c:if test="${pagination.next}">
-									<li class="page-item"><a class="page-link" href="#"
-										data-page="${pagination.endPage+1}">Next</a></li>
-								</c:if>
-							</ul>
-			
-							<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-							<input type="hidden" name="page" value="${pagination.paging.page}">
-							<input type="hidden" name="recordSize"
-								value="${pagination.paging.recordSize}">
-			
-						</div>
-					</form>
-				</div>
+						<form action="bookList" name="pageForm">
+							<div class="text-center clearfix">
+								<ul class="pagination" id="pagination">
+									<c:if test="${pagination.prev}">
+										<li class="page-item "><a class="page-link" href="#"
+											data-page="${pagination.beginPage-1}">Prev</a></li>
+									</c:if>
+				
+									<c:forEach var="num" begin="${pagination.beginPage}"
+										end="${pagination.endPage}">
+										<li
+											class="${pagination.paging.page == num ? 'age-item active' : ''}"
+											page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
+									</c:forEach>
+				
+									<c:if test="${pagination.next}">
+										<li class="page-item"><a class="page-link" href="#"
+											data-page="${pagination.endPage+1}">Next</a></li>
+									</c:if>
+								</ul>
+				
+								<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+								<input type="hidden" name="page" value="${pagination.paging.page}">
+								<input type="hidden" name="recordSize"
+									value="${pagination.paging.recordSize}">
+							</div>
+						</form>
+					</div>
+                    </div>
                 </div>
             </main>
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>
