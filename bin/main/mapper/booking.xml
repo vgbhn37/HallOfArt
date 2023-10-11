@@ -53,6 +53,16 @@
 		select * from booking_tb where user_tb_id = #{userId} and
 		status = "결제 대기"
 	</select>
+	<select id="findShowTitleByBookingId" resultType="String">
+		select title from show_tb s join booking_tb b
+		on s.id = b.show_tb_id
+		where b.id = #{id}
+	</select>
+	<select id="findSeatNameByBookingId" resultType="String">
+		select seat_name from seat_tb s join booking_tb b
+		on s.id = b.seat_tb_id
+		where b.id = #{id}
+	</select>
 	<insert id="insertBookingInfo">
 		insert into booking_tb (status, user_tb_id,
 		seat_tb_id, show_time_tb_id, show_tb_id)

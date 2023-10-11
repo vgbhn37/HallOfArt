@@ -44,6 +44,22 @@ public class BookingService {
 		return bookingRepository.findHallNameByShowId(showId);
 	}
 	
+	public String findShowTitleByBookingId(Integer bookingId) {
+		return bookingRepository.findShowTitleByBookingId(bookingId);
+	}
+	
+	public String findSeatNameByBookingId(Integer bookingId) {
+		return bookingRepository.findSeatNameByBookingId(bookingId);
+	}
+	
+	public int totalPrice(List<Integer> ids) {
+		
+		int amount = 0;
+		for (Integer integer : ids) {
+			amount+= bookingRepository.findPriceByBookingId(integer);
+		}
+		return amount;
+	}
 	@Transactional
 	public void insertBookingInfo(List<SelectedSeatDto> selectedSeatList, int userId) {
 		

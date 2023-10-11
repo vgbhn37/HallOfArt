@@ -25,13 +25,15 @@ public interface BookingRepository {
 	public String findShowTitleByShowId(Integer id);
 	public Integer findPriceByShowId(Integer id);
 	public Integer findPriceByBookingId(Integer id);
+	public String findShowTitleByBookingId(Integer id);
+	public String findSeatNameByBookingId(Integer id);
 	
 	//insert
 	public void insertBookingInfo(Booking booking);
 	
 	//update
-	public void updateBookingToSuccess(Integer id);
-	public void updateBookingToRefund(Integer id);
+	public int updateBookingToSuccess(Integer id);
+	public int updateBookingToRefund(Integer id);
 	
 	//delete
 	public int deleteBookingById(Integer id);

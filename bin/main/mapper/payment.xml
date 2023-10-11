@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.silver.hallofart.repository.interfaces.PaymentRepository">
+
+	<insert id="insertPaymentInfo">
+		insert into payment_tb (tid, order_number, amount, reg_date)
+		values (#{tid},#{orderNumber},#{amount},now())
+	</insert>
+	
+	<update id="updatePaymentTidToBooking">
+		update booking_tb set payment_tid = #{tid} where id=#{id}
+	</update>
+	
+	<delete id="deletePaymentByTid">
+		delete from payment_tb where tid=#{tid};
+	</delete>
+</mapper>

@@ -7,14 +7,10 @@ import lombok.Data;
 
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PaymentDto {
-	private String tid;
-	private String orderNumber;
-	private String regDate;
-	private int amount;
-<<<<<<< Updated upstream
-	private int refundedAmount;
-=======
-	private int refunded_amount;
->>>>>>> Stashed changes
+public class Amount {
+	Integer total;
+	Integer tex_free;
+	Integer vat;
+	Integer point;
+	Integer discount;
 }
