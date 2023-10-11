@@ -3,6 +3,7 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,6 +70,11 @@ public class UserController {
 	public String signOut() {
 		session.invalidate();
 		return "redirect:/user/sign-in";
+	}
+	
+	@GetMapping("/my-info")
+	public String myInfo() {
+		return "user/myInfo";
 	}
 	
 	@PostMapping("/sms-confirm")
@@ -273,12 +279,45 @@ public class UserController {
 		
 		session.setAttribute("user", oldUser);
 		
+		session.setAttribute("iskakao", true);
+		
 		String uri = (String) session.getAttribute("beforeLogin");
 	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
 	    	return "redirect:"+uri;
 	    } else {
 	    	return "redirect:/";
 	    }
+	}
+	
+	@PostMapping("/modify-info")
+	public String modifyInfo(UserDto userDto) {
+		
+		log.info("회원정보 수정 실행");
+		
+		UserDto oldUser = (UserDto) session.getAttribute("user");
+		
+		userDto.setId(oldUser.getId());
+		
+		if(userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
+			userDto.setPassword(oldUser.getPassword());
+		}
+		if(userDto.getBirthDate() == null) {
+			userDto.setBirthDate(oldUser.getBirthDate());
+		}
+		if(userDto.getTel() == null || userDto.getTel().isEmpty()) {
+			userDto.setTel(oldUser.getTel());
+		}
+		
+		userService.moidfyUser(userDto);
+		
+		userDto = userService.searchId(userDto.getId());
+		
+		//카카오 유저일 경우 아이디가 이메일 자른것이므로 다시 넣어주기
+		userDto.setUsername(oldUser.getUsername());
+		
+		session.setAttribute("user", userDto);
+		
+		return "redirect:/user/my-info";
 	}
 	
 }

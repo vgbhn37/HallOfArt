@@ -34,7 +34,7 @@
 	</select>
 	
 	<update id="updateById">
-  		update user_tb set username = #{username}, password = #{password}, email = #{email}, tel = #{tel}, , birth_date = #{birthDate}
+  		update user_tb set password = #{password}, tel = #{tel}, birth_date = #{birthDate}
   		where id = #{id}
 	</update>
 	  

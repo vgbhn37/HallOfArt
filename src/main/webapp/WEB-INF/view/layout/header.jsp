@@ -110,7 +110,8 @@
 								<li class="nav-item"><a href="http://localhost/user/sign-up" class="nav-link">회원가입</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="nav-item"><a href="#" class="nav-link">${user.username}님 환영합니다</a></li>
+								<li class="nav-item"><a href="http://localhost/user/my-info" class="nav-link">${user.username}님 환영합니다</a></li>
+								<li class="nav-item"><a href="http://localhost/user/my-info" class="nav-link">내 정보</a></li>
 								<li class="nav-item"><a href="http://localhost/user/sign-out" class="nav-link">로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>

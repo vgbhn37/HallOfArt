@@ -59,7 +59,7 @@
 									<div class="form-outline mb-0">
 										<label class="form-label my-0" for="tel">휴대전화 번호</label>
 										<div style="display: flex;">
-											<input style="width: 79%" type="text" id="tel" name="tel" placeholder="ex) 01040618333" class="form-control form-control" />
+											<input style="width: 79%" type="text" id="tel" name="tel" placeholder="ex) 01040618333" class="form-control form-control" maxlength="11" />
 											<button class="btn btn-outline-primary ml-1" type="button" id="checkTel">인증받기</button>
 										</div> 
 									</div>
@@ -72,7 +72,7 @@
 									<div class="form-outline mb-0">
 									<label class="form-label my-0" for="birthDate">생년월일</label>
 										<input type="text" id="birthDate" name="birthDate" placeholder="ex) 1989-11-12"
-											class="form-control form-control" /> 
+											class="form-control form-control" maxlength="10" /> 
 									</div>
 									<div class="pt-1 mb-4">
 										<button class="btn btn-dark btn-lg btn-block"
@@ -136,6 +136,7 @@
 						$("#username").css("background", "#bbbbbb");
 					} else {
 					alert('사용중인 아이디 입니다.');
+					$('#username').focus();
 				}
 			}
 			,error: function(){
@@ -200,6 +201,7 @@
 					});
 					} else {
 					alert('사용중인 전화번호 입니다.');
+					$('#tel').focus();
 				}
 			}
 			,error: function(){
@@ -295,8 +297,8 @@
 					return false;
 				}
 			} else {
-				alert('비밀번호확인을 입력하십시오.');
-				$('#passwordCheck').focus();
+				alert('비밀번호 확인란을 입력하십시오.');
+				$('#password2').focus();
 				return false;
 			}
 		}
@@ -313,6 +315,7 @@
 			}
 			else {
 				alert('생년월일 숫자를 확인해주세요');
+				$('#birthDate').focus();
 				return false;
 			}
 		} else {
@@ -395,6 +398,7 @@
 						});
 					} else {
 					alert('사용중인 이메일 입니다.');
+					$('#email').focus();
 				}
 			}
 			,error: function(){

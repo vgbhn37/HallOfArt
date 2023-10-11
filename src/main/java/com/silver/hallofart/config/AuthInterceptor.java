@@ -23,7 +23,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		log.info("프리핸들러 호출");
 		HttpSession session = request.getSession();
 		UserDto principal = (UserDto) session.getAttribute("user");
 		if(principal == null ) {
