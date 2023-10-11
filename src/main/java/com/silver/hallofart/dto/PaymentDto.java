@@ -12,9 +12,6 @@ public class PaymentDto {
 	private String orderNumber;
 	private String regDate;
 	private int amount;
-<<<<<<< Updated upstream
 	private int refundedAmount;
-=======
-	private int refunded_amount;
->>>>>>> Stashed changes
+
 }
