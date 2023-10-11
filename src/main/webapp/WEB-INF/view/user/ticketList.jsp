@@ -19,7 +19,13 @@
 							공연 일시 :
 							<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
 						</p>
-						<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId})">환불요청</button>
+						
+						<c:set var="currentTimeMillis" value="${currentTime.time}" />
+						<c:set var="twentyFourHoursAgoMillis" value="${booking.startTime.time - 86400000}" />
+						
+						<c:if test="${twentyFourHoursAgoMillis > currentTimeMillis }">
+							<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId})">환불요청</button>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -33,7 +39,6 @@
 
 <script>
 	function requestRefund(id){
-		
-		
+		location.href='/payment/refund/'+id;	
 	}
 </script>

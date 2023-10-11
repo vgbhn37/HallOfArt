@@ -20,8 +20,10 @@ public interface BookingRepository {
 	public Booking findBookingByshowTimeIdAndseatId(@Param("showTimeId")Integer showTimeId, 
 			@Param("seatId")Integer seatId);
 	public List<Booking> findWaitingPaymentBookingByUserId(int id);
+	public List<Booking> findSuccessPaymentBookingByUserId(int id);
 	public String findSeatNameBySeatId(Integer id);
 	public Timestamp findShowTimeByShowTimeId(Integer id);
+	public Timestamp findShowTimeByBookingId(Integer id);
 	public String findShowTitleByShowId(Integer id);
 	public Integer findPriceByShowId(Integer id);
 	public Integer findPriceByBookingId(Integer id);

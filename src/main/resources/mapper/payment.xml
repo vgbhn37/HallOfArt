@@ -12,6 +12,15 @@
 	<update id="updatePaymentTidToBooking">
 		update booking_tb set payment_tid = #{tid} where id=#{id}
 	</update>
+	<update id="updateRefundedAmount">
+		update payment_tb set refunded_amount = refunded_amount + #{amount}
+		where tid = #{tid}
+	</update>
+	
+	<select id="findPaymentTidByBookingId" resultType="String">
+		select payment_tid from booking_tb
+		where id = #{id}
+	</select>
 	
 	<delete id="deletePaymentByTid">
 		delete from payment_tb where tid=#{tid};

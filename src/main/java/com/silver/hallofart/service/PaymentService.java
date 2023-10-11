@@ -46,4 +46,22 @@ public class PaymentService {
 		
 	}
 	
+	public String findPaymentTidByBookingId(Integer id) {
+		return paymentRepository.findPaymentTidByBookingId(id);
+	}
+	
+	@Transactional
+	public void refundPayment(String tid, int amount, Integer bookId) {
+		
+		int result1 = paymentRepository.updateRefundedAmount(tid, amount);
+		if(result1!=1) {
+			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+		
+		int result2 = bookingRepository.updateBookingToRefund(bookId);
+		if(result2!=1) {
+			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

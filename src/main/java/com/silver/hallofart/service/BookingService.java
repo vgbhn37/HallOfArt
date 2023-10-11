@@ -1,5 +1,6 @@
 package com.silver.hallofart.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +61,10 @@ public class BookingService {
 		}
 		return amount;
 	}
+	
+	public int findPriceByBookingId(Integer id) {
+		return bookingRepository.findPriceByBookingId(id);
+	}
 	@Transactional
 	public void insertBookingInfo(List<SelectedSeatDto> selectedSeatList, int userId) {
 		
@@ -98,6 +103,28 @@ public class BookingService {
 		
 		return findpaymentListByUserId;
 	}
+	
+	public List<BookedSeatDto> findTicketByUserId(int id){
+		List<BookedSeatDto> findTicketByUserId = new ArrayList<>();
+		List<Booking> bookingList = bookingRepository.findSuccessPaymentBookingByUserId(id);
+		for (Booking booking : bookingList) {
+			BookedSeatDto dto = new BookedSeatDto();
+			dto.setBookingId(booking.getId());
+			dto.setTitle(bookingRepository.findShowTitleByShowId(booking.getShowTbId()));
+			dto.setHallName(bookingRepository.findHallNameByShowId(booking.getShowTbId()));
+			dto.setSeatName(bookingRepository.findSeatNameBySeatId(booking.getSeatTbId()));
+			dto.setPrice(bookingRepository.findPriceByShowId(booking.getShowTbId()));
+			dto.setStartTime(bookingRepository.findShowTimeByShowTimeId(booking.getShowTimeTbId()));
+			findTicketByUserId.add(dto);
+		}
+		
+		return findTicketByUserId;
+	}
+	
+	public Timestamp findShowTimeByBookingId(Integer id) {
+		return bookingRepository.findShowTimeByBookingId(id);
+	}
+	
 	
 	public void updateBookingToSuccess(List<Integer> seatIds) {
 		for (Integer id : seatIds) {
