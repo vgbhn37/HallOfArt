@@ -3,5 +3,5 @@
 <!DOCTYPE html>
 <script>
 	alert('결제에 실패했습니다.');
-	history.back();
+	window.close();
 </script>

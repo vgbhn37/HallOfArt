@@ -19,7 +19,8 @@ spring:
     multipart:
       enabled: true
       location: c:/workspace/upload/
-
+  profiles:
+    include: API-KEY
 #  sql:
 #    init: 
 #      schema-locations:
