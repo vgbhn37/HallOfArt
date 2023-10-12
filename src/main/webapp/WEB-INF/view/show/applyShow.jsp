@@ -140,20 +140,13 @@
        				<td><textarea name="content"></textarea></td>
        			</tr>
        			<tr>
-       				<td>시작 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off"></td>
-       			</tr>
-       			<tr>
-       				<td>종료 날짜</td>
-       				<td><input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off"></td>
-       			</tr>
-       			<tr>
        				<td>공연/전시 시간</td>
        				<td>
        					<div id="showtime_div">
 	       					<input type="time" min="09:00" max="18:00" class="showTime" name="showStartTime" style="width:135px;">
 	       					~
 	       					<input type="time" min="09:00" max="18:00" class="showTime" name="showEndTime" style="width:135px;">
+	       					<input type="hidden" name="startTime">
        					</div>
        				</td>
        			</tr>
@@ -177,16 +170,29 @@
        						<c:forEach var="hall" items="${halls}">
        							<c:choose>
        								<c:when test="${hall.status eq '사용 중'}">
-		       							<option value="${hall.id}" disabled>
+		       							<option value="${hall.name}" disabled>
        								</c:when>
        								<c:otherwise>
-		       							<option value="${hall.id}">
+		       							<option value="${hall.name}">
        								</c:otherwise>
        							</c:choose>
        								${hall.id} - ${hall.name} : ${hall.status}
    								</option>
        						</c:forEach>
        					</select>
+       				</td>
+       			</tr>
+       			<tr>
+       				<td rowspan="2">대관 날짜</td>
+       				<td>
+       					Start :&nbsp;<input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off" style="width: 200px;" readonly="readonly">
+       					<button type="button" id="date1resetBtn">reset</button>
+   					</td>
+       			</tr>
+       			<tr>
+       				<td>
+       					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
+       					<button type="button" id="date2resetBtn">reset</button>
        				</td>
        			</tr>
        			<tr>
@@ -237,14 +243,85 @@
             showMonthAfterYear: true,
             yearSuffix: '년',
         });
+
+		let rentalList = [];
+		
+		//ajax function
+		function loadRentalList(name, callback){
+			$.ajax({
+				url: "hallTime",
+				type: "post",
+				data: {name: name},
+				success: function(list){
+					callback(list);
+					rentalList=list;
+				},
+				error: function(e){
+					console.log("error : "+e);
+				}
+			}); // end of ajax
+		}
+		
+		// hallTime ajax
+		$("select[name=hallTbId]").change(function(){
+			let name = $("select[name=hallTbId]").val();
+			console.log(name);
+			loadRentalList(name, function (rentalList) {
+				$(".datepicker").datepicker("option", "beforeShowDay", function(date) {
+				    return disableDates(date, rentalList);
+				});
+			});
+		});
+				
 		// datepicker 범위 제약 옵션
+		
 		$('#datepicker1').datepicker('option', 'onSelect', function(dateString){
 	    	$("#datepicker2").datepicker('option', 'minDate', dateString);
+	    	for (let li of rentalList) {
+				if(dateString<li){
+			    	$("#datepicker2").datepicker('option', 'maxDate', li);
+	    			break;
+				}
+			}
 	    });
+		$('#date1resetBtn').on('click', function(){
+	    	$("#datepicker1").val('');
+	    	$("#datepicker2").datepicker('option', 'minDate', '');
+	    	$("#datepicker2").datepicker('option', 'maxDate', '');
+		});
 	    $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
 	    	$("#datepicker1").datepicker('option', 'maxDate', dateString);
+	    	for (let li of rentalList.reverse()) {
+				if(dateString>li){
+			    	$("#datepicker1").datepicker('option', 'minDate', li);
+	    			break;
+				}
+			}
 	    });
-		
+		$('#date2resetBtn').on('click', function(){
+	    	$("#datepicker2").val('');
+	    	$("#datepicker1").datepicker('option', 'maxDate', '');
+	    	$("#datepicker1").datepicker('option', 'minDate', '');
+		});
+
+		// datepicker 특정 일 비활성화
+	    function disableDates(date, rentalList){
+    		var m = date.getMonth() + 1;
+            var d = date.getDate();
+            var y = date.getFullYear();
+            console.log("rentalList fnc : "+rentalList);
+            for (var i = 0; i < rentalList.length; i++) {
+                var parts = rentalList[i].split('-');
+                var rentalYear = parseInt(parts[0]);
+                var rentalMonth = parseInt(parts[1]);
+                var rentalDay = parseInt(parts[2]);
+                if (y === rentalYear && m === rentalMonth && d === rentalDay) {
+                    return [false];
+                }
+            }
+            return [true];
+	    }
+	    
 		// 게시하기 버튼 애니메이션
     	$("#booking").hover(
    			function(){
@@ -333,7 +410,15 @@
 				$("select[name=rentalStartTime]").css("border", "2px solid red");
 				$("select[name=rentalEndTime]").css("border", "2px solid red");
 				checkMsg+="대관 시간을 입력해주세요\n";
+			}else if($("input[name=showStartTime]").val()<$("select[name=rentalStartTime]").val()
+					||$("input[name=showEndTime]").val()>$("select[name=rentalEndTime]").val()){
+				$("select[name=rentalStartTime]").css("border", "2px solid red");
+				$("select[name=rentalEndTime]").css("border", "2px solid red");
+				checkMsg+="공연 시간과 대관 시간이 올바르지 않습니다";
 			}
+
+			// startTime 계산
+			$("input[name=startTime]").val($("input[name=startDate]").val()+" "+$("input[name=showStartTime]").val());
 			
 			// ---------------- 유효성 최종 확인
 			if(checkMsg.length!=0){
@@ -368,6 +453,7 @@
 		$("#uploadImgBtn").on("click", function(){
 			let formData = new FormData();
 // 			alert($("#uploadImg").val());
+
 			if($("#uploadImg").val().length!=0){
 				formData.append('uploadImg', uploadImg);
 				console.log("formData : "+formData);

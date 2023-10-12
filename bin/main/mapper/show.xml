@@ -35,9 +35,24 @@
 	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, '승인 요청', #{showImg}, #{showTypeId1}, #{hallTbId}
   		)
 	</insert>
+	<insert id="insertShowTime">
+		insert into show_time_tb(
+			start_time, show_id	
+		)
+	  	values(
+	  		#{startTime}, (select max(id) from show_tb)
+  		)
+	</insert>
 	
 	<select id="findHallAll" resultType="com.silver.hallofart.repository.model.Hall">
 		select * from hall_tb
+	</select>
+	
+	<select id="findHallTime" resultType="com.silver.hallofart.dto.HallTimeDto">
+		select start_date, end_date, name
+		from show_tb s
+		join hall_tb h on s.hall_tb_id = h.id
+		where name=#{name}
 	</select>
 	
 	<insert id="insertRental">

@@ -3,7 +3,9 @@ package com.silver.hallofart.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.silver.hallofart.dto.FileDto;
+import com.silver.hallofart.dto.HallTimeDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.ShowDetailDto;
@@ -91,18 +94,28 @@ public class ShowController {
 	
 	@GetMapping("/apply")
 	public String apply(Model model) {
+		
 		List<Hall> halls = showService.findHallAll();
 		model.addAttribute("halls", halls);
+		
 		return "show/applyShow";
+	}
+	
+	@PostMapping("/hallTime")
+	@ResponseBody
+	public List<String> hallTime(String name){
+		List<String> list = showService.findAllHallTime(name);
+		return list;
 	}
 	
 	@Transactional
 	@PostMapping("/apply")
-	public String applying(Show show, Rental rental) {
+	public String applying(Show show, Rental rental, String startTime) {
 		System.out.println("applying show : "+show);
 		System.out.println("applying seat : "+rental);
 		try {
 			showService.insertShow(show);
+			showService.insertShowTime(startTime);
 			showService.insertRental(rental);
 		} catch (Exception e) {
 			e.printStackTrace();
