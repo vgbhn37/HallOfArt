@@ -1,5 +1,6 @@
 package com.silver.hallofart.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,7 @@ public class BookingController {
 		if (request.getHeader("REFERER") == null) {
 			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		// 인증 및 유효성 검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
@@ -105,7 +106,7 @@ public class BookingController {
 		}
 		return "success";
 	}
-	
+
 	// 예약 성공 알림 페이지 -> 결제 대기 리스트 페이지로 넘어감
 	@GetMapping("/booking/success")
 	public String bookingSuccess(HttpServletRequest request) {
@@ -115,7 +116,7 @@ public class BookingController {
 		}
 		return "booking/success";
 	}
-	
+
 	// 결제 대기 리스트
 	@GetMapping("/user/payList/{id}")
 	public String payList(@PathVariable int id, Model model) {
@@ -128,22 +129,37 @@ public class BookingController {
 		if (user.getId() != id) {
 			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
 		}
-		
-		
+
 		// 결제 대기 상태인 예약테이블 리스트를 가져와서 뿌림
 		List<BookedSeatDto> payList = bookingService.findpaymentListByUserId(id);
 		model.addAttribute("payList", payList);
 
 		return "/user/payList";
 	}
-	
-	@GetMapping("/user/ticketList")
-	public String ticketList() {
+
+	@GetMapping("/user/ticketList/{id}")
+	public String ticketList(@PathVariable int id, Model model) {
+
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+		if (user.getId() != id) {
+			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
 		
+		// 결제 완료 된 티켓리스트를 가져와서 뿌림
+		List<BookedSeatDto> ticketList = bookingService.findTicketByUserId(id);
+		model.addAttribute("ticketList", ticketList);
+		
+		// (시작 시간 - 24시간)과 현재 시간을 비교해 환불 버튼을 숨기기 위해 요청 시 현재시간
+		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+		model.addAttribute("currentTime", currentTimestamp);
 		
 		return "/user/ticketList";
 	}
-	
+
 	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
 	@DeleteMapping("/booking/delete/{id}")
 	@ResponseBody
@@ -154,21 +170,12 @@ public class BookingController {
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
-		
-		if(bookingService.deleteBookingById(id)!=1) {
+
+		if (bookingService.deleteBookingById(id) != 1) {
 			return "fail";
 		}
-		
+
 		return "success";
 	}
-	
-	// 결제
-	@PostMapping("/booking/payment_proc")
-	@ResponseBody
-	public String PaymentProc(@RequestBody PaymentDto paymentDto) {
-		
-		System.out.println(paymentDto.getTid());
-		System.out.println(paymentDto.getOrderNumber());
-		return "success";
-	}
+
 }

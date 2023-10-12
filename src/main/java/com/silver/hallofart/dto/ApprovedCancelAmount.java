@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Data
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PaymentDto {
-	private String tid;
-	private String orderNumber;
-	private String regDate;
-	private int amount;
-	private int refundedAmount;
-
+public class ApprovedCancelAmount {
+	Integer total;
+	Integer taxFree;
+	Integer vat;
+	Integer point;
+	Integer discount;
+	
 }

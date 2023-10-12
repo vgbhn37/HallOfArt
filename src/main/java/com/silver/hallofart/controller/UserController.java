@@ -3,7 +3,6 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -177,6 +176,13 @@ public class UserController {
 		log.info("userInfo : " + user);
 		
 		session.setAttribute("user", user);
+		
+		
+//		관리자 페이지 자동 이동
+		
+//		if(user.getRoleTypeId() == 2) {
+//			return "redirect:/admin/main";
+//		}
 		
 		String uri = (String) session.getAttribute("beforeLogin");
 	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {

@@ -34,9 +34,9 @@
 		<span style="font-size: 20px;">결제 금액: </span><span style="font-size: 20px;" id="totalPrice">0</span><span span style="font-size: 20px;"> 원</span>
 		<div class="button-group float-right">
 			<img class="kakao_button" src="/images/payment_icon_yellow_small.png" onclick="moveToKakaoPay()">
-			<button type="button" class="btn btn-primary" onclick="moveToPayment()">결제하기</button>
 		</div>
 	</div>
+
 </div>
 
 
@@ -53,6 +53,8 @@
 	cursor: pointer;
 	margin-right: 8px;
 }
+
+
 </style>
 
 <script>
@@ -73,10 +75,7 @@
   		}
 	}
 	
-	// 결제 객체 초기화
- 	//let IMP = window.IMP;
-	IMP.init('imp38248863'); 
-	
+
 	// 체크 된 좌석을 담는 배열
 	let selectedSeats = new Array();
 	
@@ -106,71 +105,32 @@
 		selectedSeats.splice(selectedSeats.indexOf(id), 1);
 	}
 	
-  	function moveToPayment(){
-		
-  		//주문번호
-  		let order_number = "orderNo"+selectedSeats[0];
-		IMP.request_pay({
-		      pg: "nice_v2.iamport01m",
-		      pay_method: "card",
-		      merchant_uid: order_number,
-		      name: "예술의전당 티켓예매",
-		      amount: 100,
-		      buyer_email: "${user.email}",
-		      buyer_name: "구매자이름",
-		      buyer_tel: "${user.tel}"
-		    }, function (rsp) { // callback
-		      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-		    });
-	} 
   	
   	function moveToKakaoPay(){
   		
-  		
-  		//주문번호
-  		let order_number = "orderNo"+selectedSeats[0];
-  		
-  		IMP.request_pay({
-		      pg: "kakaopay.TC0ONETIME",
-		      merchant_uid: order_number,
-		      name: "예술의전당 티켓예매",
-		      amount: totalPrice,
-		      buyer_email: "${user.email}",
-		      buyer_name: "구매자이름",
-		      buyer_tel: "${user.tel}"
-		    }, function (rsp) { // callback
-		      if(rsp.success){
-		    	  fetch('/payment/payment_proc', {
-		    		  method: 'POST',
-		    		  headers: {'Content-Type': 'application/json'
-		            },body: JSON.stringify({
-		            	imp_uid: rsp.imp_uid,
-		                merchant_uid: rsp.merchant_uid,
-		                price: totalPrice,
-		                paid_seats: selectedSeats
-		            })
-		    	  }).then(response => {
-					   if (!response.ok) {
-			                throw new Error('네트워크 응답 오류');
-			            }
-					   return response.text();
-				   }).then(data =>{
-					   if(data==='success'){
-						   console.log('결제성공');
-						   alert('결제가 완료되었습니다.');
-						   location.href='/user/ticketList'
-					   }else{
-						   throw new Error('결제에 실패하였습니다.');
-					   }
-				   }).catch(error =>{
-					 	console.error("error message: " + error.message);
-					 	alert(error.message);
-				   })
-		      }
-		    });
-  	
+  		const requestOptions = {
+  				method: 'POST',
+  				headers: {
+	                'Content-Type': 'application/json'},
+	            body: JSON.stringify({selectedSeats})
+  		}
+  		fetch('/payment/request',requestOptions)
+  			.then(res=>{
+  				if(!res.ok){
+  					throw new Error('네트워크 연결 오류');
+  				}
+  				return res.text();
+  			})
+  			.then(url=>{
+  				window.open(url, 'PaymentPopup', 'width=600, height=700');
+  			})
+  			.catch(error=>{
+  				console.error(error);
+  			});
   	}
 	 
+    
+    
 	function deleteBooking(id){
 		
 		if(confirm("좌석을 취소하시겠습니까?")){

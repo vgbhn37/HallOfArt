@@ -3,15 +3,16 @@ package com.silver.hallofart.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PaymentDto {
-	private String tid;
-	private String orderNumber;
-	private String regDate;
-	private int amount;
-	private int refundedAmount;
+public class KakaoPayRefundDto {
 
+	String tid;
+	ApprovedCancelAmount approvedCancelAmount;
 }

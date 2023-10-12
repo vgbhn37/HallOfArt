@@ -11,9 +11,12 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	@Autowired
 	private AuthInterceptor authInterceptor;
 	
+	@Autowired
+	private AdminInterceptor adminInterceptor;
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/inquery/**").addPathPatterns("/user/my-info/**");
+//		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
 	}
-	
 }
