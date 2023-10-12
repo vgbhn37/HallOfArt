@@ -3,6 +3,7 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -74,6 +75,65 @@ public class UserController {
 	@GetMapping("/my-info")
 	public String myInfo() {
 		return "user/myInfo";
+	}
+	
+	@GetMapping("/find-info")
+	public String findInfo() {
+		return "user/findInfo";
+	}
+	
+	@GetMapping("/find-id")
+	public String findId() {
+		return "user/findId";
+	}
+	
+	@PostMapping("/find-id")
+	public ResponseEntity<String> findIdProcess(UserDto userDto) {
+		
+		log.info("userDto : "+userDto);
+		
+		String user1;
+		String user2;
+		
+		try {
+			UserDto us1 = userService.searchEmail(userDto.getEmail());
+			if(us1.getPassword().equals("kakaoUser")) user1 = "카카오로 가입하셨습니다.";
+			else user1 = us1.getUsername();
+		} catch (Exception e) {
+			user1 = "없음";
+		}
+		
+		try {
+			UserDto us2 = userService.searchTel(userDto.getTel());
+			if(us2.getPassword().equals("kakaoUser")) user2 = "카카오로 가입하셨습니다.";
+			else user2 = us2.getUsername();			
+		} catch (Exception e) {
+			user2 = "없음";
+		}
+		
+		StringBuilder u1 = new StringBuilder(user1);
+		StringBuilder u2 = new StringBuilder(user2);
+		
+		if(!user1.equals("카카오로 가입하셨습니다.")) {
+			for (int i = 5; i < u1.length(); i++) {
+				u1.setCharAt(i, '*');
+			}
+		}
+		
+		if(!user2.equals("카카오로 가입하셨습니다.")) {
+			for (int i = 5; i < u2.length(); i++) {
+				u2.setCharAt(i, '*');
+			}
+		}
+		
+		if(user1.equals("없음") && user2.equals("없음")) {
+			return ResponseEntity.status(HttpStatus.OK).body("아이디가 조회되지 않습니다.");			
+		} else if(!user1.equals("없음") && !user2.equals("없음") && !(user1.equals(user2))) {
+			return ResponseEntity.status(HttpStatus.OK).body("이메일로 조회한 아이디 : "+u1+"<br>전화번호로 조회한 아이디 : "+u2);
+		}
+		
+		if(user1.equals("없음")) return ResponseEntity.status(HttpStatus.OK).body("조회된 회원님의 아이디 : "+u2);
+		else return ResponseEntity.status(HttpStatus.OK).body("조회된 회원님의 아이디 : "+u1);
 	}
 	
 	@PostMapping("/sms-confirm")
@@ -185,7 +245,7 @@ public class UserController {
 //		}
 		
 		String uri = (String) session.getAttribute("beforeLogin");
-	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up") && !uri.equals("http://localhost/user/sign-in")) {
 	    	return "redirect:"+uri;
 	    } else {
 	    	return "redirect:/";
@@ -288,7 +348,7 @@ public class UserController {
 		session.setAttribute("iskakao", true);
 		
 		String uri = (String) session.getAttribute("beforeLogin");
-	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up") && !uri.equals("http://localhost/user/sign-in")) {
 	    	return "redirect:"+uri;
 	    } else {
 	    	return "redirect:/";

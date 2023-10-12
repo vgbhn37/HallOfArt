@@ -34,7 +34,8 @@
                     <button class="btn btn-dark btn-lg" style="font-size: 0.8rem;" type="submit">로그인</button>
                     <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=a88c60cc6973f14916d03d7bd3f7c2a0&redirect_uri=http://localhost/user/kakao/callback"><img width="74" height="38" src="/images/kakao_login_small.png"></a>
                   </div>
-                  <a class="small text-muted" href="#!">비밀번호 까먹으셨읍니까?</a>
+                  <a class="small text-muted" onclick="window.open(this.href, '_blank', 'width=491, height=270'); return false;" href="http://localhost/user/find-id" target="_blank" ref="noreferrer noopener">아이디 까먹으셨읍니까?</a>
+                  <a class="small text-muted" onclick="window.open(this.href, '_blank', 'width=500, height=397'); return false;" href="http://localhost/user/find-info" target="_blank" ref="noreferrer noopener">비밀번호 까먹으셨읍니까?</a>
                   <p class="mb-5 pb-lg-2" style="color: #393f81;">회원이 아니시면? <a href="http://localhost/user/sign-up"
                       style="color: crimson;">회원가입</a></p>
                   <a href="#!" class="small text-muted">Terms of use.</a>
