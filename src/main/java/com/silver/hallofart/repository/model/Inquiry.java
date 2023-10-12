@@ -13,5 +13,5 @@ public class Inquiry {
 	private String file;
 	private Timestamp createdAt;
 	private Integer answer;
-	private Integer user_id;
+	private Integer userId;
 }

@@ -41,6 +41,7 @@ td a {
 
 .container {
 	margin-top: 50px;
+	width: 65%;
 }
 
 .write-btn {
@@ -74,6 +75,10 @@ td a {
     overflow: hidden;
 }
 
+.tab--announcement :hover{
+	cursor: pointer;
+}
+
 .tab--announcement li{
 	float: left;
     display: table;
@@ -85,7 +90,7 @@ td a {
 }
 
 .tab--announcement li:last-child {
-    border-right: none; /* 마지막 li 요소의 마진을 없애서 간격 설정 */
+    border-right: none; 
 }
 
 .tab--announcement li a {
@@ -225,7 +230,7 @@ td a {
 				</ul>
 
 				<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-				<input type="hidden" name="page" value="${pagination.paging.page}">
+				<input type="hidden" id="page" name="page" value="${pagination.paging.page}">
 				<input type="hidden" name="recordSize"
 					value="${pagination.paging.recordSize}">
 
@@ -238,27 +243,21 @@ td a {
 </div>
 <script>
     $(document).ready(function() {
-        // 페이지 로드 시 초기 페이지 로드와 페이지네이션 버튼 클릭 이벤트 핸들러를 등록합니다.
+
         setupPaginationEventHandlers();
 
-        // 초기 페이지 로드 시, "전체" 카테고리를 보여줍니다.
         loadAnnouncements("전체");
-
         $('.tab--announcement li').click(function() {
-            // 클릭한 li 요소의 데이터 속성을 읽어옵니다.
+
             var classification = $(this).data('classification');
 
-            // 모든 li 요소에서 active 클래스 제거
             $('.tab--announcement li').removeClass('active');
-            // 클릭한 li 요소에 active 클래스 추가
             $(this).addClass('active');
 
-            // 해당 카테고리의 공지사항을 로드합니다.
             loadAnnouncements(classification);
         });
 
         function setupPaginationEventHandlers() {
-            // 페이지네이션 버튼 클릭 이벤트 핸들러를 document에서 직접 처리
             $(document).on('click', '.pagination li a', function(e) {
                 e.preventDefault();
                 const value = $(this).data('page');

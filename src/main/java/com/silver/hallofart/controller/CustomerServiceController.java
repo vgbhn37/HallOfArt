@@ -38,10 +38,12 @@ public class CustomerServiceController {
 	public String announcement(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
 		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
 		    required = false, defaultValue="전체")String classification, Model model) {
+		//페이지네이션에 필요한 값 전달
 		paging.setPage(page);
 		Pagination pagination = new Pagination();
 		pagination.setPaging(paging);
 		pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
+		//공지사항 목록 전달
 		List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
 		model.addAttribute("announcementList", announcementList);
 		model.addAttribute("pagination", pagination);
@@ -135,14 +137,15 @@ public class CustomerServiceController {
 		pagination.setPaging(paging);
 		pagination.setArticleTotalCount(customerServiceService.countInquiryPage(paging));
 		model.addAttribute("pagination", pagination);
-		model.addAttribute("inquiryList", customerServiceService.findInquiry(paging));
+		model.addAttribute("inquiryList", customerServiceService.findInquiry(user.getId(), paging));
 		return "customerservice/inquiry";
 	}
 	
 	//문의 작성
 	@PostMapping("/inquiry/write")
 	public String inquiryWriteProc(Inquiry inquiry) {
-		customerServiceService.insertInquiry(inquiry);
+		UserDto user = (UserDto)session.getAttribute("user");
+		customerServiceService.insertInquiry(user.getId(),inquiry);
 		return "redirect:/customerservice/inquiry";
 	}
 	
