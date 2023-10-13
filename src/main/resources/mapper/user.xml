@@ -9,6 +9,21 @@
 	  	values(#{username}, #{password}, #{email}, #{tel}, #{birthDate}, now(), 1)
   	</insert>
   	
+  	<select id="findAllUser" resultType="com.silver.hallofart.dto.UserDto">
+		select * from user_tb
+	</select>
+	
+	<select id="findAllUserPaging" resultType="com.silver.hallofart.dto.UserDto">
+			SELECT id, username, password, email, tel, birth_date, reg_date, role_type_id, (10 * 1) as t
+			FROM user_tb
+			ORDER BY id DESC
+			LIMIT 10
+	</select>
+	
+    <select id="userTotalCount" resultType="int">
+        SELECT count(*) FROM user_tb
+    </select>
+  	
   	<select id="findById" resultType="com.silver.hallofart.dto.UserDto">
 		select * from user_tb where id = #{id}
 	</select>

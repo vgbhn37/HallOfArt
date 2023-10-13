@@ -19,7 +19,7 @@
                 <form action="/user/sign-in" method="post">
                   <div class="d-flex align-items-center mb-3 pb-1">
                     <i class="fa-solid fa-right-to-bracket fa-2xl"></i>
-                    <span class="h1 fw-bold mb-0">&nbsp;로그인 페이지</span>
+                    <span class="h1 fw-bold mb-0">&nbsp;로그인</span>
                   </div>
 <!--                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">내용</h5> -->
                   <div class="form-outline mb-4">

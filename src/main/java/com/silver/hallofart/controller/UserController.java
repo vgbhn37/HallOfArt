@@ -3,7 +3,6 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.silver.hallofart.dto.Criteria;
 import com.silver.hallofart.dto.KakaoProfile;
 import com.silver.hallofart.dto.OAuthToken;
+import com.silver.hallofart.dto.PageDTO;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.service.MailService;
@@ -70,6 +72,16 @@ public class UserController {
 	public String signOut() {
 		session.invalidate();
 		return "redirect:/user/sign-in";
+	}
+	
+	@GetMapping("/admin/user")
+	public String userAdmin(Criteria cri, Model model) {
+		
+		model.addAttribute("userList", userService.userList(cri));
+		int total = userService.countUser();
+		model.addAttribute("pageMaker", new PageDTO(total, cri));
+		
+		return "admin/userAdminPage";
 	}
 	
 	@GetMapping("/my-info")

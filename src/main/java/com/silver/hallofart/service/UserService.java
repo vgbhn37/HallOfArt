@@ -1,10 +1,13 @@
 package com.silver.hallofart.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.silver.hallofart.dto.Criteria;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.UserRepository;
@@ -17,6 +20,14 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	public List<UserDto> userList(Criteria cri) {
+		
+		cri.setAmount(10);
+		cri.setPageNum(10);
+		
+		return userRepository.findAllUserPaging(cri);
+	}
 	
 	@Transactional
 	public void signUp(UserDto userDto) {
@@ -71,6 +82,10 @@ public class UserService {
 	
 	public UserDto searchId(int id) {
 		return userRepository.findById(id);
+	}
+	
+	public int countUser() {
+		return userRepository.userTotalCount();
 	}
 
 }

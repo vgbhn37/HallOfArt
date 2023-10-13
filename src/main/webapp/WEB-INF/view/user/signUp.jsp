@@ -22,7 +22,7 @@
 								<form action="/user/sign-up" method="post" class="signUpForm">
 									<div class="d-flex align-items-center mb-3 pb-1">
 										<i class="fa-solid fa-user-plus fa-2xl"></i> <span
-											class="h1 fw-bold mb-0">&nbsp;회원가입 페이지</span>
+											class="h1 fw-bold mb-0">&nbsp;회원가입</span>
 									</div>
 									<!--                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">내용</h5> -->
 									<div class="form-outline mb-0">

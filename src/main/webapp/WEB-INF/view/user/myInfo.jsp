@@ -22,7 +22,7 @@
 								<form action="/user/modify-info" method="post" class="signUpForm">
 									<div class="d-flex align-items-center mb-3 pb-1">
 										<i class="fa-solid fa-user-pen fa-2xl"></i> <span
-											class="h1 fw-bold mb-0">&nbsp;회원정보 수정 페이지</span>
+											class="h1 fw-bold mb-0">&nbsp;회원정보 수정</span>
 									</div>
 									<div class="form-outline mb-0">
 										<label class="form-label my-0" for="username" id="idconfirmTxt">아이디</label>
