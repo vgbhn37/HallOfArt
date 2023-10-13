@@ -131,5 +131,5 @@
 	</div>
 	
 </div>
-
+<script type="text/javascript" src="/resources/js/common.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

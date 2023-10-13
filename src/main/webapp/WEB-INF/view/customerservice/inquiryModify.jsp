@@ -149,68 +149,13 @@
         <br>
         <br>
         <textarea id="summernote" id="content" name="content">${inquiry.content}</textarea>
-        <input id="subBtn" type="button" value="글 수정" onclick="send()" />
+        <input id="subBtn" type="button" value="글 수정" onclick="sendInquiry()" />
         <input type="hidden" id="classification" name="classification" />
         <input type="hidden" name="id" value="${inquiry.id}" />
         <input type="hidden" name="page" value="${page}" />
     </form>
 </div>
-	
-	<script>
-		//유효성 검사
-		function validationForm() {
-			getCheckedValue();
-			let form = document.querySelector("#form");
-			let title = form.elements["title"].value;
-			let classification = document.getElementById("classification").value;
-			let content = form.elements["content"].value;
-			
-			if (!classification) {
-				alert("분류 버튼을 선택하세요.");
-				return false;
-			}
-			if (!title) {
-				alert("제목을 입력하세요.");
-				return false;
-			}
-			if (!content) {
-				alert("내용을 입력하세요.");
-				return false;
-			}
-			return true;
-		}
-		function send() {
-			if (validationForm()) {
-				document.querySelector("#form").submit();
-			}
-		}
 
-		$(document).ready(function() {
-			$('#summernote').summernote({
-				placeholder : 'content',
-				minHeight : 370,
-				maxHeight : null,
-				focus : true,
-				lang : 'ko-KR'
-			});
-		});
-		
-		function getCheckedValue() {
-		    var radios = document.querySelectorAll('input[type="radio"]');
+<script type="text/javascript" src="/resources/js/customerservice.js"></script>
 
-		    var selectedValue = null;
-		    for (var i = 0; i < radios.length; i++) {
-		      if (radios[i].checked) {
-		        selectedValue = radios[i].value;
-		        break;
-		      }
-		    }
-
-		    if (selectedValue !== null) {
-		      document.querySelector('#classification').value = selectedValue;
-		    } else {
-		      //alert("분류 버튼을 선택하세요.");
-		    }
-		}
-	</script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

@@ -212,52 +212,12 @@
         <br>
         <br>
         <textarea id="summernote" id="content" name="content"></textarea>
-        <input id="subBtn" type="button" value="답변 작성" onclick="send()" />
-        <input type="hidden" id="inquiryId" name="inquiryId" value="${inquiry.id}"> 
+        <input id="subBtn" type="button" value="답변 작성" onclick="sendDetail()" />
+        <input type="hidden" id="inquiryId" name="inquiryId" value="${inquiry.id}">
         <input type="hidden" id="page" name="page" value="${page}">
     </form>
 </div>
 
-<script>
-	//답변하기 버튼 클릭시 답변작성 폼 활성화
-	document.querySelector("#answerBtn").addEventListener("click", function() {
-		let answerForm = document.querySelector("#answerForm")
-		answerForm.style.display = "";
-	})
-	
-	//답변 유효성 검사
-	function validationForm() {
-		let form = document.querySelector("#aForm");
-		let title = form.elements["title"].value;
-		let content = form.elements["content"].value;
-
-		if (!title) {
-			alert("제목을 입력하세요.");
-			return false;
-		}
-		if (!content) {
-			alert("내용을 입력하세요.");
-			return false;
-		}
-
-		return true;
-	}
-
-	function send() {
-		if (validationForm()) {
-			document.querySelector("#aForm").submit();
-		}
-	}
-	
-	//summernote
-	$(document).ready(function() {
-		$('#summernote').summernote({
-			placeholder : 'content',
-			minHeight : 370,
-			maxHeight : null,
-			focus : true,
-			lang : 'ko-KR'
-		});
-	});
-</script>
+<script type="text/javascript" src="/resources/js/common.js"></script>
+<script type="text/javascript" src="/resources/js/inquiryDetail.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>

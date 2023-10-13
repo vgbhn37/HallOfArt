@@ -112,51 +112,6 @@
 		<input type="hidden" name="page" value="${page}">
     </form>
 </div>
-	
-	<script>
-		//유효성 검사
-		function validationForm() {
-			let form = document.querySelector("#form");
-			let title = form.elements["title"].value;
-			let classification = document.getElementById("classification").value;
-			let content = form.elements["content"].value;
-			
-			if (!title) {
-				alert("제목을 입력하세요.");
-				return false;
-			}
-			if (!classification) {
-				alert("분류값을 입력하세요.");
-				return false;
-			}
-			if (!content) {
-				alert("내용을 입력하세요.");
-				return false;
-			}
-			return true;
-		}
-		function send() {
-			if (validationForm()) {
-				document.querySelector("#form").submit();
-			}
-		}
 
-		$(document).ready(function() {
-			$('#summernote').summernote({
-				placeholder : 'content',
-				minHeight : 370,
-				maxHeight : null,
-				focus : true,
-				lang : 'ko-KR'
-			});
-		});
-
-		// 드롭다운 항목을 클릭했을 때 호출되는 함수
-		function selectItem(selectedItem) {
-        	let dropdownButton = document.querySelector('.dropdown-btn');
-        	dropdownButton.textContent = selectedItem;
-        	let classification = document.querySelector('#classification');
-        	classification.value = selectedItem;
-    	}
-	</script>
+<script type="text/javascript" src="/resources/js/common.js"></script>
 <%@include file="/WEB-INF/view/layout/footer.jsp"%>
