@@ -17,15 +17,15 @@ public interface CustomerServiceRepository {
 	
 	public int count(Pagination pagination);
 
-	public void insertAnnouncement(Announcement announcement);
+	public int insertAnnouncement(Announcement announcement);
 
 	public Announcement findAnnouncementById(int id);
 
-	public void deleteAnnouncement(int id);
+	public int deleteAnnouncement(int id);
 
-	public void updateAnnouncement(Announcement announcement);
+	public int updateAnnouncement(Announcement announcement);
 
-	public void insertInquiry(Inquiry inquiry);
+	public int insertInquiry(Inquiry inquiry);
 
 	public List<Inquiry> findInquiryByUserId(@Param("id")int id, @Param("paging")PagingDto paging);
 
@@ -33,19 +33,19 @@ public interface CustomerServiceRepository {
 	
 	public Inquiry findInquiryById(int id);
 
-	public void insertInquiryAnswer(InquiryAnswer inquiryAnswer);
+	public int insertInquiryAnswer(InquiryAnswer inquiryAnswer);
 
-	public void modifyinquiryAnswer(Integer inquiryId);
+	public int modifyinquiryAnswer(Integer inquiryId);
 
 	public InquiryAnswer findInquiryAnswer(Integer inquiryId);
 
-	public void updateInquiry(Inquiry inquiry);
+	public int updateInquiry(Inquiry inquiry);
 
-	public void deleteInquiry(Integer id);
+	public int deleteInquiry(Integer id);
 
 	public int changeAnswer(Integer id);
 
-	public void deleteAnswer(Integer id);
+	public int deleteAnswer(Integer id);
 
 	public List<Announcement> findAnnouncement(PagingDto paging);
 

@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/header.jsp" %>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=cw4qth9oev"></script>
-<style>
+<link rel="stylesheet" href="/resources/css/information.css">
+<!-- <style>
 .title--way {
     position: relative;
     color: #535353;
@@ -112,7 +113,7 @@
     top: 0;
     left: 0;
 }
-</style>
+</style> -->
 <!-- body -->
 <div class="container">
 	<h1 class="title--way">오시는길</h1>

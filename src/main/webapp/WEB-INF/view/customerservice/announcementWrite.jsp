@@ -6,7 +6,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<style>
+<link rel="stylesheet" href="/resources/css/announcementWrite.css">
+<!-- <style>
     
     .title--write {
 	    position: relative;
@@ -85,7 +86,7 @@
 	    background-color: #151432;
     	color: #fff;
 	}
-</style>
+</style> -->
 
 <body>
 

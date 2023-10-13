@@ -6,7 +6,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<style>
+<link rel="stylesheet" href="/resources/css/inquiry.css">
+<!-- <style>
 .title--inquiry {
     position: relative;
     color: #535353;
@@ -154,7 +155,7 @@ td a {
     color: #fff;
 }
 
-</style>
+</style> -->
 <body>
 <div class="container">
 	<h1 class="title--inquiry">1:1 문의하기</h1>

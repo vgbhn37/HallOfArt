@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/layout/header.jsp" %>
-<style>
+<link rel="stylesheet" href="/resources/css/announcementDetail.css">
+<!-- <style>
     .title--detail {
 	    position: relative;
 	    color: #535353;
@@ -104,7 +105,7 @@
 	    background-color: red;
     	color: #fff;
 	}
-</style>
+</style> -->
 
 <div class= "container" style="margin-top: 70px; width:80%">
 	<h1 class="title--detail">공지 사항</h1>

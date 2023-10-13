@@ -6,7 +6,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<style>
+<link rel="stylesheet" href="/resources/css/inquiryDetail.css">
+<!-- <style>
     .title--detail {
 	    padding-top: 10px;
 	    position: relative;
@@ -143,7 +144,7 @@
 	    background-color: #B0C4DE;
     	color: #fff;
 	}
-</style>
+</style> -->
 
 <!-- 문의내용  -->
 <div class= "container" style="margin-top: 70px; width:80%">

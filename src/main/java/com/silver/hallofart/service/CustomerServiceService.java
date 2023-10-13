@@ -3,11 +3,13 @@ package com.silver.hallofart.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
+import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.CustomerServiceRepository;
 import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Inquiry;
@@ -26,7 +28,10 @@ public class CustomerServiceService {
 	
 	@Transactional
 	public void insertAnnouncement(Announcement announcement) {
-		customerServiceRepository.insertAnnouncement(announcement);
+		int result = customerServiceRepository.insertAnnouncement(announcement);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	public int countPage(Pagination pagination) {
@@ -35,25 +40,33 @@ public class CustomerServiceService {
 	}
 
 	public Announcement findAnnouncementById(int id) {
-		
 		return customerServiceRepository.findAnnouncementById(id);
 	}
 
 	@Transactional
 	public void deleteAnnouncement(int id) {
-		customerServiceRepository.deleteAnnouncement(id);
+		int result = customerServiceRepository.deleteAnnouncement(id);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Transactional
 	public void updateAnnouncement(Announcement announcement) {
-		customerServiceRepository.updateAnnouncement(announcement);
+		int result =customerServiceRepository.updateAnnouncement(announcement);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Transactional
 	public void insertInquiry(int id, Inquiry inquiry) {
 		inquiry.setAnswer(0);
 		inquiry.setUserId(id);
-		customerServiceRepository.insertInquiry(inquiry);
+		int result = customerServiceRepository.insertInquiry(inquiry);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	public List<Inquiry> findInquiry(int id, PagingDto paging) {
@@ -74,7 +87,10 @@ public class CustomerServiceService {
 	public void insertInquiryAnswer(InquiryAnswer inquiryAnswer) {
 		//inquiry테이블에 답변 여부 수정
 		customerServiceRepository.modifyinquiryAnswer(inquiryAnswer.getInquiryId());
-		customerServiceRepository.insertInquiryAnswer(inquiryAnswer);
+		int result = customerServiceRepository.insertInquiryAnswer(inquiryAnswer);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	public InquiryAnswer findInquiryAnswer(Integer inquiryId) {
@@ -83,12 +99,18 @@ public class CustomerServiceService {
 
 	@Transactional
 	public void updateInquiry(Inquiry inquiry) {
-		customerServiceRepository.updateInquiry(inquiry);		
+		int result = customerServiceRepository.updateInquiry(inquiry);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Transactional
 	public void deleteInquiry(Integer id) {
-		customerServiceRepository.deleteInquiry(id);
+		int result = customerServiceRepository.deleteInquiry(id);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Transactional
@@ -99,7 +121,10 @@ public class CustomerServiceService {
 	
 	@Transactional
 	public void deleteAnswer(Integer id) {
-		customerServiceRepository.deleteAnswer(id);	
+		int result = customerServiceRepository.deleteAnswer(id);
+		if(result !=1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	public List<Announcement> selectAnnouncement(PagingDto paging) {

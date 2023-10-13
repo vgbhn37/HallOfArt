@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/inquery/**").addPathPatterns("/user/my-info/**")
+		registry.addInterceptor(authInterceptor).addPathPatterns("/booking/**").addPathPatterns("/payment/**").addPathPatterns("/customerservice/inquiry/**").addPathPatterns("/user/my-info/**")
 		.excludePathPatterns("/payment/cancel");
 //		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
 	}

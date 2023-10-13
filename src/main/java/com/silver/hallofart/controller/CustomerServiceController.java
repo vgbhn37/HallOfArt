@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.silver.hallofart.dto.ClassificationDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.UserDto;
+import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Inquiry;
 import com.silver.hallofart.repository.model.InquiryAnswer;
@@ -88,6 +90,16 @@ public class CustomerServiceController {
 	
 	@PostMapping("/announcement/write")
 	public String announcementWriteProc(Announcement announcement) {
+		//유효성검사
+		if(announcement.getTitle() == null || announcement.getTitle().isEmpty()) {
+			throw new CustomRestfulException("제목을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(announcement.getClassification() == null || announcement.getClassification().isEmpty()) {
+			throw new CustomRestfulException("분류값을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(announcement.getContent() == null || announcement.getContent().isEmpty()) {			
+			throw new CustomRestfulException("내용을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.insertAnnouncement(announcement);
 		return "redirect:/customerservice/announcement";
 	}
@@ -109,6 +121,16 @@ public class CustomerServiceController {
 	
 	@PostMapping("/announcement/modify")
 	public String announcementModifyProc(Announcement announcement, int page) {
+		//유효성검사
+		if(announcement.getTitle() == null || announcement.getTitle().isEmpty()) {
+			throw new CustomRestfulException("제목을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(announcement.getClassification() == null || announcement.getClassification().isEmpty()) {
+			throw new CustomRestfulException("분류값을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(announcement.getContent() == null || announcement.getContent().isEmpty()) {			
+			throw new CustomRestfulException("내용을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.updateAnnouncement(announcement);
 		return "redirect:/customerservice/announcement/detail?page=" + page + "&id=" + announcement.getId();
 	}
@@ -145,6 +167,16 @@ public class CustomerServiceController {
 	@PostMapping("/inquiry/write")
 	public String inquiryWriteProc(Inquiry inquiry) {
 		UserDto user = (UserDto)session.getAttribute("user");
+		//유효성검사
+		if(inquiry.getTitle() == null || inquiry.getTitle().isEmpty()) {
+			throw new CustomRestfulException("제목을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(inquiry.getClassification() == null || inquiry.getClassification().isEmpty()) {
+			throw new CustomRestfulException("분류값을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(inquiry.getContent() == null || inquiry.getContent().isEmpty()) {			
+			throw new CustomRestfulException("내용을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.insertInquiry(user.getId(),inquiry);
 		return "redirect:/customerservice/inquiry";
 	}
@@ -162,7 +194,13 @@ public class CustomerServiceController {
 	
 	//문의수정
 	@GetMapping("/inquiry/modify")
-	public String inquiryModify(@RequestParam("id") Integer id, @RequestParam("page") Integer page, Model model) {
+	public String inquiryModify(@RequestParam (value="id", required = false) Integer id, @RequestParam(value="page", required = false) Integer page, Model model) {
+		if(id == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		if(page == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		model.addAttribute("inquiry", customerServiceService.findInquiryById(id));
 		model.addAttribute("page", page);
 		return "customerservice/inquiryModify";
@@ -170,6 +208,16 @@ public class CustomerServiceController {
 	
 	@PostMapping("/inquiry/modify")
 	public String inquiryModifyProc(Inquiry inquiry, @ModelAttribute("page") int page) {
+		//유효성검사
+		if(inquiry.getTitle() == null || inquiry.getTitle().isEmpty()) {
+			throw new CustomRestfulException("제목을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(inquiry.getClassification() == null || inquiry.getClassification().isEmpty()) {
+			throw new CustomRestfulException("분류값을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(inquiry.getContent() == null || inquiry.getContent().isEmpty()) {			
+			throw new CustomRestfulException("내용을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.updateInquiry(inquiry);
 		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + inquiry.getId();
 	}
@@ -184,6 +232,13 @@ public class CustomerServiceController {
 	//문의답변
 	@PostMapping("/inquiry/answer")
 	public String inquiryAnswer(InquiryAnswer inquiryAnswer, Model model, @ModelAttribute("page") int page) {
+		//유효성검사
+		if(inquiryAnswer.getTitle() == null || inquiryAnswer.getTitle().isEmpty()) {
+			throw new CustomRestfulException("제목을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(inquiryAnswer.getContent() == null || inquiryAnswer.getContent().isEmpty()) {			
+			throw new CustomRestfulException("내용을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.insertInquiryAnswer(inquiryAnswer);
 		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + inquiryAnswer.getInquiryId();
 	}

@@ -6,7 +6,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<style>
+<link rel="stylesheet" href="/resources/css/announcementModify.css">
+<!-- <style>
     .title--write {
 	    position: relative;
 	    color: #535353;
@@ -84,7 +85,7 @@
 	    background-color: #151432;
     	color: #fff;
 	}
-</style>
+</style> -->
 <body>
 
 <div class= "container" style="margin-top: 70px;">
