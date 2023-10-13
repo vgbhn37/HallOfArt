@@ -20,9 +20,24 @@
 		join hall_tb h on s.hall_tb_id = h.id
 		where s.id=#{id}
 	</select>
-		
+	
+	<select id="findShowAll" resultType="com.silver.hallofart.repository.model.Show">
+		select * from show_tb 
+		where not show_status like '승인%'
+		and not show_status like '결제%'
+		and not show_status like '취소%'
+		and not show_status like '환불%'
+		order by end_date
+		limit #{offset}, #{recordSize}
+	</select>
+	
 	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
-		select * from show_tb where #{date} >= start_date and end_date >= #{date}
+		select * from show_tb 
+		where #{date} >= start_date and end_date >= #{date}
+		and not show_status like '승인%'
+		and not show_status like '결제%'
+		and not show_status like '취소%'
+		and not show_status like '환불%'
 		order by end_date
 		limit #{offset}, #{recordSize}
 	</select>
@@ -52,6 +67,12 @@
 		select start_date, end_date, name
 		from show_tb s
 		join hall_tb h on s.hall_tb_id = h.id
+		join hall_type ht on h.hall_type_id = ht.id
+		where name=#{name}
+	</select>
+	
+	<select id="findHallType" resultType="int">
+		select id from hall_tb
 		where name=#{name}
 	</select>
 	

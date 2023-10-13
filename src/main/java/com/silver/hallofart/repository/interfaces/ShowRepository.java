@@ -15,11 +15,13 @@ import com.silver.hallofart.repository.model.Show;
 public interface ShowRepository {
 	public ShowDetailDto findById(Integer id);
 	public List<Show> findByDate(@Param("date") String date, @Param("offset") int offset, @Param("recordSize") int recordSize);
+	public List<Show> findShowAll(@Param("offset") int offset, @Param("recordSize") int recordSize);
 	public int insertShow(Show show);
 	public int insertShowTime(String startTime);
 	
 	public List<Hall> findHallAll();
 	public List<HallTimeDto> findHallTime(String name);
+	public int findHallType(String name);
 	public int insertRental(Rental rental);
 	
 }

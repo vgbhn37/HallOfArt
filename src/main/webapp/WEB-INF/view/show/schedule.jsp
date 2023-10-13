@@ -23,12 +23,11 @@
 </style>
 <!-- --------------------------------------------------------- -->
 <div class="schedule_content">
-	<h2>일정 검색</h2>
-
-	날짜 선택 : 
-	<input type="text" class="datepicker" id="datepicker">
-	<button type="button" id="dateSearchBtn">검색</button>
-
+	<h2>공연 정보</h2>
+	<br>
+		날짜 선택 : 
+		<input type="text" class="datepicker" id="datepicker">
+		<button type="button" id="dateSearchBtn">검색</button>
 	<table class="list_tb">
 		<tr style="height: 50px">
 			<td colspan="2" style="width: 50%">제목</td>

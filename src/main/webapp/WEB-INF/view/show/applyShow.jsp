@@ -100,7 +100,7 @@
 					</td>
 				</tr>
        			<tr>
-       				<td rowspan="2">대관 날짜</td>
+       				<td rowspan="2" style="width: 40%; min-width: 150px;">대관 날짜</td>
        				<td>
        					Start :&nbsp;<input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off" style="width: 200px;" readonly="readonly">
        					<button type="button" id="date1resetBtn">reset</button>
@@ -158,19 +158,9 @@
   					</td>
   				</tr>
        			<tr>
-       				<td style="width: 40%; min-width: 150px;">공연/전시 유형</td>
-       				<td>
-       					<select name="showTypeId1">
-       						<option value="" selected disabled>- - - - - - -</option>
-       						<option value="1">1 : 공연</option>
-       						<option value="2">2 : 전시</option>
-       					</select>
-       					<input type="hidden" id="showImg" name="showImg">
-    					</td>
-       			</tr>
-       			<tr>
        				<td>공연/전시 제목</td>
-       				<td><input type="text" name="title"></td>
+       				<td><input type="text" name="title">
+       				<input type="hidden" name="showTypeId1" value="${hallType}"></td>
        			</tr>
        			<tr>
        				<td>공연/전시 내용</td>
@@ -318,8 +308,8 @@
 				checkMsg+="이미지를 업로드해주세요\n";
 			}
 			// ---------------- 유효성 : 유형
-			if($("select[name=showTypeId1]").val()==null){
-				$("select[name=showTypeId1").css("border", "2px solid red");
+			if($("input[name=showTypeId1]").val()==null){
+				$("input[name=showTypeId1").css("border", "2px solid red");
 				checkMsg+="대관 유형을 입력해주세요 (공연 / 전시)\n";
 			}
 			// ---------------- 유효성 : 제목

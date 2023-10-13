@@ -26,8 +26,10 @@ public class ShowService {
 	}
 	
 	public List<Show> showListByDate(String date, int offset, int recordSize){
-		List<Show> list = showRepository.findByDate(date, offset, recordSize);
-		return list;
+		return showRepository.findByDate(date, offset, recordSize);
+	}
+	public List<Show> showListAll(int offset, int recordSize){
+		return showRepository.findShowAll(offset, recordSize);
 	}
 	
 	public int insertShow(Show show) {
@@ -67,6 +69,10 @@ public class ShowService {
 	    }
 		list.sort(null);
 		return list;
+	}
+	
+	public int findHallType(String name){
+		return showRepository.findHallType(name);
 	}
 	
 	public int insertRental(Rental rental) {
