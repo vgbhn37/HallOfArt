@@ -24,6 +24,7 @@ public class CustomerServiceService {
 		return announcementList;
 	}
 	
+	@Transactional
 	public void insertAnnouncement(Announcement announcement) {
 		customerServiceRepository.insertAnnouncement(announcement);
 	}
@@ -38,22 +39,25 @@ public class CustomerServiceService {
 		return customerServiceRepository.findAnnouncementById(id);
 	}
 
+	@Transactional
 	public void deleteAnnouncement(int id) {
 		customerServiceRepository.deleteAnnouncement(id);
 	}
 
+	@Transactional
 	public void updateAnnouncement(Announcement announcement) {
 		customerServiceRepository.updateAnnouncement(announcement);
 	}
 
-	public void insertInquiry(Inquiry inquiry) {
+	@Transactional
+	public void insertInquiry(int id, Inquiry inquiry) {
 		inquiry.setAnswer(0);
-		inquiry.setUser_id(1);
+		inquiry.setUserId(id);
 		customerServiceRepository.insertInquiry(inquiry);
 	}
 
-	public List<Inquiry> findInquiry(PagingDto paging) {
-		List<Inquiry> inquiryList = customerServiceRepository.findInquiryByUserId(paging);
+	public List<Inquiry> findInquiry(int id, PagingDto paging) {
+		List<Inquiry> inquiryList = customerServiceRepository.findInquiryByUserId(id, paging);
 		return inquiryList;
 	}
 
@@ -66,6 +70,7 @@ public class CustomerServiceService {
 		return customerServiceRepository.findInquiryById(id);
 	}
 
+	@Transactional
 	public void insertInquiryAnswer(InquiryAnswer inquiryAnswer) {
 		//inquiry테이블에 답변 여부 수정
 		customerServiceRepository.modifyinquiryAnswer(inquiryAnswer.getInquiryId());
@@ -76,10 +81,12 @@ public class CustomerServiceService {
 		return customerServiceRepository.findInquiryAnswer(inquiryId);
 	}
 
+	@Transactional
 	public void updateInquiry(Inquiry inquiry) {
 		customerServiceRepository.updateInquiry(inquiry);		
 	}
 
+	@Transactional
 	public void deleteInquiry(Integer id) {
 		customerServiceRepository.deleteInquiry(id);
 	}

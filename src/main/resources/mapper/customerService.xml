@@ -27,8 +27,8 @@
 		select count(*) from announcement_tb where classification = #{classification}
 	</select>
 	
-	<select id="findInquiryByUserId" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Inquiry">
-		select * from inquiry_tb where user_id = #{userId} order by created_at desc limit #{offset}, #{recordSize}
+	<select id="findInquiryByUserId" resultType="Inquiry">
+		select * from inquiry_tb where user_id = #{id} order by created_at desc limit #{paging.offset}, #{paging.recordSize}
 	</select>
 	
 	<select id="findInquiryById" resultType="Inquiry">
@@ -46,7 +46,7 @@
 	
 	<insert id="insertInquiry">
 		insert into inquiry_tb(classification, title, content, file, created_at, answer, user_id) 
-		values(#{classification}, #{title}, #{content}, #{file}, now(), #{answer}, #{user_id})
+		values(#{classification}, #{title}, #{content}, #{file}, now(), #{answer}, #{userId})
 	</insert>
 	
 	<insert id="insertInquiryAnswer">

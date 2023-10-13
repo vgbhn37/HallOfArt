@@ -24,7 +24,9 @@ import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.dto.UserDto;
+import com.silver.hallofart.handler.exception.BadRequestException;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
+import com.silver.hallofart.handler.exception.ForbiddenException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
 import com.silver.hallofart.repository.model.ShowTime;
 import com.silver.hallofart.service.BookingService;
@@ -51,8 +53,10 @@ public class BookingController {
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
-
+		
 		ShowDetailDto show = showService.showById(showId);
+		
+		// 쇼타임 
 		List<ShowTime> showTimeList = bookingService.findShowTime(showId);
 		String hallName = bookingService.findHallNameByShowId(showId);
 		model.addAttribute("show", show);
@@ -67,7 +71,7 @@ public class BookingController {
 	public List<SeatStatusDto> seatList(@PathVariable Integer showTimeId, HttpServletRequest request) {
 		// 주소창에 직접 입력시 오류 발생
 		if (request.getHeader("REFERER") == null) {
-			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		// 인증 및 유효성 검사 체크 필요
@@ -112,7 +116,7 @@ public class BookingController {
 	public String bookingSuccess(HttpServletRequest request) {
 		// 주소창에 직접 입력시 오류 발생
 		if (request.getHeader("REFERER") == null) {
-			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		return "booking/success";
 	}
@@ -127,7 +131,7 @@ public class BookingController {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
 		if (user.getId() != id) {
-			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+			throw new ForbiddenException("잘못된 접근입니다.", HttpStatus.FORBIDDEN);
 		}
 
 		// 결제 대기 상태인 예약테이블 리스트를 가져와서 뿌림
@@ -146,7 +150,7 @@ public class BookingController {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
 		if (user.getId() != id) {
-			throw new UnAuthorizedException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+			throw new ForbiddenException("잘못된 접근입니다.", HttpStatus.FORBIDDEN);
 		}
 		
 		// 결제 완료 된 티켓리스트를 가져와서 뿌림

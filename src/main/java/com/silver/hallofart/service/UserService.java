@@ -9,6 +9,9 @@ import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 	
@@ -28,6 +31,14 @@ public class UserService {
 		int result = userRepository.updateById(userDto);
 		if(result != 1) {
 			throw new CustomRestfulException("회원정보 수정에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@Transactional
+	public void updatePassByUsername(String username, String password) {
+		int result = userRepository.updatePassByUsername(username, password);
+		if(result != 1) {
+			throw new CustomRestfulException("임시 비밀번호로 변경에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -61,5 +72,5 @@ public class UserService {
 	public UserDto searchId(int id) {
 		return userRepository.findById(id);
 	}
-	
+
 }

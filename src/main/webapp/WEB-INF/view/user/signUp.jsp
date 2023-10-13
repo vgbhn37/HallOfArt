@@ -29,7 +29,7 @@
 										<label class="form-label my-0" for="username" id="idconfirmTxt">아이디</label>
 										<div style="display: flex;">
 											<input style="width: 79%" type="text" id="username" name="username" placeholder="아이디 입력" class="form-control form-control" /> 
-											<button class="btn btn-outline-primary ml-1" type="button" id="checkId">중복검사</button>
+											<button class="btn btn-outline-dark ml-1" type="button" id="checkId">중복검사</button>
 										</div>
 									</div>
 									<div class="form-outline mb-0">
@@ -47,7 +47,7 @@
 										<label class="form-label my-0" for="email">이메일</label>
 										<div style="display: flex;">
 											<input style="width: 79%" type="email" id="email" name="email" placeholder="ex) hjm8333@naver.com" class="form-control form-control" />
-											<button class="btn btn-outline-primary ml-1" type="button" id="checkEmail">인증받기</button>
+											<button class="btn btn-outline-dark ml-1" type="button" id="checkEmail">인증받기</button>
 										</div>
 									</div>
 									
@@ -60,7 +60,7 @@
 										<label class="form-label my-0" for="tel">휴대전화 번호</label>
 										<div style="display: flex;">
 											<input style="width: 79%" type="text" id="tel" name="tel" placeholder="ex) 01040618333" class="form-control form-control" maxlength="11" />
-											<button class="btn btn-outline-primary ml-1" type="button" id="checkTel">인증받기</button>
+											<button class="btn btn-outline-dark ml-1" type="button" id="checkTel">인증받기</button>
 										</div> 
 									</div>
 									

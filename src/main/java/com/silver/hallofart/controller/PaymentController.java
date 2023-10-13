@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,6 +40,9 @@ import com.silver.hallofart.service.PaymentService;
 @Controller
 public class PaymentController {
 
+	@Value("${kakao_payment_api_key}")
+	private String kakaoApiKey;
+	
 	@Autowired
 	BookingService bookingService;
 
@@ -57,16 +61,14 @@ public class PaymentController {
 	public String PaymentRequest(@RequestBody PaymentRequestDto payreqDto) {
 		// 로그인 된 유저
 		UserDto user = (UserDto) session.getAttribute("user");
+		// 결제 요청 좌석 리스트
 		bookIds = payreqDto.getSelectedSeats();
 
-		if (user == null) {
-			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
-		}
 		// RestTeamplate
 		RestTemplate rt = new RestTemplate();
 		// 헤더 객체
 		HttpHeaders headers = new HttpHeaders();
-		// 카카오 결제 서버에 전달할 itemname 정하기 (좌석이 1건이면 공연+좌석이름, 2건 이상이면 첫번째 공연+좌석 외 n개)
+		// 카카오 결제 서버에 전달할 itemname 정하기 (좌석이 1건이면 공연+좌석이름, 2건 이상이면 첫번째 공연+좌석 외 n건)
 		String firstShowName = bookingService.findShowTitleByBookingId(bookIds.get(0));
 		String firstSeatName = bookingService.findSeatNameByBookingId(bookIds.get(0));
 		String itemName = payreqDto.getSelectedSeats().size() == 1 ? firstShowName + " " + firstSeatName
@@ -78,7 +80,7 @@ public class PaymentController {
 		int amount = bookingService.totalPrice(bookIds);
 
 		// 헤더에 들어갈 내용 싣기
-		headers.add("Authorization", "KakaoAK 87bbada7fcee0b5be9c2633bf2882b00");
+		headers.add("Authorization", kakaoApiKey);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// 바디에 들어갈 내용 싣기
@@ -119,7 +121,7 @@ public class PaymentController {
 		HttpHeaders headers = new HttpHeaders();
 
 		// 헤더에 들어갈 내용 싣기
-		headers.add("Authorization", "KakaoAK 87bbada7fcee0b5be9c2633bf2882b00");
+		headers.add("Authorization", kakaoApiKey);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// 바디에 들어갈 내용 싣기
@@ -141,7 +143,7 @@ public class PaymentController {
 		if (response.getStatusCode() == HttpStatus.OK) {
 			paymentService.insertPaymentInfo(tid, orderNum, response.getBody().getAmount().getTotal(), bookIds);
 
-			// 전역변수 초기화
+			// 전역변수 리셋
 			tid = "";
 			orderNum = "";
 			bookIds.clear();
@@ -182,7 +184,7 @@ public class PaymentController {
 		HttpHeaders headers = new HttpHeaders();
 
 		// 헤더에 담길 내용
-		headers.add("Authorization", "KakaoAK 87bbada7fcee0b5be9c2633bf2882b00");
+		headers.add("Authorization", kakaoApiKey);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// 바디에 들어갈 내용 싣기

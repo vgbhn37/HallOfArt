@@ -24,7 +24,7 @@
 							공연 일시 :
 							<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
 						</p>
-						<button type="button" class="btn btn-outline-danger float-right" onclick="deleteBooking(${booking.bookingId})">취소</button>
+						<button type="button" class="btn btn-outline-danger float-right" onclick="deleteBooking(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">취소</button>
 					</div>
 				</div>
 			</div>
@@ -38,50 +38,29 @@
 	</div>
 
 </div>
-
-
-<!-- --------------------------------------------------------- -->
-<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-
-<style>
-#check-seat {
-	width: 20px;
-	height: 20px;
-}
-
-.kakao_button {
-	cursor: pointer;
-	margin-right: 8px;
-}
-
-
-</style>
-
 <script>
-	
-	//새로고침, 뒤로가기 막기
-	document.onkeydown = function(e){
- 		key = (e) ? e.keyCode : event.keyCode;
- 		ctrl = (e) ? e.ctrlKey  : event.ctrlKey;
- 
- 		if((ctrl == true && (key == 78 || key == 82)) || key==8 || key==116){
-    		if(e){
-      			e.preventDefault();
-    		}
-    		else{
-          event.keyCode = 0;
-          event.returnValue = false;
-    		}
-  		}
+
+	//로컬 스토리지의 결제 성공값 삭제
+	if(localStorage.getItem("payStatus")=="success"){
+		localStorage.removeItem("payStatus");
 	}
 	
-
-	// 체크 된 좌석을 담는 배열
+	// 세션 스토리지의 팝업창 상태 초기화
+	if(sessionStorage.getItem("popupStatus")=="popup"){
+		sessionStorage.removeItem("popupStatus");
+		location.reload();
+	}
+	
+	
+	// 체크 된 좌석을 담는 배열	
 	let selectedSeats = new Array();
 	
 	// 총 가격
 	let totalPriceElement = document.getElementById("totalPrice");
 	let totalPrice =  parseInt(totalPriceElement.textContent);
+	
+	// 결제 팝업 창
+	let paymentPopup;
 	
 	// 각 좌석을 체크, 체크 해제 시 총 가격을 계산
 	function calcPrice(checked,price,id){
@@ -122,15 +101,31 @@
   				return res.text();
   			})
   			.then(url=>{
-  				window.open(url, 'PaymentPopup', 'width=600, height=700');
+  				paymentPopup = window.open(url, 'PaymentPopup', 'width=600, height=700');
+  				sessionStorage.setItem("popupStatus","popup");
+  				checkPopupClosed();
   			})
   			.catch(error=>{
   				console.error(error);
   			});
   	}
-	 
-    
-    
+  	
+  	function checkPopupClosed(){
+  		if(!paymentPopup || paymentPopup.closed){
+  			
+  			sessionStorage.removeItem("popupStatus"); // 팝업창이 닫혔으므로 팝업창 상태를 제거
+  			if(localStorage.getItem("payStatus")=="success"){
+  				localStorage.removeItem("payStatus"); // 성공상태를 수신하였으므로 상태 제거
+  				location.href='/user/ticketList/' + ${user.id};
+  			}
+  			
+  		}else{
+  			 setTimeout(checkPopupClosed, 300); 
+  		}
+  			
+  	}
+  	
+ 
 	function deleteBooking(id){
 		
 		if(confirm("좌석을 취소하시겠습니까?")){
@@ -152,3 +147,20 @@
 	
 	
 </script>
+
+
+<!-- --------------------------------------------------------- -->
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+
+<style>
+#check-seat {
+	width: 20px;
+	height: 20px;
+}
+
+.kakao_button {
+	cursor: pointer;
+	margin-right: 8px;
+}
+</style>
+

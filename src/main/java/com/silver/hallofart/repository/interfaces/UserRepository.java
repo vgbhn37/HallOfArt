@@ -3,6 +3,7 @@ package com.silver.hallofart.repository.interfaces;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.silver.hallofart.dto.UserDto;
 
@@ -10,6 +11,7 @@ import com.silver.hallofart.dto.UserDto;
 public interface UserRepository {
 	public int insert(UserDto dto);
 	public int updateById(UserDto user);
+	public int updatePassByUsername(@Param("username") String username, @Param("password") String password);
 	public int deleteById(Integer id);
 	public UserDto findById(Integer id);
 	public List<UserDto> findAll();

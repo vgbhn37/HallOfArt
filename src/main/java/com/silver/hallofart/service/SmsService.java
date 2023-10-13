@@ -29,4 +29,16 @@ final DefaultMessageService messageService;
         
         return certificationNumber;
     }
+    
+    public String sendTempPassword(String to) {
+    	String certificationNumber = String.valueOf((int) (Math.random() * 99999) + 10000); // ==> 인증번호
+        Message message = new Message();
+        message.setFrom("010-4061-8333");
+        
+        message.setTo( to.replace("-", "") );
+        message.setText("[예술의 전당 테스트] 회원님의 임시 비밀번호를 보내드립니다. :  "+ certificationNumber );
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        
+        return certificationNumber;
+    }
 }

@@ -27,7 +27,7 @@ public class BookingService {
 		
 		List<ShowTime> showTimeList = bookingRepository.findShowTimeListByShowId(showId);
 		if(showTimeList==null) {
-			System.out.println("-- 못 가져옴 --");
+			throw new CustomRestfulException("해당 공연이 없습니다", HttpStatus.BAD_REQUEST);
 		}
 			return showTimeList;	
 	}
@@ -36,7 +36,7 @@ public class BookingService {
 		
 		List<SeatStatusDto> seatList = bookingRepository.findSeatListByShowTimeId(showTimeId);
 		if(seatList == null) {
-			System.out.println("-- 좌석 못가져옴-- ");
+			throw new CustomRestfulException("해당 공연의 좌석 정보를 가져오는 데 실패했습니다.", HttpStatus.BAD_REQUEST);
 		}
 			return seatList;
 	}
@@ -54,7 +54,6 @@ public class BookingService {
 	}
 	
 	public int totalPrice(List<Integer> ids) {
-		
 		int amount = 0;
 		for (Integer integer : ids) {
 			amount+= bookingRepository.findPriceByBookingId(integer);
@@ -65,6 +64,7 @@ public class BookingService {
 	public int findPriceByBookingId(Integer id) {
 		return bookingRepository.findPriceByBookingId(id);
 	}
+	
 	@Transactional
 	public void insertBookingInfo(List<SelectedSeatDto> selectedSeatList, int userId) {
 		
@@ -87,6 +87,7 @@ public class BookingService {
 		}
 	}
 	
+	@Transactional
 	public List<BookedSeatDto> findpaymentListByUserId(int id){
 		List<BookedSeatDto> findpaymentListByUserId = new ArrayList<>();
 		List<Booking> bookingList = bookingRepository.findWaitingPaymentBookingByUserId(id);
@@ -104,6 +105,7 @@ public class BookingService {
 		return findpaymentListByUserId;
 	}
 	
+	@Transactional
 	public List<BookedSeatDto> findTicketByUserId(int id){
 		List<BookedSeatDto> findTicketByUserId = new ArrayList<>();
 		List<Booking> bookingList = bookingRepository.findSuccessPaymentBookingByUserId(id);

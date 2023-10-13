@@ -51,6 +51,35 @@ public class MailService implements MailServiceImpl {
 
 		return message;
 	}
+	
+	@Override
+	public MimeMessage createTempPassMessage(String to) throws MessagingException, UnsupportedEncodingException {
+		
+		MimeMessage message = emailsender.createMimeMessage();
+
+		message.addRecipients(RecipientType.TO, to);// 보내는 대상
+		message.setSubject("예술의 전당 임시 비밀번호 발송");// 제목
+
+		String msgg = "";
+		msgg += "<div style='margin:100px;'>";
+		msgg += "<h1> 안녕하세요</h1>";
+		msgg += "<h1> 예술의 전당입니다</h1>";
+		msgg += "<br>";
+		msgg += "<p>회원님의 임시 비밀번호를 발송해 드립니다.<p>";
+		msgg += "<br>";
+		msgg += "<p>감사합니다<p>";
+		msgg += "<br>";
+		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+		msgg += "<h3 style='color:blue;'>임시 비밀번호입니다.</h3>";
+		msgg += "<div style='font-size:130%'>";
+		msgg += "PASSWORD : <strong>";
+		msgg += ePw + "</strong><div><br/> ";
+		msgg += "</div>";
+		message.setText(msgg, "utf-8", "html");
+		message.setFrom(new InternetAddress("wjsekdxptmxmdyd@naver.com", "예술의전당_관리자"));
+
+		return message;
+	}
 
 	// 랜덤 인증 코드 전송
 	@Override
@@ -100,5 +129,21 @@ public class MailService implements MailServiceImpl {
 
 
 		return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
+	}
+	
+	@Override
+	public String sendTempPassword(String to) throws Exception {
+
+		ePw = createKey();
+
+		MimeMessage message = createTempPassMessage(to);
+		try {
+			emailsender.send(message);
+		} catch (MailException es) {
+			es.printStackTrace();
+			throw new IllegalArgumentException();
+		}
+
+		return ePw;
 	}
 }

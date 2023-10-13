@@ -3,6 +3,7 @@ package com.silver.hallofart.controller;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -76,9 +77,111 @@ public class UserController {
 		return "user/myInfo";
 	}
 	
+	@GetMapping("/find-pass")
+	public String findInfo() {
+		return "user/findPass";
+	}
+	
+	@PostMapping("/find-pass")
+	public ResponseEntity<Integer> findPass(UserDto userDto) throws Exception {
+		
+		log.info("임시 비밀번호 발송 컨트롤러 실행");
+//		log.info("userDto : "+userDto);
+		
+		if(userService.searchUsername(userDto.getUsername())==null) {
+			// 존재하지 않는 아이디
+			return ResponseEntity.status(HttpStatus.OK).body(500);
+		}else {
+			UserDto oldUser = userService.searchUsername(userDto.getUsername());
+			if(userDto.getTel() == null) { // 이메일로 보내기를 눌렀을 경우
+				if(userDto.getEmail().equals(oldUser.getEmail())) {
+					String password = mailService.sendTempPassword(userDto.getEmail());
+					userService.updatePassByUsername(userDto.getUsername(), password);
+					log.info("발급된 임시 비밀번호 : " + password);
+					return ResponseEntity.status(HttpStatus.OK).body(400);
+				} else {
+					// 이메일 불일치
+					return ResponseEntity.status(HttpStatus.OK).body(501);
+				}
+			} else {
+				if(userDto.getTel().equals(oldUser.getTel())) {
+					
+//					사업자번호 이슈로 인한 조치
+//					String password = smsService.sendTempPassword(userDto.getTel());
+					
+					String password = String.valueOf((int) (Math.random() * 99999) + 10000);				
+					userService.updatePassByUsername(userDto.getUsername(), password);
+					log.info("발급된 임시 비밀번호 : " + password);
+					
+					return ResponseEntity.status(HttpStatus.OK).body(400);
+				} else {
+					// 전화번호 불일치
+					return ResponseEntity.status(HttpStatus.OK).body(502);
+				}
+			}
+		}
+	}
+	
+	@GetMapping("/find-id")
+	public String findId() {
+		return "user/findId";
+	}
+	
+	@PostMapping("/find-id")
+	public ResponseEntity<String> findIdProcess(UserDto userDto) {
+		
+		log.info("아이디찾기 컨트롤러 실행");
+		log.info("userDto : "+userDto);
+		
+		String user1;
+		String user2;
+		
+		try {
+			UserDto us1 = userService.searchEmail(userDto.getEmail());
+			if(us1.getPassword().equals("kakaoUser")) user1 = "카카오로 가입하셨습니다.";
+			else user1 = us1.getUsername();
+		} catch (Exception e) {
+			user1 = "없음";
+		}
+		
+		try {
+			UserDto us2 = userService.searchTel(userDto.getTel());
+			if(us2.getPassword().equals("kakaoUser")) user2 = "카카오로 가입하셨습니다.";
+			else user2 = us2.getUsername();			
+		} catch (Exception e) {
+			user2 = "없음";
+		}
+		
+		StringBuilder u1 = new StringBuilder(user1);
+		StringBuilder u2 = new StringBuilder(user2);
+		
+		if(!user1.equals("카카오로 가입하셨습니다.")) {
+			for (int i = 5; i < u1.length(); i++) {
+				u1.setCharAt(i, '*');
+			}
+		}
+		
+		if(!user2.equals("카카오로 가입하셨습니다.")) {
+			for (int i = 5; i < u2.length(); i++) {
+				u2.setCharAt(i, '*');
+			}
+		}
+		
+		if(user1.equals("없음") && user2.equals("없음")) {
+			return ResponseEntity.status(HttpStatus.OK).body("아이디가 조회되지 않습니다.");			
+		} else if(!user1.equals("없음") && !user2.equals("없음") && !(user1.equals(user2))) {
+			return ResponseEntity.status(HttpStatus.OK).body("이메일로 조회한 아이디 : "+u1+"<br>전화번호로 조회한 아이디 : "+u2);
+		}
+		
+		if(user1.equals("없음")) return ResponseEntity.status(HttpStatus.OK).body("조회된 회원님의 아이디 : "+u2);
+		else return ResponseEntity.status(HttpStatus.OK).body("조회된 회원님의 아이디 : "+u1);
+	}
+	
 	@PostMapping("/sms-confirm")
 	@ResponseBody
 	int smsConfirm(@RequestParam("tel") String tel) throws Exception {
+		
+		log.info("가입코드 문자메세지 전송 컨트롤러 실행");
 		
 //		int code = smsService.send(tel);
 //		log.info("인증코드 : " + code);
@@ -93,6 +196,9 @@ public class UserController {
 	@PostMapping("/mail-confirm")
 	@ResponseBody
 	String mailConfirm(@RequestParam("email") String email) throws Exception {
+		
+		log.info("가입코드 이메일 전송 컨트롤러 실행");
+		
 	    String code = mailService.sendSimpleMessage(email);
 	    log.info("인증코드 : " + code);
 	    return code;
@@ -100,7 +206,9 @@ public class UserController {
 	
 	@PostMapping("/duplicate-check")
 	public ResponseEntity<Integer> duplicateCheck(@RequestParam("username") String username) {
-		log.info("UserController ===> duplicateCheck ====> start");
+		
+		log.info("아이디 중복체크 컨트롤러 실행");
+		
 		if(userService.searchUsername(username)!=null) {
 			log.info("UserController ====> 아이디 사용불가");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
@@ -112,7 +220,9 @@ public class UserController {
 	
 	@PostMapping("/email-duplicate-check")
 	public ResponseEntity<Integer> emailDuplicateCheck(@RequestParam("email") String email) {
-		log.info("UserController ===> email duplicateCheck ====> start");
+		
+		log.info("이메일 중복체크 컨트롤러 실행");
+		
 		if(userService.searchEmail(email)!=null) {
 			log.info("UserController ====> 이메일 사용불가");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
@@ -124,7 +234,9 @@ public class UserController {
 	
 	@PostMapping("/tel-duplicate-check")
 	public ResponseEntity<Integer> telDuplicateCheck(@RequestParam("tel") String tel) {
-		log.info("UserController ===> tel duplicateCheck ====> start");
+		
+		log.info("전화번호 중복체크 컨트롤러 실행");
+		
 		if(userService.searchTel(tel)!=null) {
 			log.info("UserController ====> 전화번호 사용불가");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
@@ -137,6 +249,7 @@ public class UserController {
 	@PostMapping("/sign-up")
 	public String signUpProcess(UserDto userDto) {
 		
+		log.info("회원가입 컨트롤러 실행");
 		log.info("userDto : "+userDto);
 		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
@@ -163,6 +276,8 @@ public class UserController {
 	@PostMapping("/sign-in")
 	public String signInProc(UserDto userDto) {
 		
+		log.info("로그인 컨트롤러 실행");
+		
 		if(userDto.getUsername() == null || userDto.getUsername().isEmpty()) {
 			throw new CustomRestfulException("아이디를 입력하십시오", HttpStatus.BAD_REQUEST);
 		}
@@ -185,7 +300,7 @@ public class UserController {
 //		}
 		
 		String uri = (String) session.getAttribute("beforeLogin");
-	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up") && !uri.equals("http://localhost/user/sign-in")) {
 	    	return "redirect:"+uri;
 	    } else {
 	    	return "redirect:/";
@@ -195,6 +310,8 @@ public class UserController {
 	
 	@GetMapping("/kakao/callback")
 	public String kakaoCallback(@RequestParam String code) {
+		
+		log.info("카카오 로그인 컨트롤러 실행");
 		log.info("카카오 로그인 콜백메서드 동작");
 		log.info("카카오 인가 코드 확인 : " + code);
 		
@@ -288,7 +405,7 @@ public class UserController {
 		session.setAttribute("iskakao", true);
 		
 		String uri = (String) session.getAttribute("beforeLogin");
-	    if (uri != null && !uri.equals("http://localhost/user/sign-up")) {
+	    if (uri != null && !uri.equals("http://localhost/user/sign-up") && !uri.equals("http://localhost/user/sign-in")) {
 	    	return "redirect:"+uri;
 	    } else {
 	    	return "redirect:/";
@@ -298,7 +415,7 @@ public class UserController {
 	@PostMapping("/modify-info")
 	public String modifyInfo(UserDto userDto) {
 		
-		log.info("회원정보 수정 실행");
+		log.info("회원정보 수정 컨트롤러 실행");
 		
 		UserDto oldUser = (UserDto) session.getAttribute("user");
 		
