@@ -9,6 +9,22 @@
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="css/admin_styles.css" rel="stylesheet" />
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	$(document).ready(function(){
+		$(".modal-content").load("modal");
+		
+	    const sidebarToggle = $('#sidebarToggle');
+	    if (sidebarToggle.length) {
+	        sidebarToggle.on('click', function(event) {
+	            event.preventDefault();
+	            $('body').toggleClass('sb-sidenav-toggled');
+	            localStorage.setItem('sb|sidebar-toggle', $('body').hasClass('sb-sidenav-toggled'));
+	        });
+	    }
+	});
+</script>
 </head>
 <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -55,7 +71,8 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="showList">조회</a>
-                                    <a class="nav-link" href="insertShow">입력</a>
+									<a class="nav-link" data-bs-toggle="modal" href="#myModal">입력</a>
+<!--                                     <a class="nav-link" href="insertShow">입력</a> -->
                                     <a class="nav-link" href="bookList">예매 현황</a>
                                     <a class="nav-link" href="merchantList">결제 현황</a>
                                 </nav>
@@ -106,5 +123,13 @@
                     </div>
                 </nav>
             </div>
+            <!-- Modal -->
+				  <div class="modal fade" id="myModal" role="dialog">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				      	modal
+				      </div>
+				    </div>
+				  </div>
 </body>
 </html>

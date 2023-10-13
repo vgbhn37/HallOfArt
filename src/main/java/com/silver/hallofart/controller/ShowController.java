@@ -93,19 +93,16 @@ public class ShowController {
 	}
 	
 	@GetMapping("/apply")
-	public String apply(Model model) {
+	public String apply(@RequestParam String name, Model model) {
 		
 		List<Hall> halls = showService.findHallAll();
 		model.addAttribute("halls", halls);
 		
-		return "show/applyShow";
-	}
-	
-	@PostMapping("/hallTime")
-	@ResponseBody
-	public List<String> hallTime(String name){
 		List<String> list = showService.findAllHallTime(name);
-		return list;
+		model.addAttribute("rentalList", list);
+		model.addAttribute("name", name);
+		
+		return "show/applyShow";
 	}
 	
 	@Transactional
@@ -120,7 +117,7 @@ public class ShowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:apply";
+		return "redirect:main";
 	}
 	
 	

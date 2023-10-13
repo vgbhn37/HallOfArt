@@ -148,21 +148,6 @@
 		                   		</table>                         
                             </div>
                         </div>
-	                    
-	                    
-	                    <h3 class="mt-4">결제 내역 정보</h3>
-	                    <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Merchant Information</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-header" id="merchantHeader">
-                                <i class="fas fa-table me-1"></i>
-                                Recent Merchant
-                            </div>
-                            <div class="card-body" id="merchantDiv">
-								결제 정보                                
-                            </div>
-                        </div>
                     </div>
                 </main>
 <%@ include file="/WEB-INF/view/layout/admin_footer.jsp"%>
@@ -177,18 +162,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script>
         	$(document).ready(function(){
-        		$("#merchantDiv").hide();
-        		$("#merchantHeader").css("cursor", "pointer");       			
-        		
-        		$("#merchantHeader").on("click", function(){       			
-	        		let password = prompt("비밀번호를 입력해주세요");
-        			if(password=='1234'){
-		        		$("#merchantDiv").show();
-        			}else{
-        				alert('패스워드가 일치하지 않습니다');        				
-        			}
-        		});
-        		
         	});
         </script>
     </body>

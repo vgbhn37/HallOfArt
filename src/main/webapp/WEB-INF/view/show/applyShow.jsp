@@ -79,31 +79,68 @@
 </style>
 <!-- --------------------------------------------------------- -->
 	<div class="content">
-		<form method="post" id="upload" action="upload" onsubmit="return false;" style="width:100%" enctype="multipart/form-data">
-			<table class="insertShowTb" style="margin-top: 50px;">
-    			<tr>
-    				<td colspan="2">
-       					<h3>공연 정보</h3>
-    				</td>
-    			</tr>
-	   			<tr>
-	   				<td style="width: 40%; min-width: 150px;">공연/전시 이미지</td>
-	   				<td>
-	   					<label for="uploadImg">
-	   						<input type="file" id="uploadImg" name="uploadImg" accept="image/*" multiple="multiple" style="width: 250px">
-	   						<button id="uploadImgBtn" style="width:50px;">저장</button>
-		   				</label>
-   					</td>
-	   			</tr>
-	   			<tr id="thumbTr">
-	   				<td>미리보기</td>
-	   				<td id="thumbTd" style="height: 300px; padding: 10px; background-color: #eee">
-	   				</td>
-	   			</tr>
-			</table>
-		</form>
 		<form method="post" id="apply_frm" action="apply" style="width:100%">
   			<table class="insertShowTb">
+  				<tr>
+    				<td colspan="2">
+    					<br><h1>대관 신청 - ${name}</h1><br><br>
+    				</td>
+    			</tr>
+    			<tr>
+					<td colspan="2"  style="text-align: center;">
+						<h3>
+							대관 정보
+							<c:forEach var="hall" items="${halls}">
+								<c:if test="${hall.name eq name}">
+									<input type="hidden" name="hallTbId" value="${hall.id}">
+									<input type="hidden" name="name" value="${hall.name}">
+								</c:if>
+							</c:forEach>
+						</h3>
+					</td>
+				</tr>
+       			<tr>
+       				<td rowspan="2">대관 날짜</td>
+       				<td>
+       					Start :&nbsp;<input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off" style="width: 200px;" readonly="readonly">
+       					<button type="button" id="date1resetBtn">reset</button>
+   					</td>
+       			</tr>
+       			<tr>
+       				<td>
+       					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
+       					<button type="button" id="date2resetBtn">reset</button>
+       				</td>
+       			</tr>
+       			<tr>
+       				<td>대관 시간</td>
+       				<td>
+       					<div id="halltimeTd">
+	       					오전 <select name="rentalStartTime" style="width:105px;">
+	       					    <option value="" selected disabled>- - - - -</option>
+	       						<option value="09:00">09:00</option>
+	       						<option value="10:00">10:00</option>
+	       						<option value="11:00">11:00</option>
+	       						<option value="12:00">12:00</option>
+	       						<option value="13:00">13:00</option>
+	       					</select>
+	       					~
+	       					오후 <select name="rentalEndTime" style="width:105px;">
+	       					    <option value="" selected disabled>- - - - -</option>
+	       						<option value="14:00">02:00</option>
+	       						<option value="15:00">03:00</option>
+	       						<option value="16:00">04:00</option>
+	       						<option value="17:00">05:00</option>
+	       						<option value="18:00">06:00</option>
+	       					</select>
+       					</div>
+       				</td>
+       			</tr>
+    			<tr>
+    				<td colspan="2">
+       					<br><h3>공연 정보</h3>
+    				</td>
+    			</tr>
   				<tr>
   					<td>신청인</td>
   					<td>
@@ -157,81 +194,43 @@
        				<td>입장 가격</td>
        				<td><input type="text" name="price"></td>
        			</tr>
-				<tr>
-					<td colspan="2"  style="text-align: center;">
-						<h3>대관 정보</h3>
-					</td>
-				</tr>
-       			<tr>
-       				<td>장소 (홀)</td>
-       				<td>
-       					<select name="hallTbId">
-       					    <option value="" selected disabled>- - - - - - -</option>
-       						<c:forEach var="hall" items="${halls}">
-       							<c:choose>
-       								<c:when test="${hall.status eq '사용 중'}">
-		       							<option value="${hall.name}" disabled>
-       								</c:when>
-       								<c:otherwise>
-		       							<option value="${hall.name}">
-       								</c:otherwise>
-       							</c:choose>
-       								${hall.id} - ${hall.name} : ${hall.status}
-   								</option>
-       						</c:forEach>
-       					</select>
-       				</td>
-       			</tr>
-       			<tr>
-       				<td rowspan="2">대관 날짜</td>
-       				<td>
-       					Start :&nbsp;<input type="text" class="datepicker" id="datepicker1" name="startDate" autocomplete="off" style="width: 200px;" readonly="readonly">
-       					<button type="button" id="date1resetBtn">reset</button>
-   					</td>
-       			</tr>
-       			<tr>
-       				<td>
-       					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
-       					<button type="button" id="date2resetBtn">reset</button>
-       				</td>
-       			</tr>
-       			<tr>
-       				<td>대관 시간</td>
-       				<td>
-       					<div id="halltimeTd">
-	       					<select name="rentalStartTime" style="width:140px;">
-	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="09:00">09:00</option>
-	       						<option value="10:00">10:00</option>
-	       						<option value="11:00">11:00</option>
-	       						<option value="12:00">12:00</option>
-	       						<option value="13:00">13:00</option>
-	       					</select>
-	       					~
-	       					<select name="rentalEndTime" style="width:140px;">
-	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="12:00">14:00</option>
-	       						<option value="15:00">15:00</option>
-	       						<option value="16:00">16:00</option>
-	       						<option value="17:00">17:00</option>
-	       						<option value="18:00">18:00</option>
-	       					</select>
-       					</div>
-       				</td>
-       			</tr>
-       			<tr>
-       				<td colspan="2"><a id="booking" href="#">신청하기</a></td>
-       			</tr>
    			</table>
    		</form>
+   		<form method="post" id="upload" action="upload" onsubmit="return false;" style="width:100%" enctype="multipart/form-data">
+			<table class="insertShowTb">
+	   			<tr>
+	   				<td style="width: 40%; min-width: 150px;">공연/전시 이미지</td>
+	   				<td>
+	   					<label for="uploadImg">
+	   						<input type="file" id="uploadImg" name="uploadImg" accept="image/*" multiple="multiple" style="width: 250px">
+	   						<button id="uploadImgBtn" style="width:50px;">저장</button>
+		   				</label>
+   					</td>
+	   			</tr>
+	   			<tr id="thumbTr">
+	   				<td>미리보기</td>
+	   				<td id="thumbTd" style="height: 300px; padding: 10px; background-color: #eee">
+	   				</td>
+	   			</tr>
+			</table>
+		</form>
+		<a id="booking" href="#">신청하기</a>
 	</div>
 <!-- --------------------------------------------------------- -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(document).ready(function() {
+		// hallTime ajax
+// 		$("select[name=hallTbId]").change(function(){
+// 			let name = $("select[name=hallTbId]").val();
+// 			console.log(name);
+// 			loadRentalList(name);
+// 			console.log("rentalList : "+rentalList);
+// 		});
+			
 		// datepicker 기본 설정
-    	$(".datepicker").datepicker({
+		$(".datepicker").datepicker({
             dateFormat: 'yy-mm-dd',
             prevText: '이전 달',
             nextText: '다음 달',
@@ -242,42 +241,13 @@
             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
             showMonthAfterYear: true,
             yearSuffix: '년',
+            beforeShowDay: disableDates
         });
-
-		let rentalList = [];
 		
-		//ajax function
-		function loadRentalList(name, callback){
-			$.ajax({
-				url: "hallTime",
-				type: "post",
-				data: {name: name},
-				success: function(list){
-					callback(list);
-					rentalList=list;
-				},
-				error: function(e){
-					console.log("error : "+e);
-				}
-			}); // end of ajax
-		}
-		
-		// hallTime ajax
-		$("select[name=hallTbId]").change(function(){
-			let name = $("select[name=hallTbId]").val();
-			console.log(name);
-			loadRentalList(name, function (rentalList) {
-				$(".datepicker").datepicker("option", "beforeShowDay", function(date) {
-				    return disableDates(date, rentalList);
-				});
-			});
-		});
-				
 		// datepicker 범위 제약 옵션
-		
 		$('#datepicker1').datepicker('option', 'onSelect', function(dateString){
 	    	$("#datepicker2").datepicker('option', 'minDate', dateString);
-	    	for (let li of rentalList) {
+	    	for (let li of ${rentalList}) {
 				if(dateString<li){
 			    	$("#datepicker2").datepicker('option', 'maxDate', li);
 	    			break;
@@ -291,7 +261,7 @@
 		});
 	    $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
 	    	$("#datepicker1").datepicker('option', 'maxDate', dateString);
-	    	for (let li of rentalList.reverse()) {
+	    	for (let li of ${rentalList}.reverse()) {
 				if(dateString>li){
 			    	$("#datepicker1").datepicker('option', 'minDate', li);
 	    			break;
@@ -302,16 +272,16 @@
 	    	$("#datepicker2").val('');
 	    	$("#datepicker1").datepicker('option', 'maxDate', '');
 	    	$("#datepicker1").datepicker('option', 'minDate', '');
-		});
+		});		
 
-		// datepicker 특정 일 비활성화
-	    function disableDates(date, rentalList){
+// 		datepicker 특정 일 비활성화
+	    function disableDates(date){
+//             console.log("rentalList fnc : "+${rentalList});
     		var m = date.getMonth() + 1;
             var d = date.getDate();
             var y = date.getFullYear();
-            console.log("rentalList fnc : "+rentalList);
-            for (var i = 0; i < rentalList.length; i++) {
-                var parts = rentalList[i].split('-');
+            for (var i = 0; i < ${rentalList}.length; i++) {
+                var parts = ${rentalList}[i].split('-');
                 var rentalYear = parseInt(parts[0]);
                 var rentalMonth = parseInt(parts[1]);
                 var rentalDay = parseInt(parts[2]);
@@ -401,19 +371,18 @@
 				checkMsg+="입장 가격을 입력해주세요\n";
 			}
 			// ---------------- 유효성 : 장소
-			if($("select[name=hallTbId]").val()==null){
-				$("select[name=hallTbId]").css("border", "2px solid red");
+			if($("input[name=hallTbId]").val()==null){
 				checkMsg+="대관할 홀 번호를 입력해주세요\n";
 			}
 			// ---------------- 유효성 : 대관 시간
 			if($("select[name=rentalStartTime]").val()==null||$("select[name=rentalEndTime]").val()==null){
-				$("select[name=rentalStartTime]").css("border", "2px solid red");
-				$("select[name=rentalEndTime]").css("border", "2px solid red");
+				$("select[name=showStartTime]").css("border", "2px solid red");
+				$("select[name=showEndTime]").css("border", "2px solid red");
 				checkMsg+="대관 시간을 입력해주세요\n";
 			}else if($("input[name=showStartTime]").val()<$("select[name=rentalStartTime]").val()
 					||$("input[name=showEndTime]").val()>$("select[name=rentalEndTime]").val()){
-				$("select[name=rentalStartTime]").css("border", "2px solid red");
-				$("select[name=rentalEndTime]").css("border", "2px solid red");
+				$("select[name=showStartTime]").css("border", "2px solid red");
+				$("select[name=showEndTime]").css("border", "2px solid red");
 				checkMsg+="공연 시간과 대관 시간이 올바르지 않습니다";
 			}
 

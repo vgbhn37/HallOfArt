@@ -102,23 +102,30 @@ public class AdminController {
 	}
 	
 	@GetMapping("/insertShow")
-	public String insertShow(Model model) {
+	public String insertShow(@RequestParam String name, Model model) {
+		
 		List<Hall> halls = showService.findHallAll();
 		model.addAttribute("halls", halls);
+		
+		List<String> list = showService.findAllHallTime(name);
+		model.addAttribute("rentalList", list);
+		model.addAttribute("name", name);
+		
 		return "admin/insertShow";
 	}
 	@Transactional
 	@PostMapping("/insert")
-	public String applying(Show show, Rental rental) {
+	public String applying(Show show, Rental rental,  String startTime) {
 		System.out.println("inserting show : "+show);
 		System.out.println("inserting seat : "+rental);
 		try {
 			showService.insertShow(show);
+			showService.insertShowTime(startTime);
 			showService.insertRental(rental);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:insertShow";
+		return "redirect:main";
 	}
 
 	@GetMapping("/bookList")
@@ -150,5 +157,15 @@ public class AdminController {
 		List<PaymentDto> list = service.findMerchantAll(paging);
 		model.addAttribute("list", list);
 		return "admin/merchantList";
+	}
+	
+	@GetMapping("/modal")
+	public String loginModal(Model model) {
+		
+		List<Hall> halls = showService.findHallAll();
+		model.addAttribute("halls", halls);
+		System.out.println(halls);
+		
+	    return "layout/modal";
 	}
 }
