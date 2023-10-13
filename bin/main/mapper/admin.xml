@@ -19,6 +19,22 @@
 		order by id desc
 		limit #{offset}, #{recordSize}
 	</select>
+	<select id="findShowBySearch" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.repository.model.Show">
+		select id
+				 ,title
+				 ,content
+				 ,start_date
+				 ,end_date
+				 ,price
+				 ,show_status
+				 ,show_img
+				 ,show_type_id1
+				 ,hall_tb_id
+		from show_tb
+		where title like concat('%',#{search},'%')
+		order by id desc
+		limit #{paging.offset}, #{paging.recordSize}
+	</select>
 		
 	<update id="updateStatus">
 		update show_tb set show_status = #{showStatus} where id = #{id}

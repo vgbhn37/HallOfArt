@@ -39,5 +39,6 @@ public interface BookingRepository {
 	
 	//delete
 	public int deleteBookingById(Integer id);
+	public int deleteNonpaymentBooking();
 	
 }

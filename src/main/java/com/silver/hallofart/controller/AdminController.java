@@ -82,6 +82,7 @@ public class AdminController {
 	@GetMapping("/showList")
 	public String showList(@ModelAttribute("paging") PagingDto paging , 
 									@RequestParam(value="page", required = false, defaultValue="1")int page, 
+									@RequestParam(value="search", required = false) String search,
 									Model model) {
 		paging.setPage(page);
 		Pagination pagination = new Pagination();
@@ -89,7 +90,7 @@ public class AdminController {
 		pagination.setArticleTotalCount(service.countShow(pagination));
 		
 		model.addAttribute("pagination", pagination);
-		List<Show> list = service.findAll(paging);
+		List<Show> list = search==null ? service.findAll(paging) : service.findShowBySearch(paging, search);
 		model.addAttribute("list", list);
 		
 		return "admin/showList";

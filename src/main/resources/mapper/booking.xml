@@ -82,9 +82,9 @@
 	</select>
 	<insert id="insertBookingInfo">
 		insert into booking_tb (status, user_tb_id,
-		seat_tb_id, show_time_tb_id, show_tb_id)
+		seat_tb_id, show_time_tb_id, show_tb_id,created_at)
 		values (#{status},
-		#{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId})
+		#{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId},now())
 	</insert>
 	<update id="updateBookingToSuccess">
 		update booking_tb set status='정상' where id = #{id}
@@ -94,6 +94,9 @@
 	</update>
 	<delete id="deleteBookingById">
 		delete from booking_tb where id = #{id}
+	</delete>
+	<delete id="deleteNonpaymentBooking">
+		delete from booking_tb where timestampdiff(minute, created_at , now()) >= 30 and status='결제 대기';
 	</delete>
 
 

@@ -13,6 +13,7 @@ import com.silver.hallofart.repository.model.Show;
 @Mapper
 public interface AdminRepository {
 	public List<Show> findAll(PagingDto paging);
+	public List<Show> findShowBySearch(@Param("paging") PagingDto paging, @Param("search") String search);
 	public int updateStatus(@Param("id") int id, @Param("showStatus") String showStatus);
 	public AdminDto findCountAll();
 	public List<PaymentDto> findMerchantAll(PagingDto paging);

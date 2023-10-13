@@ -9,6 +9,8 @@
 	<section style="min-height: calc(100vh - 158.77px);">
 
 		<div class="container" style="margin-top: 60px;">
+		
+		<h1 class="title--booking">좌석 예매</h1>
 			<label for="time-select">선택 일시 : </label>
 			<select name="showtime" id="time-select" onchange="showSeatList(this.value)">
 				<option value="" disabled selected>--날짜와 시간을 선택해주세요--</option>
@@ -19,16 +21,17 @@
 				</c:forEach>
 			</select>
 			<div class="show_title">
-				<span style="font-weight: bold; font-size: large;">${show.title } (${hallName })</span>
+				<h4 style="margin-top: 15px;">${show.title } (${hallName })</h4>
 			</div>
-			<div class="row" style="padding-top: 50px; border-top: solid;">
+			<hr>
+			<div class="row" style="padding: 50px 0; background: #f4f6f2;">
 				<div id="hall_status" class="col-7">
 					<div class="stage">
-						<p style="text-align: center;">STAGE</p>
+						<p style="text-align: center;"></p>
 					</div>
 					<!-- 좌석리스트 표시 div (ajax) -->
-					<div class="seat_list" style="margin-top: 40px;">
-						<p style="text-align: center;">공연 시간을 선택해주세요.</p>
+					<div class="seat_list" style="margin-top: 40px; text-align: center;">
+						<p>공연 시간을 선택해주세요.</p>
 					</div>
 				</div>
 				<!-- 선택한 좌석 표시 div -->
@@ -36,20 +39,20 @@
 					<p style="text-align: center;">선택 된 좌석이 없습니다</p>
 				</div>
 			</div>
-			<div style="text-align: end;">
+			<div style="text-align: end; margin-top: 20px;">
 				<button onclick="moveToBookingSuccessPage()" class="btn btn-primary">예매하기</button>
 			</div>
 		</div>
 
-		<style>
+<style>
 .seat {
 	background-color: #6610f2;
-	font-size: xx-large;
-	width: 30px;
+	font-size: x-large;
+	width: 20px;
 	height: 20px;
-	margin: 10px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	margin: 5px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 	cursor: pointer;
 }
 
@@ -59,41 +62,62 @@
 
 .seat:hover {
 	background-color: #a06af7;
-	font-size: xx-large;
+	font-size: x-large;
 	width: 30px;
 	height: 20px;
-	margin: 10px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	margin: 5px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 	cursor: pointer;
 }
 
 .stage {
-	border: 1px solid;
 	margin: auto;
 	padding: 20px;
-	width: 300px;
-	height: 80px;
+	width: 330px;
+	height: 50px;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .selected_seat {
 	background-color: #2287fa;
-	font-size: xx-large;
+	font-size: x-large;
 	width: 100px;
 	height: 80px;
-	margin: 10px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	margin: 5px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 }
 
 .booked_seat {
 	background-color: #888888;
-	font-size: xx-large;
+	font-size: x-large;
 	width: 100px;
 	height: 80px;
-	margin: 10px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	margin: 5px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+
+.title--booking {
+    position: relative;
+    color: #535353;
+    font-size: 35px;
+    line-height: 35px;
+    padding: 5px 0 20px 22px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid #535353;
+}
+
+.title--booking:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #ed1a3b;
+    content: "";
 }
 </style>
 

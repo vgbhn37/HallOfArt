@@ -21,6 +21,10 @@ public class AdminService {
 		return adminRepository.findAll(paging);
 	}
 	
+	public List<Show> findShowBySearch(PagingDto paging, String search){
+		return adminRepository.findShowBySearch(paging, search);
+	}
+ 	
 	public int updateStatus(int id, String showStatus) {
 		return adminRepository.updateStatus(id, showStatus);
 	}

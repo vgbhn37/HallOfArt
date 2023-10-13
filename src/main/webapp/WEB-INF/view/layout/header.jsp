@@ -31,7 +31,7 @@
 <body>
 	<section class="ftco-section" style="font-family: 'NanumSquareRound'">
 		<div id="header_back"
-			style="background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../resources/images/headertest.png'); height: 92px;">
+			style="background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('/resources/images/headertest.png'); height: 92px;">
 			<div class="container-fluid px-md-5">
 				<div class="row justify-content-between">
 					<div class="col-md-8 order-md-last">
