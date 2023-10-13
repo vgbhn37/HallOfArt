@@ -41,7 +41,7 @@
 	            <div class="form-outline">
 	            	<div style="float: left;">
 						<label class="form-label">이메일</label>
-						<input style="margin-bottom: 5px;" type="text" id="email" name="email" placeholder="ex)findid@naver.com" class="form-control form-control"/>
+						<input style="margin-bottom: 5px;" type="email" id="email" name="email" placeholder="ex)findid@naver.com" class="form-control form-control"/>
 					</div>
 					<div style="float: right;"> 
 						<label class="form-label">전화번호</label>

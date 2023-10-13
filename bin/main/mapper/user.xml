@@ -37,6 +37,11 @@
   		update user_tb set password = #{password}, tel = #{tel}, birth_date = #{birthDate}
   		where id = #{id}
 	</update>
+	
+	<update id="updatePassByUsername" parameterType="string">
+  		update user_tb set password = #{password}
+  		where username = #{username}
+	</update>
 	  
 	<delete id="deleteById">
 	  	delete from user_tb where id = #{id}
