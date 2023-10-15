@@ -2,12 +2,12 @@ package com.silver.hallofart.service;
 
 import java.util.List;
 
+import com.silver.hallofart.dto.PagingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.silver.hallofart.dto.Criteria;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.UserRepository;
@@ -17,18 +17,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 	
-	public List<UserDto> userList(Criteria cri) {
-		
-		cri.setAmount(10);
-		cri.setPageNum(10);
-		
-		return userRepository.findAllUserPaging(cri);
+	public List<UserDto> userList(PagingDto paging) {
+		return userRepository.findAllUserPaging(paging);
 	}
-	
+	public List<UserDto> userListByType(PagingDto paging) {
+		return userRepository.findAllUserByTypePaging(paging);
+	}
+
+	public List<UserDto> allUserList() {
+		return userRepository.findAllUser();
+	}
+
+	public List<UserDto> allUserListByType(String classification) {
+		return userRepository.findAllUserByType(classification);
+	}
+
 	@Transactional
 	public void signUp(UserDto userDto) {
 		int result = userRepository.insert(userDto);
@@ -40,6 +47,13 @@ public class UserService {
 	@Transactional
 	public void moidfyUser(UserDto userDto) {
 		int result = userRepository.updateById(userDto);
+		if(result != 1) {
+			throw new CustomRestfulException("회원정보 수정에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@Transactional
+	public void moidfyUserAdmin(UserDto userDto) {
+		int result = userRepository.updateByIdAdmin(userDto);
 		if(result != 1) {
 			throw new CustomRestfulException("회원정보 수정에 실패했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -86,6 +100,10 @@ public class UserService {
 	
 	public int countUser() {
 		return userRepository.userTotalCount();
+	}
+
+	public int countUserClassification(PagingDto paging) {
+		return userRepository.userTotalCountClassification(paging);
 	}
 
 }
