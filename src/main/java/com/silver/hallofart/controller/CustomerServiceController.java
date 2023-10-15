@@ -106,14 +106,20 @@ public class CustomerServiceController {
 	
 	//공지사항 세부페이지
 	@GetMapping("/announcement/detail")
-	public String announcementDetail(@ModelAttribute("page") int page, @RequestParam("id") Integer id, Model model) {
+	public String announcementDetail(@ModelAttribute("page") int page, @RequestParam (value="id", required = false) Integer id, Model model) {
+		if(id == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		model.addAttribute("announcement", customerServiceService.findAnnouncementById(id));
 		return "customerservice/announcementDetail";
 	}
 	
 	//공지사항 수정
 	@GetMapping("/announcement/modify")
-	public String announcementModify(@RequestParam("id") Integer id, @RequestParam("page") int page, Model model) {
+	public String announcementModify(@RequestParam("id") Integer id, @RequestParam (value="page", required = false) int page, Model model) {
+		if(id == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		model.addAttribute("announcement", customerServiceService.findAnnouncementById(id));
 		model.addAttribute("page", page);
 		return "customerservice/announcementModify";
@@ -183,7 +189,10 @@ public class CustomerServiceController {
 	
 	//문의내용
 	@GetMapping("/inquiry/detail")
-	public String inquiryDetail(@ModelAttribute("page") int page, @RequestParam("id") Integer id, Model model) {
+	public String inquiryDetail(@ModelAttribute("page") int page, @RequestParam (value="id", required = false) Integer id, Model model) {
+		if(id == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		//문의내용 불러오기
 		model.addAttribute("inquiry", customerServiceService.findInquiryById(id));
 		model.addAttribute("page", page);
@@ -244,7 +253,10 @@ public class CustomerServiceController {
 	}
 	
 	@GetMapping("/inquiry/answerDelete")
-	public String answerDelete(@RequestParam("id")Integer id, @ModelAttribute("page") int page) {
+	public String answerDelete(@RequestParam (value="id", required = false)Integer id, @ModelAttribute("page") int page) {
+		if(id == null) {
+			throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		customerServiceService.changeAnswer(id);
 		customerServiceService.deleteAnswer(id);
 		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + id;

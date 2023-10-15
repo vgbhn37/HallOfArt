@@ -13,16 +13,35 @@
 		select * from user_tb
 	</select>
 	
-	<select id="findAllUserPaging" resultType="com.silver.hallofart.dto.UserDto">
-			SELECT id, username, password, email, tel, birth_date, reg_date, role_type_id, (10 * 1) as t
-			FROM user_tb
-			ORDER BY id DESC
-			LIMIT 10
+	<select id="findAllUserPaging" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		ORDER BY id DESC
+		LIMIT #{offset}, #{recordSize}
+	</select>
+
+	<select id="findAllUserByTypePaging" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		WHERE role_type_id = #{classification}
+		ORDER BY id DESC
+		LIMIT #{offset}, #{recordSize}
+	</select>
+
+	<select id="findAllUserByType" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		WHERE role_type_id = #{classification}
+		ORDER BY id DESC
 	</select>
 	
     <select id="userTotalCount" resultType="int">
         SELECT count(*) FROM user_tb
     </select>
+
+	<select id="userTotalCountClassification" resultType="int">
+		SELECT count(*) FROM user_tb WHERE role_type_id = #{classification}
+	</select>
   	
   	<select id="findById" resultType="com.silver.hallofart.dto.UserDto">
 		select * from user_tb where id = #{id}
@@ -51,6 +70,11 @@
 	<update id="updateById">
   		update user_tb set password = #{password}, tel = #{tel}, birth_date = #{birthDate}
   		where id = #{id}
+	</update>
+
+	<update id="updateByIdAdmin">
+		update user_tb set role_type_id = #{roleTypeId}
+		where id = #{id}
 	</update>
 	
 	<update id="updatePassByUsername" parameterType="string">
