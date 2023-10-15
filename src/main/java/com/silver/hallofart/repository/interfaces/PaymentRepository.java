@@ -15,6 +15,7 @@ public interface PaymentRepository {
 	
 	//update
 	public int updatePaymentTidToBooking(@Param("tid")String tid, @Param("id")Integer id);
+	public int updatePaymentTidToRental(@Param("tid")String tid, @Param("id")Integer id);
 	public int updateRefundedAmount(@Param("tid")String tid, @Param("amount")int amount);
 	
 	//delete

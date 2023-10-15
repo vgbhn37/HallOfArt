@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.silver.hallofart.dto.BookedSeatDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.BookingRepository;
 import com.silver.hallofart.repository.model.Booking;
+import com.silver.hallofart.repository.model.Hall;
+import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.ShowTime;
 
 @Service
@@ -32,13 +35,18 @@ public class BookingService {
 			return showTimeList;	
 	}
 	
-	public List<SeatStatusDto> findSeatListByShowTimeId(Integer showTimeId){
+	public List<SeatStatusDto> findSeatListByShowTimeId(Integer showTimeId, Integer hallId){
 		
-		List<SeatStatusDto> seatList = bookingRepository.findSeatListByShowTimeId(showTimeId);
+		List<SeatStatusDto> seatList = bookingRepository.findSeatListByShowTimeIdAndHallId(showTimeId, hallId);
 		if(seatList == null) {
 			throw new CustomRestfulException("해당 공연의 좌석 정보를 가져오는 데 실패했습니다.", HttpStatus.BAD_REQUEST);
 		}
 			return seatList;
+	}
+	
+	public Hall findHallByShowId(Integer showId) {
+		
+		return bookingRepository.findHallByShowId(showId);
 	}
 	
 	public String findHallNameByShowId(Integer showId) {
@@ -97,6 +105,7 @@ public class BookingService {
 			dto.setTitle(bookingRepository.findShowTitleByShowId(booking.getShowTbId()));
 			dto.setHallName(bookingRepository.findHallNameByShowId(booking.getShowTbId()));
 			dto.setSeatName(bookingRepository.findSeatNameBySeatId(booking.getSeatTbId()));
+			dto.setShowImg(bookingRepository.findShowImgByshowId(booking.getShowTbId()));
 			dto.setPrice(bookingRepository.findPriceByShowId(booking.getShowTbId()));
 			dto.setStartTime(bookingRepository.findShowTimeByShowTimeId(booking.getShowTimeTbId()));
 			findpaymentListByUserId.add(dto);
@@ -115,6 +124,7 @@ public class BookingService {
 			dto.setTitle(bookingRepository.findShowTitleByShowId(booking.getShowTbId()));
 			dto.setHallName(bookingRepository.findHallNameByShowId(booking.getShowTbId()));
 			dto.setSeatName(bookingRepository.findSeatNameBySeatId(booking.getSeatTbId()));
+			dto.setShowImg(bookingRepository.findShowImgByshowId(booking.getShowTbId()));
 			dto.setPrice(bookingRepository.findPriceByShowId(booking.getShowTbId()));
 			dto.setStartTime(bookingRepository.findShowTimeByShowTimeId(booking.getShowTimeTbId()));
 			findTicketByUserId.add(dto);
@@ -125,6 +135,11 @@ public class BookingService {
 	
 	public Timestamp findShowTimeByBookingId(Integer id) {
 		return bookingRepository.findShowTimeByBookingId(id);
+	}
+	
+	public Integer findRentalAmountByShowId(Integer showTbId) {
+		
+		return bookingRepository.findRentalAmountByShowId(showTbId);
 	}
 	
 	
@@ -140,5 +155,23 @@ public class BookingService {
 	
 	public int deleteBookingById(Integer id) {	
 		return bookingRepository.deleteBookingById(id);
+	}
+
+	public List<RentalInfoDto> findRentalList(int id) {
+		List<RentalInfoDto> findRentalList = new ArrayList<>();
+		List<Rental> rentalList = bookingRepository.findRentalByUserId(id);
+		for (Rental rental : rentalList) {
+			RentalInfoDto dto = new RentalInfoDto();
+			Integer showTbId = rental.getShowTbId();
+			dto.setShowTbId(showTbId);
+			dto.setRentalStartTime(rental.getRentalStartTime());
+			dto.setRentalEndTime(rental.getRentalEndTime());
+			dto.setHallName(bookingRepository.findHallNameByShowId(showTbId));
+			dto.setAmount(rental.getAmount());
+			dto.setCreatedAt(rental.getCreatedAt());
+			dto.setShowStatus(bookingRepository.findShowStatusByShowId(showTbId));
+			findRentalList.add(dto);
+		}
+		return findRentalList;
 	}
 }

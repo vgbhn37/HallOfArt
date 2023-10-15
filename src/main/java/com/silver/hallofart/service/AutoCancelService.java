@@ -21,4 +21,6 @@ public class AutoCancelService {
 			System.out.println(result + "건의 예매가 취소 : non_paid");
 		}
 	}
+	
+	
 }

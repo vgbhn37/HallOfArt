@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class Hall {
-	private int id;
+	private Integer id;
 	private String name;
-	private int maxSeat;
-	private String status;
-	private int hallTypeId;
+	private Integer maxSeat;
+	private Integer hallTypeId;
+	private Integer basicPrice;
+	private Integer perTimePrice;
 }

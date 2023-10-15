@@ -17,51 +17,84 @@ public class PaymentService {
 
 	@Autowired
 	PaymentRepository paymentRepository;
-	
+
 	@Autowired
 	BookingRepository bookingRepository;
-	
+
 	@Transactional
 	public void insertPaymentInfo(String tid, String orderNumber, int amount, List<Integer> ids) {
-		
+
 		PaymentDto paymentDto = new PaymentDto();
 		paymentDto.setTid(tid);
 		paymentDto.setOrderNumber(orderNumber);
 		paymentDto.setAmount(amount);
-		
+
 		int result = paymentRepository.insertPaymentInfo(paymentDto);
-		if(result!=1) {
+		if (result != 1) {
 			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 		}
 		for (Integer integer : ids) {
-			int result2 = paymentRepository.updatePaymentTidToBooking(tid,integer);
-			if(result2!=1) {
+			int result2 = paymentRepository.updatePaymentTidToBooking(tid, integer);
+			if (result2 != 1) {
 				throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 			}
 			int result3 = bookingRepository.updateBookingToSuccess(integer);
-			if(result3!=1) {
+			if (result3 != 1) {
 				throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 			}
 		}
-		
+
 	}
-	
+
 	public String findPaymentTidByBookingId(Integer id) {
 		return paymentRepository.findPaymentTidByBookingId(id);
 	}
-	
+
 	@Transactional
 	public void refundPayment(String tid, int amount, Integer bookId) {
-		
+
 		int result1 = paymentRepository.updateRefundedAmount(tid, amount);
-		if(result1!=1) {
+		if (result1 != 1) {
 			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		int result2 = bookingRepository.updateBookingToRefund(bookId);
-		if(result2!=1) {
+		if (result2 != 1) {
 			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+	@Transactional
+	public void insertRentalInfo(String rentalTid, String rentalOrderNum, Integer amount, Integer showTbId) {
+
+		PaymentDto paymentDto = new PaymentDto();
+		paymentDto.setTid(rentalTid);
+		paymentDto.setOrderNumber(rentalOrderNum);
+		paymentDto.setAmount(amount);
+
+		int result = paymentRepository.insertPaymentInfo(paymentDto);
+		if (result != 1) {
+			System.out.println("1번에서 오류 발생");
+			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+
+		int result2 = paymentRepository.updatePaymentTidToRental(rentalTid, showTbId);
+		if (result2 != 1) {
+			System.out.println("2번에서 오류 발생");
+			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+		int result3 = bookingRepository.updateRentalToSuccess(showTbId);
+		if (result3 != 1) {
+			System.out.println("3번에서 오류 발생");
+			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+		
+		int result4 = bookingRepository.updateShowToProcess(showTbId);
+		if (result4 != 1) {
+			System.out.println("4번에서 오류 발생");
+			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 }

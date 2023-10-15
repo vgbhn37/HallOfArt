@@ -4,20 +4,25 @@
 
 <%@	include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- --------------------------------------------------------- -->
-<div class="container my-5">
-	<h2>티켓 리스트</h2>
+<div class="container my-5" style="width: 75%;">
+	<h2 class= "title--list">티켓 리스트</h2>
 	<hr>
 
 	<c:forEach var="booking" items="${ticketList }">
-		<div class="row my-3">
-			<div class="col-11">
-				<div class="card" style="width: 70%;">
-					<div class="card-body">
-						<h5 class="card-title">${booking.title }</h5>
-						<span class="card-text">${booking.hallName }(${booking.seatName })</span> <span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
+			<div class="my-3">
+				<div class="card flex-row flex-wrap">
+					<div class="card-header border-0">
+						<img src="/imagePath/${booking.showImg}" onerror="this.src='/resources/images/errorImage.png'"
+							style="width: 150px; height: 200px;">
+					</div>
+					<div class="card-body p-5">
+						<h4 class="card-title pb-3">${booking.title }</h4>
+						<span class="card-text">${booking.hallName }(${booking.seatName })</span>
+						<span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
 						<p class="card-text">
 							공연 일시 :
-							<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
+							<fmt:formatDate value="${booking.startTime}"
+								pattern="yyyy-MM-dd HH:mm" />
 						</p>
 						
 						<c:set var="currentTimeMillis" value="${currentTime.time}" />
@@ -27,11 +32,33 @@
 							<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">환불요청</button>
 						</c:if>
 					</div>
+					<div class="w-100"></div>
 				</div>
 			</div>
-		</div>
 	</c:forEach>
 </div>
+<style>
+.title--list {
+	position: relative;
+	color: #535353;
+	font-size: 35px;
+	line-height: 35px;
+	padding: 5px 0 20px 22px;
+	margin-bottom: 35px;
+	border-bottom: 1px solid #535353;
+}
+
+.title--list:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #ed1a3b;
+    content: "";
+}
+</style>
 
 
 <!-- --------------------------------------------------------- -->

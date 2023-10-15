@@ -11,6 +11,7 @@ public class BookedSeatDto {
 	private String title;
 	private String hallName;
 	private String seatName;
+	private String showImg;
 	private Integer price;
 	private Timestamp startTime;
 }

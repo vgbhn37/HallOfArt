@@ -52,13 +52,21 @@ public class PaymentController {
 	@Autowired
 	HttpSession session;
 
+	//일반 결제 전역변수
 	private String tid;
-	private List<Integer> bookIds;
 	private String orderNum;
-
+	private List<Integer> bookIds;
+	
+	//대관 결제 전역변수
+	private String rentalTid;
+	private String rentalOrderNum;
+	private Integer showTbId;
+	
+	
+	// 일반 티켓 결제
 	@PostMapping("/payment/request")
 	@ResponseBody
-	public String PaymentRequest(@RequestBody PaymentRequestDto payreqDto) {
+	public String paymentRequest(@RequestBody PaymentRequestDto payreqDto) {
 		// 로그인 된 유저
 		UserDto user = (UserDto) session.getAttribute("user");
 		// 결제 요청 좌석 리스트
@@ -110,7 +118,8 @@ public class PaymentController {
 		}
 
 	}
-
+	
+	// 일반 결제 요청 성공 시
 	@GetMapping("/payment/success")
 	public String paymentSuccess(@RequestParam(name = "pg_token", required = false) String pgToken) {
 		// 로그인 된 유저
@@ -153,7 +162,8 @@ public class PaymentController {
 		}
 
 	}
-
+	
+	// 일반 티켓 환불 요청
 	@GetMapping("/payment/refund/{bookId}")
 	public String paymentRefund(@PathVariable Integer bookId, HttpServletRequest request) {
 
@@ -211,6 +221,105 @@ public class PaymentController {
 		}
 
 	}
+	
+	// 대관 결제
+	@GetMapping("/payment/request/{showTbId}")
+	@ResponseBody
+	public String rentalPaymentRequest(@PathVariable Integer showTbId) {
+		// 로그인 된 유저
+		UserDto user = (UserDto) session.getAttribute("user");
+		
+		//showTbId 저장
+		this.showTbId = showTbId;
+		// RestTeamplate
+		RestTemplate rt = new RestTemplate();
+		// 헤더 객체
+		HttpHeaders headers = new HttpHeaders();
+		// 카카오 결제 서버에 전달할 itemname 정하기 (좌석이 1건이면 공연+좌석이름, 2건 이상이면 첫번째 공연+좌석 외 n건)
+		String hallName = bookingService.findHallNameByShowId(showTbId);
+		String itemName = "예술의 전당 " + hallName + " 대관";
+		// 가맹점 주문번호 제작
+		rentalOrderNum = "orderRental04_" + showTbId;
+		
+		// 금액
+		int amount = bookingService.findRentalAmountByShowId(showTbId);
+
+		
+		// 헤더에 들어갈 내용 싣기
+		headers.add("Authorization", kakaoApiKey);
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		// 바디에 들어갈 내용 싣기
+		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+		params.add("cid", "TC0ONETIME"); // CID (테스트용)
+		params.add("partner_order_id", rentalOrderNum); // 가맹점 주문번호
+		params.add("partner_user_id", user.getUsername()); // 사용자id
+		params.add("item_name", itemName); // 주문품목명
+		params.add("quantity", 1); // 수량
+		params.add("total_amount", amount); // 총 금액
+		params.add("tax_free_amount", 0); // 비과세금액
+		params.add("approval_url", "http://localhost/payment/rentalSuccess"); // 성공 시 리디렉션 url
+		params.add("cancel_url", "http://localhost/payment/cancel");// 취소 시 리디렉션 url
+		params.add("fail_url", "http://localhost/payment/fail");// 실패 시 리디렉션 url
+
+		// 헤더와 바디를 포함하는 HTTP 객체
+		HttpEntity<MultiValueMap<String, Object>> reqMes = new HttpEntity<>(params, headers);
+
+		// http요청에 대한 응답
+		ResponseEntity<KakaoPayResponseDto> response = rt.exchange("https://kapi.kakao.com/v1/payment/ready",
+				HttpMethod.POST, reqMes, KakaoPayResponseDto.class);
+		if (response.getStatusCode() == HttpStatus.OK) {
+			rentalTid = response.getBody().getTid();
+			return response.getBody().getNextRedirectPcUrl();
+		} else {
+			return "http://localhost/error/404";
+		}
+
+	}
+	
+	// 대관 결제 요청 성공 시
+		@GetMapping("/payment/rentalSuccess")
+		public String paymentRentalSuccess(@RequestParam(name = "pg_token", required = false) String pgToken) {
+			// 로그인 된 유저
+			UserDto user = (UserDto) session.getAttribute("user");
+			// RestTeamplate
+			RestTemplate rt = new RestTemplate();
+			// 헤더 객체
+			HttpHeaders headers = new HttpHeaders();
+
+			// 헤더에 들어갈 내용 싣기
+			headers.add("Authorization", kakaoApiKey);
+			headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+			// 바디에 들어갈 내용 싣기
+			MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+			params.add("cid", "TC0ONETIME"); // CID (테스트용)
+			params.add("tid", rentalTid);
+			params.add("partner_order_id", rentalOrderNum);
+			params.add("partner_user_id", user.getUsername());
+			params.add("pg_token", pgToken);
+
+			// 헤더와 바디를 포함하는 HTTP 객체
+			HttpEntity<MultiValueMap<String, Object>> reqMes = new HttpEntity<>(params, headers);
+
+			// http요청에 대한 응답
+			ResponseEntity<KakaoPaySuccessDto> response = rt.exchange("https://kapi.kakao.com/v1/payment/approve",
+					HttpMethod.POST, reqMes, KakaoPaySuccessDto.class);
+
+			// 성공 시 결제 정보를 담고 success 페이지로
+			if (response.getStatusCode() == HttpStatus.OK) {
+				paymentService.insertRentalInfo(rentalTid, rentalOrderNum, response.getBody().getAmount().getTotal(), showTbId);
+
+				// 전역변수 리셋
+				rentalTid = "";
+				rentalOrderNum = "";
+				return "/payment/rentalSuccess";
+			} else {
+				return "/payment/fail";
+			}
+
+		}
+	
 
 	@GetMapping("/payment/cancel")
 	public String paymentCancel() {

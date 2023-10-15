@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silver.hallofart.dto.BookedSeatDto;
 import com.silver.hallofart.dto.PaymentDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.SeatStatusDto;
 import com.silver.hallofart.dto.SelectedSeatDto;
 import com.silver.hallofart.dto.ShowDetailDto;
@@ -28,6 +30,7 @@ import com.silver.hallofart.handler.exception.BadRequestException;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.handler.exception.ForbiddenException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
+import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.ShowTime;
 import com.silver.hallofart.service.BookingService;
 import com.silver.hallofart.service.ShowService;
@@ -47,7 +50,12 @@ public class BookingController {
 	// 해당 show의 좌석예매 페이지로 진입
 	@GetMapping("/booking/booking/{showId}")
 	public String book(@PathVariable Integer showId, Model model, HttpServletRequest request) {
-
+		
+		// 주소창에 직접 입력시 오류 발생( 추후 필요)
+		/*
+		 * if (request.getHeader("REFERER") == null) { throw new
+		 * BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST); }
+		 */
 		// 인증 및 유효성검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
@@ -58,28 +66,30 @@ public class BookingController {
 		
 		// 쇼타임 
 		List<ShowTime> showTimeList = bookingService.findShowTime(showId);
-		String hallName = bookingService.findHallNameByShowId(showId);
+		Hall hall = bookingService.findHallByShowId(showId);
+		
 		model.addAttribute("show", show);
 		model.addAttribute("showTimeList", showTimeList);
-		model.addAttribute("hallName", hallName);
+		model.addAttribute("hall", hall);
 		return "/booking/booking";
 	}
 
 	// 해당 showtime의 좌석리스트
-	@GetMapping("/booking/select-time/{showTimeId}")
+	@GetMapping("/booking/selectTime")
 	@ResponseBody
-	public List<SeatStatusDto> seatList(@PathVariable Integer showTimeId, HttpServletRequest request) {
+	public List<SeatStatusDto> seatList(@RequestParam("showTimeId") Integer showTimeId, @RequestParam("hallId") Integer hallId, HttpServletRequest request) {
 		// 주소창에 직접 입력시 오류 발생
 		if (request.getHeader("REFERER") == null) {
 			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
-
+		
+		
 		// 인증 및 유효성 검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
-		List<SeatStatusDto> seatList = bookingService.findSeatListByShowTimeId(showTimeId);
+		List<SeatStatusDto> seatList = bookingService.findSeatListByShowTimeId(showTimeId, hallId);
 		return seatList;
 	}
 
@@ -140,7 +150,9 @@ public class BookingController {
 
 		return "/user/payList";
 	}
-
+	
+	
+	//결제가 완료 된 티켓리스트
 	@GetMapping("/user/ticketList/{id}")
 	public String ticketList(@PathVariable int id, Model model) {
 
@@ -162,6 +174,27 @@ public class BookingController {
 		model.addAttribute("currentTime", currentTimestamp);
 		
 		return "/user/ticketList";
+	}
+	
+	// 대관 신청 리스트
+	@GetMapping("/user/rentalList/{id}")
+	public String rentalList(@PathVariable int id, Model model) {
+		
+		// 사용자 인증 처리
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+		if (user.getId() != id) {
+			throw new ForbiddenException("잘못된 접근입니다.", HttpStatus.FORBIDDEN);
+		}
+		
+		// 해당 로그인 된 아이디의 대관 신청 리스트
+		List<RentalInfoDto> rentalList = bookingService.findRentalList(id);
+		model.addAttribute("rentalList",rentalList);
+		return "/user/rentalList";
+		
 	}
 
 	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)

@@ -12,6 +12,11 @@
 	<update id="updatePaymentTidToBooking">
 		update booking_tb set payment_tid = #{tid} where id=#{id}
 	</update>
+	
+	<update id="updatePaymentTidToRental">
+		update rental_tb set payment_tid = #{tid} where show_tb_id=#{id}
+	</update>
+	
 	<update id="updateRefundedAmount">
 		update payment_tb set refunded_amount = refunded_amount + #{amount}
 		where tid = #{tid}

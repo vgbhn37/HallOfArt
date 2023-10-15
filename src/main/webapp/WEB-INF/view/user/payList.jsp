@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -6,39 +7,54 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <!-- --------------------------------------------------------- -->
 
-<div class="container my-5">
-	<h2>결제 대기 리스트</h2>
-	<hr>
+<section style="min-height: calc(100vh - 158.77px);">
+	<div class="container my-5" style="width: 75%;">
+		<h1 class="title--list">결제 대기 리스트</h1>
+		<hr>
 
-	<c:forEach var="booking" items="${payList }">
-		<div class="row my-3">
-			<div class="col-1 d-flex align-items-center justify-content-center">
-				<input type="checkbox" id="check-seat" onchange="calcPrice(this,${booking.price},${booking.bookingId})">
-			</div>
-			<div class="col-11">
-				<div class="card" style="width: 70%;">
-					<div class="card-body">
-						<h5 class="card-title">${booking.title }</h5>
-						<span class="card-text">${booking.hallName }(${booking.seatName })</span> <span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
-						<p class="card-text">
-							공연 일시 :
-							<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
-						</p>
-						<button type="button" class="btn btn-outline-danger float-right" onclick="deleteBooking(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">취소</button>
+		<c:forEach var="booking" items="${payList }">
+			<div class="row my-3">
+				<div class="col-1 d-flex align-items-center justify-content-center">
+					<input type="checkbox" id="check-seat"
+						onchange="calcPrice(this,${booking.price},${booking.bookingId})">
+				</div>
+				<div class="col-11">
+					<div class="card flex-row flex-wrap">
+						<div class="card-header border-0">
+							<img src="/imagePath/${booking.showImg}"
+								onerror="this.src='/resources/images/errorImage.png'"
+								style="width: 150px; height: 200px;">
+						</div>
+						<div class="card-body p-5">
+							<h4 class="card-title pb-3">${booking.title }</h4>
+							<span class="card-text">${booking.hallName }(${booking.seatName })</span>
+							<span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
+							<p class="card-text">
+								공연 일시 :
+								<fmt:formatDate value="${booking.startTime}"
+									pattern="yyyy-MM-dd HH:mm" />
+							</p>
+							<button type="button" class="btn btn-outline-danger float-right"
+								onclick="deleteBooking(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">취소</button>
+						</div>
+						<div class="w-100"></div>
 					</div>
 				</div>
 			</div>
+		</c:forEach>
+		<div class="my-5" style="width: 100%">
+			<span style="font-size: 20px;">결제 금액: </span><span
+				style="font-size: 20px;" id="totalPrice">0</span><span
+				style="font-size: 20px;"> 원</span>
+			<div class="button-group float-right">
+				<img class="kakao-button"
+					src="/images/payment_icon_yellow_small.png"
+					onclick="moveToKakaoPay()">
+			</div>
 		</div>
-	</c:forEach>
-	<div class="my-5" style="width: 73%">
-		<span style="font-size: 20px;">결제 금액: </span><span style="font-size: 20px;" id="totalPrice">0</span><span span style="font-size: 20px;"> 원</span>
-		<div class="button-group float-right">
-			<img class="kakao_button" src="/images/payment_icon_yellow_small.png" onclick="moveToKakaoPay()">
-		</div>
-	</div>
 
-</div>
-<script>
+	</div>
+	<script>
 
 	//로컬 스토리지의 결제 성공값 삭제
 	if(localStorage.getItem("payStatus")=="success"){
@@ -148,7 +164,7 @@
 	
 </script>
 
-
+</section>
 <!-- --------------------------------------------------------- -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
 
@@ -158,9 +174,30 @@
 	height: 20px;
 }
 
-.kakao_button {
+.kakao-button {
 	cursor: pointer;
 	margin-right: 8px;
+}
+
+.title--list {
+	position: relative;
+	color: #535353;
+	font-size: 35px;
+	line-height: 35px;
+	padding: 5px 0 20px 22px;
+	margin-bottom: 35px;
+	border-bottom: 1px solid #535353;
+}
+
+.title--list:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 12px;
+	height: 12px;
+	background: #ed1a3b;
+	content: "";
 }
 </style>
 
