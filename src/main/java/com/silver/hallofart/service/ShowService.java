@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.silver.hallofart.dto.HallTimeDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.repository.interfaces.ShowRepository;
 import com.silver.hallofart.repository.model.Hall;
@@ -77,5 +78,9 @@ public class ShowService {
 	
 	public int insertRental(Rental rental) {
 		return showRepository.insertRental(rental);
+	}
+	
+	public List<RentalInfoDto> findRentalAll(){
+		return showRepository.findRentalAll();
 	}
 }

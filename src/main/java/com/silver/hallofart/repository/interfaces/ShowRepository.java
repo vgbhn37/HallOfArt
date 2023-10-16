@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.silver.hallofart.dto.HallTimeDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.ShowDetailDto;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
@@ -23,5 +24,5 @@ public interface ShowRepository {
 	public List<HallTimeDto> findHallTime(String name);
 	public int findHallType(String name);
 	public int insertRental(Rental rental);
-	
+	public List<RentalInfoDto> findRentalAll();
 }

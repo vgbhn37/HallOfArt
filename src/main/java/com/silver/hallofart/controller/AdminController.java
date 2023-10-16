@@ -17,6 +17,7 @@ import com.silver.hallofart.dto.AdminDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Show;
@@ -26,6 +27,7 @@ import com.silver.hallofart.service.ShowService;
 
 @Controller
 @RequestMapping("/admin")
+@Transactional
 public class AdminController {
 
 	@Autowired
@@ -93,12 +95,16 @@ public class AdminController {
 		List<Show> list = search==null ? service.findAll(paging) : service.findShowBySearch(paging, search);
 		model.addAttribute("list", list);
 		
+		List<RentalInfoDto> rental = showService.findRentalAll();
+		model.addAttribute("rental", rental);
+		System.out.println("rental : "+rental);
+		
 		return "admin/showList";
 	}
 	
 	@GetMapping("/updateStatus")
-	public String updateStatus(@Param("id") int id, @Param("showStatus") String showStatus) {
-		service.updateStatus(id, showStatus);
+	public String updateStatus(@Param("id") int id, @Param("status") String status) {
+		service.updateStatus(id, status);
 		return "redirect:showList";
 	}
 	
@@ -114,7 +120,6 @@ public class AdminController {
 		
 		return "admin/insertShow";
 	}
-	@Transactional
 	@PostMapping("/insert")
 	public String applying(Show show, Rental rental,  String startTime) {
 		System.out.println("inserting show : "+show);

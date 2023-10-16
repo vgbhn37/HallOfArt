@@ -13,5 +13,5 @@ public class RentalInfoDto {
 	private String hallName;
 	private Integer amount;
 	private Timestamp createdAt;
-	private String showStatus;
+	private String status;
 }

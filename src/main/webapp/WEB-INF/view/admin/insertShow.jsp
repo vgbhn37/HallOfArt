@@ -15,7 +15,7 @@
     <link href="/css/admin_styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <style>
 	.insertShow_content{
@@ -130,30 +130,6 @@
 				       					<button type="button" id="date2resetBtn">reset</button>
 				       				</td>
 				       			</tr>
-				       			<tr>
-				       				<td>대관 시간</td>
-				       				<td>
-				       					<div id="halltimeTd">
-					       					오전 <select name="rentalStartTime" style="width:105px;">
-					       					    <option value="" selected disabled>- - - - -</option>
-					       						<option value="09:00">09:00</option>
-					       						<option value="10:00">10:00</option>
-					       						<option value="11:00">11:00</option>
-					       						<option value="12:00">12:00</option>
-					       						<option value="13:00">13:00</option>
-					       					</select>
-					       					~
-					       					오후 <select name="rentalEndTime" style="width:105px;">
-					       					    <option value="" selected disabled>- - - - -</option>
-					       						<option value="14:00">02:00</option>
-					       						<option value="15:00">03:00</option>
-					       						<option value="16:00">04:00</option>
-					       						<option value="17:00">05:00</option>
-					       						<option value="18:00">06:00</option>
-					       					</select>
-				       					</div>
-				       				</td>
-				       			</tr>
 				  				<tr>
 				    				<td colspan="2">
 				       					<br><h3>공연 정보</h3>
@@ -201,6 +177,7 @@
 					       					<input type="time" min="09:00" max="18:00" class="showTime" name="showStartTime" style="width:135px;">
 					       					~
 					       					<input type="time" min="09:00" max="18:00" class="showTime" name="showEndTime" style="width:135px;">
+					       					<input type="hidden" class="showTime" name="startTime">
 				       					</div>
 				       				</td>
 				       			</tr>

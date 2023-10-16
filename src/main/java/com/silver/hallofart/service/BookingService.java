@@ -169,7 +169,7 @@ public class BookingService {
 			dto.setHallName(bookingRepository.findHallNameByShowId(showTbId));
 			dto.setAmount(rental.getAmount());
 			dto.setCreatedAt(rental.getCreatedAt());
-			dto.setShowStatus(bookingRepository.findShowStatusByShowId(showTbId));
+			dto.setStatus(bookingRepository.findShowStatusByShowId(showTbId));
 			findRentalList.add(dto);
 		}
 		return findRentalList;

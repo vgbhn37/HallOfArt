@@ -14,7 +14,7 @@ import com.silver.hallofart.repository.model.Show;
 public interface AdminRepository {
 	public List<Show> findAll(PagingDto paging);
 	public List<Show> findShowBySearch(@Param("paging") PagingDto paging, @Param("search") String search);
-	public int updateStatus(@Param("id") int id, @Param("showStatus") String showStatus);
+	public int updateStatus(@Param("id") int id, @Param("status") String status);
 	public AdminDto findCountAll();
 	public List<PaymentDto> findMerchantAll(PagingDto paging);
 	public List<AdminDto> findBookingAll(PagingDto paging);

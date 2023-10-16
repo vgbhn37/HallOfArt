@@ -25,8 +25,8 @@ public class AdminService {
 		return adminRepository.findShowBySearch(paging, search);
 	}
  	
-	public int updateStatus(int id, String showStatus) {
-		return adminRepository.updateStatus(id, showStatus);
+	public int updateStatus(int id, String status) {
+		return adminRepository.updateStatus(id, status);
 	}
 	
 	public AdminDto findCountAll() {

@@ -11,7 +11,6 @@
 				 ,start_date
 				 ,end_date
 				 ,price
-				 ,show_status
 				 ,show_img
 				 ,show_type_id1
 				 ,hall_tb_id
@@ -23,10 +22,6 @@
 	
 	<select id="findShowAll" resultType="com.silver.hallofart.repository.model.Show">
 		select * from show_tb 
-		where not show_status like '승인%'
-		and not show_status like '결제%'
-		and not show_status like '취소%'
-		and not show_status like '환불%'
 		order by end_date
 		limit #{offset}, #{recordSize}
 	</select>
@@ -34,20 +29,16 @@
 	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
 		select * from show_tb 
 		where #{date} >= start_date and end_date >= #{date}
-		and not show_status like '승인%'
-		and not show_status like '결제%'
-		and not show_status like '취소%'
-		and not show_status like '환불%'
 		order by end_date
 		limit #{offset}, #{recordSize}
 	</select>
 	
 	<insert id="insertShow">
 		insert into show_tb(
-			title, content, start_date, end_date, price, show_status, show_img, show_type_id1, hall_tb_id	
+			title, content, start_date, end_date, price, show_img, show_type_id1, hall_tb_id	
 		)
 	  	values(
-	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, '승인 요청', #{showImg}, #{showTypeId1}, #{hallTbId}
+	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, #{showImg}, #{showTypeId1}, #{hallTbId}
   		)
 	</insert>
 	<insert id="insertShowTime">
@@ -76,12 +67,18 @@
 		where name=#{name}
 	</select>
 	
+	<select id="findRentalAll" resultType="com.silver.hallofart.dto.RentalInfoDto">
+		select * from rental_tb
+	</select>
+	
 	<insert id="insertRental">
 		insert into rental_tb(
-			show_tb_id, hall_tb_id, user_tb_id, rental_start_time, rental_end_time	
+			show_tb_id, hall_tb_id, user_tb_id, rental_start_time, rental_end_time,
+			status, amount, created_at
 		)
 	  	values(
-	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime}
+	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime},
+	  		'승인 요청', #{price}, now()
   		)
 	</insert>
 </mapper>

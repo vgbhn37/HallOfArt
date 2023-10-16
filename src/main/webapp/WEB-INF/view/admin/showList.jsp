@@ -89,9 +89,14 @@ tr {
 						<td class="titleTd">${li.title}</td>
 						<td>${li.startDate}~ ${li.endDate}</td>
 						<td>
+							<c:forEach var="rental" items="${rental}">
+								<c:if test="${li.id eq rental.showTbId}">
+									<c:set var="s" value="${rental.status}"/>
+								</c:if>
+							</c:forEach>
 							<input type="hidden" id="statusId" value="${li.id}">
 							<select id="selectStatus" required>
-								<option value="none" selected disabled>${li.showStatus}</option>
+								<option value="none" selected disabled>${s}</option>
 								<option value="승인 요청">승인 요청</option>
 								<option value="결제 요청">승인 (결제 요청)</option>
 								<option value="결제됨">결제됨</option>
@@ -163,7 +168,7 @@ tr {
 						alert("변경할 상태를 지정해주세요");
 					} else {
 						location.href = "updateStatus?id=" + id
-								+ "&showStatus=" + status;
+								+ "&status=" + status;
 					}
 				});
 
