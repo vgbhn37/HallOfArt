@@ -109,6 +109,10 @@
                                     </div>
                                 </nav>
                             </div>
+                            <a class="nav-link collapsed" href="http://localhost/admin/user?reset=1">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-pen"></i></div>
+                                유저 관리
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

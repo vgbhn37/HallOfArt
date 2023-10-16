@@ -17,8 +17,12 @@
 </head>
 <%@ include file="/WEB-INF/view/layout/admin_header.jsp" %>
 
+<div id="layoutSidenav_content">
+	<main>
+			<div class="container-fluid px-4">
+
 <div style="font-family: 'NanumSquareRound';">
-    <div class="card-body text-black" style="margin: 300px 0px 0px 1000px;">
+    <div class="card-body text-black" style="margin: 100px auto; max-width: 500px;">
             <div class="d-flex align-items-center mb-3 pb-1">
                 <i class="fa-solid fa-user-pen fa-2xl"></i> <span
                     class="h1 fw-bold mb-0">&nbsp;회원정보 조회</span>
@@ -104,14 +108,15 @@
 <%--                        style="font-size: 0.8rem;" type="submit">정보수정--%>
 <%--                </button>--%>
 
-                <button class="btn btn-dark btn-lg btn-block" type="button" onClick="location.href='/user/admin/user?page=${page}'">목록보기
+                <button class="btn btn-dark btn-lg btn-block" type="button" onClick="location.href='/admin/user?page=${page}'">목록보기
                 </button>
 
             </div>
-
-
-
     </div>
+</div>
+
+</div>
+</main>
 </div>
 
 <script>
@@ -126,7 +131,7 @@
 
         $.ajax({
             type : "POST",
-            url : "/user/admin/user/modify",
+            url : "/admin/user/modify",
             data : {
                 "id" : idval,
                 "roleTypeId" : roleval
