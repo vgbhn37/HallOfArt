@@ -131,6 +131,8 @@ public class PaymentService {
 			dto.setStartDate(show.getStartDate());
 			dto.setEndDate(show.getEndDate());
 			dto.setShowImg(show.getShowImg());
+			
+			list.add(dto);
 		}
 		
 		return list;

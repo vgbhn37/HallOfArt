@@ -64,9 +64,7 @@ public class ShowService {
 	        while (true) {
 	            list.add("\""+fmt.format(startDate)+"\"");
 	            startDate.setTime(startDate.getTime() + 24 * 60 * 60 * 1000); // 다음 날짜로 이동
-	            System.out.println("야호");
-	            System.out.println(startDate);
-	            System.out.println(endDate);
+	        
 	            if (startDate.equals(endDate)) { // equals 메서드로 비교
 	                break;
 	            }

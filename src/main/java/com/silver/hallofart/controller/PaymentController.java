@@ -1,6 +1,8 @@
 package com.silver.hallofart.controller;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,8 +83,11 @@ public class PaymentController {
 		String firstSeatName = bookingService.findSeatNameByBookingId(bookIds.get(0));
 		String itemName = payreqDto.getSelectedSeats().size() == 1 ? firstShowName + " " + firstSeatName
 				: firstShowName + " " + firstSeatName + " 외 " + (bookIds.size() - 1) + "건";
+		String pattern = "yyyyMMdd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String date = simpleDateFormat.format(new Date());
 		// 가맹점 주문번호 제작
-		orderNum = "orderTest01_" + payreqDto.getSelectedSeats().get(0);
+		orderNum = "ODN" + date + payreqDto.getSelectedSeats().get(0);
 
 		// 총 결제 금액을 DB에서 각 좌석가격을 가져와서 계산
 		int amount = bookingService.totalPrice(bookIds);
@@ -320,9 +325,9 @@ public class PaymentController {
 
 		}
 		
-	// 대관 환불 요청 시
+	
+			// 대관 환불 요청 시
 		
-		// 일반 티켓 환불 요청
 		@GetMapping("/payment/rentalRefund/{showTbId}")
 		public String paymentRentalRefund(@PathVariable Integer showTbId, HttpServletRequest request) {
 

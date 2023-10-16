@@ -11,6 +11,8 @@ import com.silver.hallofart.dto.MainShowDto;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.PaymentService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -30,7 +32,7 @@ public class MainController {
 	@GetMapping({ "/main", "/" })
 	public String main(Model model) {
 		log.info("메인 페이지 컨트롤러 실행");
-
+	
 //        List<Show> showsList = mainService.readShowDto();
 //        List<Announcement> selectAnnouncement = mainService.selectAnnouncement();
 //        model.addAttribute("selectAnnouncement", selectAnnouncement);
@@ -61,7 +63,7 @@ public class MainController {
 //        }
 
 		List<MainShowDto> showsList = paymantService.findShowListOnMain();
-
+		
 		if (showsList.isEmpty()) {
 			model.addAttribute("showsList", null);
 		} else {

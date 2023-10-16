@@ -22,13 +22,13 @@
 		<tbody>
 			<c:forEach var="rental" items="${rentalList }">
 				<tr>
-					<th scope="row">${rental.showStatus }</th>
+					<th scope="row">${rental.status }</th>
 					<td>${rental.hallName }</td>
 					<td>${rental.rentalStartTime }</td>
 					<td>${rental.rentalEndTime }</td>
 					<td><fmt:formatNumber value="${rental.amount }"/> 원</td>
 					<c:choose>
-						<c:when test="${rental.showStatus=='결제 요청' }">
+						<c:when test="${rental.status=='결제 요청' }">
 							<td><img class="kakao-button"
 								src="/images/payment_icon_yellow_small.png"
 								onclick="moveToKakaoPay(${rental.showTbId})"></td>

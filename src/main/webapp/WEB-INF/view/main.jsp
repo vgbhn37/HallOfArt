@@ -723,33 +723,26 @@
 			<div class="content--box">
 				<div class="content">
 					<ul class="slider">
-<%--						<c:forEach var="showList" items="${showsList}">--%>
+						<c:forEach var="showList" items="${showsList}">
 							<li>
 								<div class="content--info">
 									<dl style="top: 300px;" class="right">
 										<div class="info">
 <%--											<p style="margin-top: 180px; margin-left: -330px; background-color: #fff; border: 1px solid #fff; border-radius: 20px; font-size: 20px; font-weight: 400; padding: 5px 20px;">${showList.showType}</p>--%>
-											<p style="margin-top: 50px; margin-left: -330px; background-color: #fff; border: 1px solid #fff; border-radius: 20px; font-size: 20px; font-weight: 400; padding: 5px 20px;">쇼 종류 표시</p>
+											<p style="margin-top: 50px; margin-left: -330px; background-color: #fff; border: 1px solid #fff; border-radius: 20px; font-size: 20px; font-weight: 400; padding: 5px 20px;">${showList.showType }</p>
 <%--											<h2 style="margin-top: -10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ ${showList.location}</h2>--%>
-											<h2 style="margin-top: -10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ 장소 표시</h2>
+											<h2 style="margin-top: -10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ ${showList.hallName }</h2>
 <%--											<h1 style="display: flex; align-items: center; margin-bottom: 50px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 60px;">${showList.title}</h1>--%>
-											<h1 style="display: flex; align-items: center; margin-bottom: 50px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 60px;">쇼 제목</h1>
-<%--											<c:choose>--%>
-<%--												<c:when test="${showList.rating==null}">--%>
-<%--													<h3 style="margin-top: 30px; margin-left: -330px; font-size: 27px; font-weight: 100; height: 60px;">평점이 아직 등록되지 않았습니다.</h3>--%>
-<%--												</c:when>--%>
-<%--												<c:otherwise>--%>
-													<h3 style="margin-top: 30px; margin-left: -335px; font-size: 27px; font-weight: 100; height: 60px;">⭐평점 : ${showList.rating}</h3>
-<%--												</c:otherwise>--%>
-<%--											</c:choose>--%>
+											<h1 style="display: flex; align-items: center; margin-bottom: 50px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 60px;">${showList.title }</h1>
+<%--										
 <%--											<h4 style="margin-top: -20px; margin-left: -330px; font-size: 25px; font-weight: 100;">기간 : ${showList.startDate}&nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp${showList.endDate}</h4>--%>
-											<h4 style="margin-top: -20px; margin-left: -330px; font-size: 25px; font-weight: 100;">기간 : 시작일 &nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp 끝일</h4>
+											<h4 style="margin-top: -20px; margin-left: -330px; font-size: 25px; font-weight: 100;">기간 : ${showList.startDate} &nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp ${showList.endDate}</h4>
 										</div>
 <%--										<c:choose>--%>
 <%--											<c:when test="${showList.imgRoute.length()>=30}">--%>
 												<div style="top: 50px; left: 300px; position: relative;">
 <%--													<a href="/show/showView/${showList.id}"><img src="/images/upload/${showList.imgRoute}" width="480" height="600"></a>--%>
-													<a style="width: 480px; height: 600px;" href="/show/showView/${showList.id}"><img style="margin-top: 0px;" src="https://media.gettyimages.com/id/113452208/pt/foto/the-mozart-family-in-paris-in-1763-leopold-mozart-is-the-violinist-the-singer-is-his-daughter.jpg?s=2048x2048&w=gi&k=20&c=irEqCRW_OYRIh5k3LdHhYk8-mX83LHRVCTDvr9Ed-Bs=" width="480" height="600"></a>
+													<a style="width: 480px; height: 600px;" href="/show/detail?id=${showList.id}"><img style="margin-top: 0px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" width="480" height="600"></a>
 												</div>
 <%--											</c:when>--%>
 <%--											<c:otherwise>--%>
@@ -761,22 +754,22 @@
 									</dl>
 								</div>
 							</li>
-<%--						</c:forEach>--%>
+						</c:forEach>
 					</ul>
 					<div class="slide_wrapper_box">
 						<div class="slide_wrapper">
 							<ul class="slides">
-<%--								<c:forEach var="showList" items="${showsList}">--%>
+								<c:forEach var="showList" items="${showsList}">
 <%--									<c:choose>--%>
 <%--										<c:when test="${showList.imgRoute.length()>=30}">--%>
 <%--											<li><a href="/show/showView/${showList.id}"><img src="/images/upload/${showList.imgRoute}" width="150" height="200"></a></li>--%>
-											<li><a href="/show/showView/${showList.id}"><img src="https://media.gettyimages.com/id/113452208/pt/foto/the-mozart-family-in-paris-in-1763-leopold-mozart-is-the-violinist-the-singer-is-his-daughter.jpg?s=2048x2048&w=gi&k=20&c=irEqCRW_OYRIh5k3LdHhYk8-mX83LHRVCTDvr9Ed-Bs=" width="150" height="200"></a></li>
+											<li><a href="/show/detail?id=${showList.id}"><img src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" width="150" height="200"></a></li>
 <%--										</c:when>--%>
 <%--										<c:otherwise>--%>
 <%--											<li><a href="/show/showView/${showList.id}"><img src="/images/${showList.imgRoute}" width="150" height="200"></a></li>--%>
 <%--										</c:otherwise>--%>
 <%--									</c:choose>--%>
-<%--								</c:forEach>--%>
+								</c:forEach>
 							</ul>
 						</div>
 						<div class="btn">
@@ -903,7 +896,7 @@
 		});
 	}
 	init();
-	// 전대영
+
 	// 중복 클릭 방지
 	$(".button").on("click", function() {
 		$(this).attr("disabled", true);
@@ -912,7 +905,6 @@
 		}, 550);
 	});
 
-	// 전대영
 	// 상단 메뉴바 드롭다운
 	$(document).ready(function() {
 		$(".main>li").mouseover(function() {
@@ -923,7 +915,6 @@
 		});
 	});
 
-	// 전대영
 	// 이미지 흘러가기 기능 구현
 	var slides = document.querySelector('.slides'),
 			slide = document.querySelectorAll('.slides li'),
@@ -987,7 +978,6 @@
 
 	}
 
-	// 전대영
 	// 슬라이드 뒷 배경
 	$(function() {
 		var $slider = $('.slider'),
