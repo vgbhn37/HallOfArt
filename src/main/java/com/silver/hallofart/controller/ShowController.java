@@ -31,6 +31,7 @@ import com.silver.hallofart.service.ShowService;
 
 @Controller
 @RequestMapping("/show")
+@Transactional
 public class ShowController {
 
 	@Autowired
@@ -135,7 +136,6 @@ public class ShowController {
 		return "show/applyShow";
 	}
 	
-	@Transactional
 	@PostMapping("/apply")
 	public String applying(Show show, Rental rental, String startTime) {
 		System.out.println("applying show : "+show);

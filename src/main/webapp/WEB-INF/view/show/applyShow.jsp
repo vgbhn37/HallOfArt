@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@	include file="../layout/header.jsp" %>
-<!-- --------------------------------------------------------- -->
+<!-- --------------------------------------------------------- -->	
 <style>
 	.content{
 		width: 85%;
@@ -110,30 +110,6 @@
        				<td>
        					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
        					<button type="button" id="date2resetBtn">reset</button>
-       				</td>
-       			</tr>
-       			<tr>
-       				<td>대관 시간</td>
-       				<td>
-       					<div id="halltimeTd">
-	       					오전 <select name="rentalStartTime" style="width:105px;">
-	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="09:00">09:00</option>
-	       						<option value="10:00">10:00</option>
-	       						<option value="11:00">11:00</option>
-	       						<option value="12:00">12:00</option>
-	       						<option value="13:00">13:00</option>
-	       					</select>
-	       					~
-	       					오후 <select name="rentalEndTime" style="width:105px;">
-	       					    <option value="" selected disabled>- - - - -</option>
-	       						<option value="14:00">02:00</option>
-	       						<option value="15:00">03:00</option>
-	       						<option value="16:00">04:00</option>
-	       						<option value="17:00">05:00</option>
-	       						<option value="18:00">06:00</option>
-	       					</select>
-       					</div>
        				</td>
        			</tr>
     			<tr>
@@ -303,7 +279,7 @@
 			$("select").css("border", "1px solid #999");
 			$("textarea").css("border", "1px solid #999");
 			// ---------------- 유효성 : 이미지 파일
-			if($("#showImg").val().length==0){
+			if($("#uploadImg").val().length==0){
 				$("#uploadImg").css("border", "2px solid red");
 				checkMsg+="이미지를 업로드해주세요\n";
 			}
@@ -363,17 +339,6 @@
 			// ---------------- 유효성 : 장소
 			if($("input[name=hallTbId]").val()==null){
 				checkMsg+="대관할 홀 번호를 입력해주세요\n";
-			}
-			// ---------------- 유효성 : 대관 시간
-			if($("select[name=rentalStartTime]").val()==null||$("select[name=rentalEndTime]").val()==null){
-				$("select[name=showStartTime]").css("border", "2px solid red");
-				$("select[name=showEndTime]").css("border", "2px solid red");
-				checkMsg+="대관 시간을 입력해주세요\n";
-			}else if($("input[name=showStartTime]").val()<$("select[name=rentalStartTime]").val()
-					||$("input[name=showEndTime]").val()>$("select[name=rentalEndTime]").val()){
-				$("select[name=showStartTime]").css("border", "2px solid red");
-				$("select[name=showEndTime]").css("border", "2px solid red");
-				checkMsg+="공연 시간과 대관 시간이 올바르지 않습니다";
 			}
 
 			// startTime 계산

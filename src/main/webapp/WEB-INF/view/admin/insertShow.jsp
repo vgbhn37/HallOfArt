@@ -361,17 +361,6 @@
 				if($("input[name=hallTbId]").val()==null){
 					checkMsg+="대관할 홀 번호를 입력해주세요\n";
 				}
-				// ---------------- 유효성 : 대관 시간
-				if($("select[name=rentalStartTime]").val()==null||$("select[name=rentalEndTime]").val()==null){
-					$("select[name=showStartTime]").css("border", "2px solid red");
-					$("select[name=showEndTime]").css("border", "2px solid red");
-					checkMsg+="대관 시간을 입력해주세요\n";
-				}else if($("input[name=showStartTime]").val()<$("select[name=rentalStartTime]").val()
-						||$("input[name=showEndTime]").val()>$("select[name=rentalEndTime]").val()){
-					$("select[name=showStartTime]").css("border", "2px solid red");
-					$("select[name=showEndTime]").css("border", "2px solid red");
-					checkMsg+="공연 시간과 대관 시간이 올바르지 않습니다";
-				}
 	
 				// startTime 계산
 				$("input[name=startTime]").val($("input[name=startDate]").val()+" "+$("input[name=showStartTime]").val());
