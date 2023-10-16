@@ -14,7 +14,7 @@
 		<h1 class="title--booking">좌석 예약</h1>
 		<div style="font-family: 'NanumSquareRound'">
 
-			<div style="background: #FAFAFA;">
+			<div style="background: #FAFAFA; margin-bottom: 40px;">
 				<h5>주의 사항</h5>
 				<ul>
 					<li>좌석은 한 번에 1인당 10매까지 예매 가능합니다.</li>
@@ -24,8 +24,8 @@
 			</div>
 			<hr>
 
-			<label for="time-select">선택 일시 : </label> <select name="showtime"
-				id="time-select" onchange="showSeatList(this.value)">
+			<label for="time-select">선택 일시 : &nbsp; </label> <select class="custom-select" name="showtime"
+				id="time-select" onchange="showSeatList(this.value)" style="width: 40%;">
 				<option value="" disabled selected>--날짜와 시간을 선택해주세요--</option>
 				<c:forEach var="showtime" items="${showTimeList }">
 					<option value="${showtime.id }">
@@ -35,7 +35,7 @@
 				</c:forEach>
 			</select>
 			<div class="show_title">
-				<h4 style="margin-top: 15px;">${show.title }(${hall.name })</h4>
+				<h4 style="margin-top: 50px;">${show.title }(${hall.name })</h4>
 			</div>
 			<hr>
 			<div class="row" style="padding: 50px 0; background: #f4f6f2;">

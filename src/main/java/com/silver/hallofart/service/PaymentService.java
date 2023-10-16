@@ -11,6 +11,7 @@ import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.BookingRepository;
 import com.silver.hallofart.repository.interfaces.PaymentRepository;
+import com.silver.hallofart.repository.model.Show;
 
 @Service
 public class PaymentService {
@@ -111,6 +112,11 @@ public class PaymentService {
 	
 	public Integer findPriceByPaymentTid(String tid) {
 		return paymentRepository.findPriceByPaymentTid(tid);
+	}
+	
+	public List<Show> findShowListOnMain(){
+		
+		return paymentRepository.findShowListOnMain();
 	}
 
 }

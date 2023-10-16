@@ -3,8 +3,14 @@ package com.silver.hallofart.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.silver.hallofart.repository.model.Show;
+import com.silver.hallofart.service.PaymentService;
+
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,11 +19,16 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
-    private HttpSession session;
-    @GetMapping({"/main", "/"})
-    public String main() {
-        log.info("메인 페이지 컨트롤러 실행");
+	@Autowired
+	private HttpSession session;
+
+	// 추후 showService로 수정
+	@Autowired
+	private PaymentService paymantPaymentService;
+
+	@GetMapping({ "/main", "/" })
+	public String main(Model model) {
+		log.info("메인 페이지 컨트롤러 실행");
 
 //        List<Show> showsList = mainService.readShowDto();
 //        List<Announcement> selectAnnouncement = mainService.selectAnnouncement();
@@ -48,7 +59,15 @@ public class MainController {
 //            model.addAttribute("showsList", showsList);
 //        }
 
-        return "main";
-    }
+		List<Show> showsList = paymantPaymentService.findShowListOnMain();
+
+		if (showsList.isEmpty()) {
+			model.addAttribute("showsList", null);
+		} else {
+			model.addAttribute("showsList", showsList);
+		}
+
+		return "main";
+	}
 
 }

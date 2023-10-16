@@ -1,6 +1,7 @@
 package com.silver.hallofart.controller;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +63,8 @@ public class ShowController {
 		pagination.setPaging(paging);
 		pagination.setArticleTotalCount(adminService.countShow(pagination));
 		
+		Timestamp nowTime = new Timestamp(System.currentTimeMillis());
+		
 		System.out.println("paging offset : "+paging.getOffset());
 		System.out.println("paging recordSize : "+paging.getRecordSize());
 		
@@ -71,6 +74,7 @@ public class ShowController {
 		
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);
+		model.addAttribute("nowTime", nowTime);
 		
 		return "show/schedule";
 	}

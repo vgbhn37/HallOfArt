@@ -26,7 +26,7 @@
 					<td>${rental.hallName }</td>
 					<td>${rental.rentalStartTime }</td>
 					<td>${rental.rentalEndTime }</td>
-					<td>${rental.amount }</td>
+					<td><fmt:formatNumber value="${rental.amount }"/> 원</td>
 					<c:choose>
 						<c:when test="${rental.showStatus=='결제 요청' }">
 							<td><img class="kakao-button"
