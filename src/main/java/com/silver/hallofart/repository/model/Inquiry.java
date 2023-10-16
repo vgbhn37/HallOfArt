@@ -10,7 +10,6 @@ public class Inquiry {
 	private String classification;
 	private String title;
 	private String content;
-	private String file;
 	private Timestamp createdAt;
 	private Integer answer;
 	private Integer userId;

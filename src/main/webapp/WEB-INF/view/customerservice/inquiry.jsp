@@ -73,7 +73,7 @@
 		</tbody>
 	</table>
 	<div class="paging">
-		<form action="<c:url value='/customerservice/announcement'/>"
+		<form action="<c:url value='/customerservice/inquiry'/>"
 			name="pageForm">
 			<div class="text-center clearfix">
 				<ul class="pagination" id="pagination">

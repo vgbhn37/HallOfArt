@@ -114,6 +114,23 @@ public class CustomerServiceController {
 		return "customerservice/announcementDetail";
 	}
 	
+	@GetMapping("/announcement/admin")
+	public String announcementAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification, Model model) {
+		//페이지네이션에 필요한 값 전달
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
+		//공지사항 목록 전달
+		List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
+		model.addAttribute("announcementList", announcementList);
+		model.addAttribute("pagination", pagination);
+		return "admin/announcementAdmin";
+
+	}
+	
 	//공지사항 수정
 	@GetMapping("/announcement/modify")
 	public String announcementModify(@RequestParam("id") Integer id, @RequestParam (value="page", required = false) int page, Model model) {
@@ -260,5 +277,50 @@ public class CustomerServiceController {
 		customerServiceService.changeAnswer(id);
 		customerServiceService.deleteAnswer(id);
 		return "redirect:/customerservice/inquiry/detail?page=" + page + "&id=" + id;
+	}
+	
+	@GetMapping("/inquiry/admin/main")
+	public String inquiryAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification, Model model) {
+		UserDto user = (UserDto)session.getAttribute("user");
+		paging.setPage(page);
+		paging.setUserId(user.getId());
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countAllInquiryPage(paging));
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("inquiryList", customerServiceService.findAllInquiry(paging));
+		return "admin/inquiryAdmin";
+	}
+	
+	//문의 ajax활용
+	@GetMapping("/inquiry/admin/classification")
+	@ResponseBody
+	public ClassificationDto inquiryClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification) {
+		paging.setPage(page);
+		paging.setClassification(classification);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		ClassificationDto classificationDto = new ClassificationDto();
+		//분류가 전체일 떄
+		if(classification.equals("전체")) {
+			pagination.setArticleTotalCount(customerServiceService.countAllInquiryPage(paging));
+			List<Inquiry> inquiryList = customerServiceService.findAllInquiry(paging);
+			classificationDto.setInquiryList(inquiryList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		} 
+		//분류값이 있을 때
+		else {
+			pagination.setArticleTotalCount(customerServiceService.countNoAnswer(paging));
+			paging.setClassification(classification);
+			List<Inquiry> inquiryList = customerServiceService.findNoAnswer(paging);
+			classificationDto.setInquiryList(inquiryList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		}
 	}
 }

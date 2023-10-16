@@ -10,6 +10,5 @@ public class Announcement {
 	private String classification;
 	private String title;
 	private String content;
-	private String file;
 	private Timestamp createdAt;
 }
