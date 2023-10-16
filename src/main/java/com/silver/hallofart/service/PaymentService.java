@@ -1,5 +1,6 @@
 package com.silver.hallofart.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.silver.hallofart.dto.MainShowDto;
 import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.BookingRepository;
@@ -114,9 +116,24 @@ public class PaymentService {
 		return paymentRepository.findPriceByPaymentTid(tid);
 	}
 	
-	public List<Show> findShowListOnMain(){
+	@Transactional
+	public List<MainShowDto> findShowListOnMain(){
 		
-		return paymentRepository.findShowListOnMain();
+		List<MainShowDto> list = new ArrayList<>();
+		List<Show> showList = paymentRepository.findShowListOnMain();
+		for (Show show : showList) {
+			MainShowDto dto = new MainShowDto();
+			Integer showId = show.getId();
+			dto.setId(showId);
+			dto.setShowType("공연"); //추후 변경 요망
+			dto.setHallName(bookingRepository.findHallNameByShowId(showId));
+			dto.setTitle(show.getTitle());
+			dto.setStartDate(show.getStartDate());
+			dto.setEndDate(show.getEndDate());
+			dto.setShowImg(show.getShowImg());
+		}
+		
+		return list;
 	}
 
 }

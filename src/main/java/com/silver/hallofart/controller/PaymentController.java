@@ -367,7 +367,7 @@ public class PaymentController {
 				paymentService.rentalRefundPayment(r_tid,
 						response.getBody().getApprovedCancelAmount().getTotal(), showTbId);
 				
-				System.out.println("야호성공");
+	
 				return "/payment/rentalRefundSuccess";
 			} else {
 				return "/payment/refundFail";

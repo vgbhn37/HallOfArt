@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.silver.hallofart.dto.MainShowDto;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.PaymentService;
 
@@ -24,7 +25,7 @@ public class MainController {
 
 	// 추후 showService로 수정
 	@Autowired
-	private PaymentService paymantPaymentService;
+	private PaymentService paymantService;
 
 	@GetMapping({ "/main", "/" })
 	public String main(Model model) {
@@ -59,7 +60,7 @@ public class MainController {
 //            model.addAttribute("showsList", showsList);
 //        }
 
-		List<Show> showsList = paymantPaymentService.findShowListOnMain();
+		List<MainShowDto> showsList = paymantService.findShowListOnMain();
 
 		if (showsList.isEmpty()) {
 			model.addAttribute("showsList", null);

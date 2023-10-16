@@ -11,7 +11,7 @@ public class MainShowDto {
 	private String showType;
 	private String hallName;
 	private String title;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private String startDate;
+	private String endDate;
 	private String showImg;
 }

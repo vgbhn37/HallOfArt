@@ -40,4 +40,9 @@
 	<delete id="deletePaymentByTid">
 		delete from payment_tb where tid=#{tid};
 	</delete>
+	
+	<!-- 추후 show.xml로 옮겨야함 -->
+	<select id="findShowListOnMain" resultType="Show">
+		select * from show_tb where end_date >= date_format(now(),'%Y-%m-%d') limit 5;
+	</select>
 </mapper>
