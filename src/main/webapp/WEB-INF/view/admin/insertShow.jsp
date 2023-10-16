@@ -239,6 +239,8 @@
 		        yearSuffix: '년',
 		        beforeShowDay: disableDates
 		    });
+		    	$("#datepicker1").datepicker('option', 'minDate', new Date());
+		    	$("#datepicker2").datepicker('option', 'minDate', new Date());
 			
 			// datepicker 범위 제약 옵션
 			$('#datepicker1').datepicker('option', 'onSelect', function(dateString){
@@ -257,7 +259,7 @@
 		    });
 			$('#date1resetBtn').on('click', function(){
 		    	$("#datepicker1").val('');
-		    	$("#datepicker2").datepicker('option', 'minDate', '');
+		    	$("#datepicker2").datepicker('option', 'minDate', new Date());
 		    	$("#datepicker2").datepicker('option', 'maxDate', '');
 			});
 		    $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
@@ -276,8 +278,8 @@
 		    });
 			$('#date2resetBtn').on('click', function(){
 		    	$("#datepicker2").val('');
+		    	$("#datepicker1").datepicker('option', 'minDate', new Date());
 		    	$("#datepicker1").datepicker('option', 'maxDate', '');
-		    	$("#datepicker1").datepicker('option', 'minDate', '');
 			});
 			
 //	 		datepicker 특정 일 비활성화
