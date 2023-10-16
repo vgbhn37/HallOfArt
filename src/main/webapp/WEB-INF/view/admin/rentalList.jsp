@@ -78,7 +78,7 @@
                    			</c:forEach>
                    		</table>
                     <div class="paging">
-						<form action="merchantList" name="pageForm">
+						<form action="rentalList" name="pageForm">
 							<div class="text-center clearfix">
 								<ul class="pagination" id="pagination">
 									<c:if test="${pagination.prev}">
