@@ -3,9 +3,11 @@ table {
 	border-collapse: collapse;
 	margin-top: 30px;
 }
-.table td {
-	vertical-align: middle;	
+
+.container-fluid {
+	margin-top: 50px;	
 }
+
 p {
 	margin: 0;
 }
@@ -38,7 +40,8 @@ td a {
 }
 
 .container {
-	margin-top: 50px;
+	margin-top: 150px;
+	margin-left: 300px;
 	width: 65%;
 }
 
@@ -80,7 +83,7 @@ td a {
 .tab--announcement li{
 	float: left;
     display: table;
-    width: calc(20% - 2px);;
+    width: calc(50% - 2px);;
     height: 66px;
     position: relative;
     box-sizing: border-box;

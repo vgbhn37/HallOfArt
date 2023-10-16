@@ -23,8 +23,16 @@
 		select count(*) from inquiry_tb where user_id = #{userId}
 	</select>
 	
+	<select id="countAllInquiry" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from inquiry_tb
+	</select>
+	
 	<select id="countPageClassification" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
 		select count(*) from announcement_tb where classification = #{classification}
+	</select>
+	
+	<select id="countNoAnswer" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from inquiry_tb where answer = 0
 	</select>
 	
 	<select id="findInquiryByUserId" resultType="Inquiry">
@@ -35,28 +43,36 @@
 		select * from inquiry_tb where id = #{id}
 	</select>
 	
+	<select id="findAllInquiry" resultType="Inquiry">
+		select * from inquiry_tb order by created_at desc limit #{offset}, #{recordSize}
+	</select>
+	
+	<select id="findNoAnswer" resultType="Inquiry">
+		select * from inquiry_tb where answer = 0 order by created_at desc limit #{offset}, #{recordSize}
+	</select>
+	
 	<select id="findInquiryAnswer" resultType="InquiryAnswer">
 		select * from inquiry_answer_tb where inquiry_id = #{inquiryId}
 	</select>
 	
 	<insert id="insertAnnouncement">
-		insert into announcement_tb(classification, title, content, file, created_at) 
-		values(#{classification}, #{title}, #{content}, #{file}, now())
+		insert into announcement_tb(classification, title, content, created_at) 
+		values(#{classification}, #{title}, #{content}, now())
 	</insert>
 	
 	<insert id="insertInquiry">
-		insert into inquiry_tb(classification, title, content, file, created_at, answer, user_id) 
-		values(#{classification}, #{title}, #{content}, #{file}, now(), #{answer}, #{userId})
+		insert into inquiry_tb(classification, title, content, created_at, answer, user_id) 
+		values(#{classification}, #{title}, #{content}, now(), #{answer}, #{userId})
 	</insert>
 	
 	<insert id="insertInquiryAnswer">
-		insert into inquiry_answer_tb(title, content, file, created_at, inquiry_id) 
-		values(#{title}, #{content}, #{file}, now(), #{inquiryId})
+		insert into inquiry_answer_tb(title, content, created_at, inquiry_id) 
+		values(#{title}, #{content}, now(), #{inquiryId})
 	</insert>
 	
 	<update id="updateAnnouncement">
 		update announcement_tb set title = #{title}, classification = #{classification}, 
-		content = #{content}, file = #{file} where id = #{id}
+		content = #{content} where id = #{id}
 	</update>
 	
 	<update id="modifyinquiryAnswer">

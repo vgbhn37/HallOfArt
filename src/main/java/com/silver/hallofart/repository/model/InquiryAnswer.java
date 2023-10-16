@@ -9,7 +9,6 @@ public class InquiryAnswer {
 	private Integer id;
 	private String title;
 	private String content;
-	private String file;
 	private Timestamp createdAt;
 	private Integer inquiryId;
 }

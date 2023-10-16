@@ -137,4 +137,23 @@ public class CustomerServiceService {
 		return count;
 	}
 
+	public int countAllInquiryPage(PagingDto paging) {
+		int count = customerServiceRepository.countAllInquiry(paging);
+		return count;
+	}
+
+	public List<Inquiry> findAllInquiry(PagingDto paging) {
+		List<Inquiry> inquiryList = customerServiceRepository.findAllInquiry(paging);
+		return inquiryList;
+	}
+
+	public List<Inquiry> findNoAnswer(PagingDto paging) {
+		List<Inquiry> inquiryList = customerServiceRepository.findNoAnswer(paging);
+		return inquiryList;
+	}
+
+	public int countNoAnswer(PagingDto paging) {
+		int count = customerServiceRepository.countNoAnswer(paging);
+		return count;
+	}
 }

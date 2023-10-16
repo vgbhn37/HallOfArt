@@ -10,7 +10,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
 	rel='stylesheet' type='text/css'>
-<!-- <link rel="stylesheet" href="../resources/css/style.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -41,6 +40,7 @@
 	font: 400 16px/1.56 Roboto,Open Sans,Arial,Helvetica,sans-serif;
     padding: 24px 32px;
     height: calc(1em * 1.71 + 64px);
+    justify-content: center;
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -49,14 +49,23 @@
 }
 .Header_home {
 	flex: 1 1;
-	justify-content: center; 
+	justify-content: center;
+	align-items: center; 
 	display: flex;
-	margin-left: 180px;
+}
+.Header_home h1{
+	display: flex;
+	margin-left: 210px;
 }
 .Header_home a {
 	text-decoration: inherit;
 	color: inherit;
 	cursor: pointer;
+}
+.Header_home img {
+	width: 30%;
+    display: block;
+    margin: 0 auto;
 }
 .Header_links {
 	list-style: none;
@@ -115,7 +124,79 @@
     position: absolute;
     bottom: 0;
     height: 1px;
+    width: 80%;
     background-color: #222;
+}
+.HorizontalList {
+	position: relative;
+    overflow: hidden;
+    contain: layout paint;
+}
+.HorizontalList_container {
+	display: flex;
+    justify-content: center;
+    --distance: calc(calc(var(--line-height, 1.7142857143) * 1em) + 40px);
+}
+.HorizontalList_track {
+	list-style-type: none;
+    margin: 0;
+    white-space: nowrap;
+    width: 40%;
+    justify-content: space-between;
+    display: flex;
+    padding: 0 var(--body-padding);
+}
+.HorizontalList_item {
+	display: flex;
+    white-space: nowrap;
+    text-align: -webkit-match-parent;
+}
+.Header_Nav_link {
+	transition: color .3s;
+    padding: 16px 0;
+    text-decoration: inherit;
+    color: inherit;
+}
+.Header_Nav_text {
+	flex: 1;
+	position: relative;
+	font: 18px/1.33 Montserrat,Verdana,sans-serif;
+	padding-bottom: 5px;
+}
+.Header_Nav_text::after {
+	content: "";
+    position: absolute;
+    left: 50%;
+    width: 30px;
+    bottom: 0;
+    max-width: calc(100% - 24px);
+    height: 2px;
+    background-color: #fff;
+    transform: translateX(-50%) scaleX(0);
+    transition-property: transform;
+    transition-duration: .3s;
+}
+.Header_Nav_link:hover {
+	color: inherit;
+	text-decoration: inherit;
+}
+.Header_Nav_text:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+#sliding_menu {
+	display:none; 
+	width:100%; height:200px;
+	position:absolute; left:0; top:78px;
+	opacity:1; 
+	background: rgba(181,178,255,0.5); 
+	padding:5px; margin-right:5px; z-index:9999;
+}
+#sliding_menu a {
+	position:relative;
+	left:0px; top:0px;
+	margin:0px 10px;
+	padding:5px;
+	line-height:25px;
 }
 </style>
 
@@ -126,19 +207,30 @@
 		<div class = "Header_top">
 			<div class="Header_home">
 				<h1>
-					<a href="/" style="--ratio:5.230769230769231">Hall of Art</a>
+					<a href="/" style="--ratio:5.230769230769231"><img alt="#" src="/resources/images/htest.jpg" style="width: 30%;"></a>
 				</h1>
 			</div>
 			<ul class="Header_links">
 				<li>
-					<a href="/login" style="--color:#000; --color-hover:#fff; margin-right: 20px;" class="login_btn"><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Login</span></a>
+					<a href="http://localhost/user/sign-in" style="--color:#000; --color-hover:#fff; margin-right: 20px;" class="login_btn"><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Login</span></a>
 				</li>
 				<li>
-					<a href="/login" style="--color:#008573; --color-hover:#0a4f51" class="signIn_button"><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a>
+					<a href="http://localhost/user/sign-up" style="--color:#008573; --color-hover:#0a4f51" class="signIn_button"><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a>
 				</li>
 			</ul>
 		</div>
+		<nav role="navigation" aria-label="principal" class="Header_Navigation">
+			<div class="HorizontalList">
+				<div class="HorizontalList_container">
+					<ul class="HorizontalList_track">
+						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">회원</span></a></li>
+						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">공연/예메</span></a></li>
+						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">대관</span></a></li>
+						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text"  id="item_customer">고객센터</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	</header>
 
-	
-	
+<section style="min-height: calc(100vh - 204px);">

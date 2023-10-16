@@ -50,4 +50,12 @@ public interface CustomerServiceRepository {
 	public List<Announcement> findAnnouncement(PagingDto paging);
 
 	public int countPageClassification(PagingDto paging);
+
+	public int countAllInquiry(PagingDto paging);
+
+	public List<Inquiry> findAllInquiry(PagingDto paging);
+
+	public List<Inquiry> findNoAnswer(PagingDto paging);
+
+	public int countNoAnswer(PagingDto paging);
 }
