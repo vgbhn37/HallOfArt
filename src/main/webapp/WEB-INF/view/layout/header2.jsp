@@ -31,7 +31,7 @@
 	position: sticky;
     top: -1px;
     padding-top: 1px;
-    z-index: 300;
+    /* z-index: 300; */
     color: #fff;
     background: #000;
     transition: transform .3s;
@@ -43,7 +43,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     position: relative;
     height: 100%;
 }
@@ -128,20 +128,20 @@
     background-color: #222;
 }
 .HorizontalList {
-	position: relative;
-    overflow: hidden;
-    contain: layout paint;
+	/* position: relative;
+    overflow: visible;
+    contain: layout paint; */
 }
 .HorizontalList_container {
 	display: flex;
     justify-content: center;
-    --distance: calc(calc(var(--line-height, 1.7142857143) * 1em) + 40px);
+    /* --distance: calc(calc(var(--line-height, 1.7142857143) * 1em) + 40px); */
 }
 .HorizontalList_track {
 	list-style-type: none;
     margin: 0;
     white-space: nowrap;
-    width: 40%;
+    width: 60%;
     justify-content: space-between;
     display: flex;
     padding: 0 var(--body-padding);
@@ -183,20 +183,20 @@
 .Header_Nav_text:hover::after {
     transform: translateX(-50%) scaleX(1);
 }
-#sliding_menu {
-	display:none; 
-	width:100%; height:200px;
-	position:absolute; left:0; top:78px;
-	opacity:1; 
-	background: rgba(181,178,255,0.5); 
-	padding:5px; margin-right:5px; z-index:9999;
+.dropdown-menu {
+    position: relative;
+    opacity: 1;
+    left: 10px;
+    background: #fff;
+    border: 1px solid #ccc; 
 }
-#sliding_menu a {
-	position:relative;
-	left:0px; top:0px;
-	margin:0px 10px;
-	padding:5px;
-	line-height:25px;
+.dropdown-menu li {
+	width: 120px;
+	color:inherit;
+}
+.dropdown-menu a{
+	color:inherit;
+	text-decoration: none;
 }
 </style>
 
@@ -219,18 +219,44 @@
 				</li>
 			</ul>
 		</div>
-		<nav role="navigation" aria-label="principal" class="Header_Navigation">
+		<nav role="navigation" class="Header_Navigation">
 			<div class="HorizontalList">
 				<div class="HorizontalList_container">
 					<ul class="HorizontalList_track">
-						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">회원</span></a></li>
+<!-- 						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">회원</span></a></li>
 						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">공연/예메</span></a></li>
-						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">대관</span></a></li>
-						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text"  id="item_customer">고객센터</span></a></li>
+						<li class="HorizontalList_item"><a class="Header_Nav_link" href="#"><span class="Header_Nav_text">대관</span></a></li> -->
+						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;회원&nbsp;</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;공연/예매&nbsp;</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;대관&nbsp;</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;고객센터&nbsp;</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
-
 <section style="min-height: calc(100vh - 204px);">

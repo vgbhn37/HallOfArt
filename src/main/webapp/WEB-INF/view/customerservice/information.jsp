@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/view/layout/header.jsp" %>
+<%@include file="/WEB-INF/view/layout/header2.jsp" %>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=cw4qth9oev"></script>
 <link rel="stylesheet" href="/resources/css/information.css">
 

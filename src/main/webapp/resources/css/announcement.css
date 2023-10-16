@@ -50,6 +50,7 @@ td a {
     position: relative;
     color: #535353;
     font-size: 35px;
+    height: 100%;
     line-height: 35px;
     padding: 5px 0 20px 22px;
     margin-bottom: 35px;
@@ -70,7 +71,7 @@ td a {
 .tab--announcement {
     padding: 0 0 1px 1px;
     margin-bottom: 30px;
-    overflow: hidden;
+/*     overflow: hidden; */
 }
 
 .tab--announcement :hover{
