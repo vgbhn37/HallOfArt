@@ -121,7 +121,7 @@ public class ShowController {
 	}
 	
 	@GetMapping("/apply")
-	public String apply(@RequestParam String name, Model model) {
+	public String apply(@RequestParam String name, Model model) throws InterruptedException {
 		
 		List<Hall> halls = showService.findHallAll();
 		model.addAttribute("halls", halls);

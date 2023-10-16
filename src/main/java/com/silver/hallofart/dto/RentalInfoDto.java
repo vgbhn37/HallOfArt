@@ -8,13 +8,12 @@ import lombok.Data;
 public class RentalInfoDto {
 
 	private Integer showTbId;
-	private String rentalStartTime;
-	private String rentalEndTime;
+	private Timestamp rentalStartTime;
+	private Timestamp rentalEndTime;
 	private String hallName;
 	private Integer amount;
 	private Timestamp createdAt;
 	private String status;
-	
 	private String title;
 	private String name;
 	private String username;

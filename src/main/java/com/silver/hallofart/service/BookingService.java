@@ -164,12 +164,12 @@ public class BookingService {
 			RentalInfoDto dto = new RentalInfoDto();
 			Integer showTbId = rental.getShowTbId();
 			dto.setShowTbId(showTbId);
-			dto.setRentalStartTime(rental.getRentalStartTime());
-			dto.setRentalEndTime(rental.getRentalEndTime());
+			dto.setRentalStartTime(bookingRepository.findStartDateByShowId(showTbId));
+			dto.setRentalEndTime(bookingRepository.findEndDateByShowId(showTbId));
 			dto.setHallName(bookingRepository.findHallNameByShowId(showTbId));
 			dto.setAmount(rental.getAmount());
 			dto.setCreatedAt(rental.getCreatedAt());
-			dto.setStatus(bookingRepository.findShowStatusByShowId(showTbId));
+			dto.setStatus(bookingRepository.findStatusByShowId(showTbId));
 			findRentalList.add(dto);
 		}
 		return findRentalList;

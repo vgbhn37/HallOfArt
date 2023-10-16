@@ -319,6 +319,61 @@ public class PaymentController {
 			}
 
 		}
+		
+	// 대관 환불 요청 시
+		
+		// 일반 티켓 환불 요청
+		@GetMapping("/payment/rentalRefund/{showTbId}")
+		public String paymentRentalRefund(@PathVariable Integer showTbId, HttpServletRequest request) {
+
+			// 로그인 여부
+			UserDto user = (UserDto) session.getAttribute("user");
+			if (user == null) {
+				throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+			}
+
+			// 주소창에 직접 입력시 오류 발생
+			if (request.getHeader("REFERER") == null) {
+				throw new CustomRestfulException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+			}
+
+
+			// RestTeamplate
+			RestTemplate rt = new RestTemplate();
+			// 헤더 객체
+			HttpHeaders headers = new HttpHeaders();
+			
+			String r_tid = paymentService.findPaymentTidByShowId(showTbId);
+
+			// 헤더에 담길 내용
+			headers.add("Authorization", kakaoApiKey);
+			headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+			// 바디에 들어갈 내용 싣기
+			MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+			params.add("cid", "TC0ONETIME");
+			params.add("tid", r_tid);
+			params.add("cancel_amount", paymentService.findPriceByPaymentTid(r_tid));
+			params.add("cancel_tax_free_amount", 0);
+
+			// 헤더와 바디를 포함하는 HTTP 객체
+			HttpEntity<MultiValueMap<String, Object>> reqMes = new HttpEntity<>(params, headers);
+
+			// http요청에 대한 응답
+			ResponseEntity<KakaoPayRefundDto> response = rt.exchange("https://kapi.kakao.com/v1/payment/cancel",
+					HttpMethod.POST, reqMes, KakaoPayRefundDto.class);
+			
+			if(response.getStatusCode()== HttpStatus.OK) {
+				paymentService.rentalRefundPayment(r_tid,
+						response.getBody().getApprovedCancelAmount().getTotal(), showTbId);
+				
+				System.out.println("야호성공");
+				return "/payment/rentalRefundSuccess";
+			} else {
+				return "/payment/refundFail";
+			}
+
+		}
 	
 
 	@GetMapping("/payment/cancel")

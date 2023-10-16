@@ -50,7 +50,8 @@ public class ShowService {
 	
 	// 예약 날짜 모두 반환
 	public List<String> findAllHallTime(String name){
-	
+		
+
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 		List<HallTimeDto> hallTime = findHallTime(name);
 		List<String> list = new ArrayList<>();
@@ -63,6 +64,9 @@ public class ShowService {
 	        while (true) {
 	            list.add("\""+fmt.format(startDate)+"\"");
 	            startDate.setTime(startDate.getTime() + 24 * 60 * 60 * 1000); // 다음 날짜로 이동
+	            System.out.println("야호");
+	            System.out.println(startDate);
+	            System.out.println(endDate);
 	            if (startDate.equals(endDate)) { // equals 메서드로 비교
 	                break;
 	            }

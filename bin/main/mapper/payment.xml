@@ -27,6 +27,16 @@
 		where id = #{id}
 	</select>
 	
+	<select id="findPaymentTidByShowId" resultType="String">
+		select payment_tid from rental_tb
+		where show_tb_id = #{id}
+	</select>
+	
+	<select id="findPriceByPaymentTid" resultType="Integer">
+		select amount from payment_tb
+		where tid = #{tid}
+	</select>
+	
 	<delete id="deletePaymentByTid">
 		delete from payment_tb where tid=#{tid};
 	</delete>

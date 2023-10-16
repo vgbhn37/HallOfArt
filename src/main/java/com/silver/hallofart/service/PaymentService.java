@@ -89,12 +89,28 @@ public class PaymentService {
 			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 		}
 		
-		int result4 = bookingRepository.updateShowToProcess(showTbId);
-		if (result4 != 1) {
-			System.out.println("4번에서 오류 발생");
-			throw new CustomRestfulException("결제 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+	}
+	
+	@Transactional
+	public void rentalRefundPayment(String tid, int amount, Integer showTbId) {
+
+		int result1 = paymentRepository.updateRefundedAmount(tid, amount);
+		if (result1 != 1) {
+			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
 		}
 
+		int result2 = bookingRepository.updateRentalToRefund(showTbId);
+		if (result2 != 1) {
+			throw new CustomRestfulException("환불 요청에 실패햐였습니다", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	public String findPaymentTidByShowId(Integer showTbId) {
+		return paymentRepository.findPaymentTidByShowId(showTbId);
+	}
+	
+	public Integer findPriceByPaymentTid(String tid) {
+		return paymentRepository.findPriceByPaymentTid(tid);
 	}
 
 }

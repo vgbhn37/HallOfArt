@@ -35,7 +35,9 @@ public interface BookingRepository {
 	public String findShowImgByshowId(Integer id);
 	public Integer findRentalAmountByShowId(Integer showTbId);
 	public List<Rental> findRentalByUserId(Integer userTbId);
-	public String findShowStatusByShowId(Integer id);
+	public String findStatusByShowId(Integer id);
+	public Timestamp findStartDateByShowId(Integer id);
+	public Timestamp findEndDateByShowId(Integer id);
 	
 	//insert
 	public void insertBookingInfo(Booking booking);
@@ -44,7 +46,8 @@ public interface BookingRepository {
 	public int updateBookingToSuccess(Integer id);
 	public int updateRentalToSuccess(Integer id);
 	public int updateBookingToRefund(Integer id);
-	public int updateShowToProcess(Integer id);
+	public int updateRentalToRefund(Integer id);
+
 	
 	//delete
 	public int deleteBookingById(Integer id);

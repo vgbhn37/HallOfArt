@@ -73,11 +73,11 @@
 	
 	<insert id="insertRental">
 		insert into rental_tb(
-			show_tb_id, hall_tb_id, user_tb_id, rental_start_time, rental_end_time,
+			show_tb_id, hall_tb_id, user_tb_id,
 			status, amount, created_at
 		)
 	  	values(
-	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime},
+	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId},
 	  		'승인 요청', #{amount}, now()
   		)
 	</insert>

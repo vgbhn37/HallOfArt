@@ -101,11 +101,20 @@
 		from rental_tb
 		where user_tb_id = #{userTbId}
 	</select>
-	<select id = "findShowStatusByShowId" resultType="String">
-		select show_status
-		from show_tb
+	<select id = "findStatusByShowId" resultType="String">
+		select status
+		from rental_tb
+		where show_tb_id = #{id}
+	</select>
+	<select id = "findStartDateByShowId">
+		select start_date from show_tb
 		where id = #{id}
 	</select>
+	<select id = "findEndDateByShowId">
+		select end_date from show_tb
+		where id = #{id}
+	</select>
+	
 	<insert id="insertBookingInfo">
 		insert into booking_tb (status, user_tb_id,
 		seat_tb_id, show_time_tb_id, show_tb_id,created_at)
@@ -118,11 +127,11 @@
 	<update id="updateRentalToSuccess">
 		update rental_tb set status='정상' where show_tb_id = #{id}
 	</update>
-	<update id="updateShowToProcess">
-		update show_tb set show_status='공연 중' where id = #{id}
-	</update>
 	<update id="updateBookingToRefund">
 		update booking_tb set status='환불' where id = #{id}
+	</update>
+	<update id="updateRentalToRefund">
+		update rental_tb set status='환불' where show_tb_id = #{id}
 	</update>
 	<delete id="deleteBookingById">
 		delete from booking_tb where id = #{id}

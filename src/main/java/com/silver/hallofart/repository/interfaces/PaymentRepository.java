@@ -9,6 +9,9 @@ import com.silver.hallofart.dto.PaymentDto;
 public interface PaymentRepository {
 	//select
 	public String findPaymentTidByBookingId(Integer id);
+	public String findPaymentTidByShowId(Integer id);
+	public Integer findPriceByPaymentTid(String tid);
+	
 	
 	//insert
 	public int insertPaymentInfo(PaymentDto paymentDto);
