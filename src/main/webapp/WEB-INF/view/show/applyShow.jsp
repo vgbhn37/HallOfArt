@@ -38,7 +38,7 @@
        				<td>
        					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
        					<button type="button" id="date2resetBtn">reset</button>
-       					<input type="hidden" name="amount">
+       					<input type="hidden" id="amount" name="amount">
        				</td>
        			</tr>
        			<tr>

@@ -14,4 +14,8 @@ public class RentalInfoDto {
 	private Integer amount;
 	private Timestamp createdAt;
 	private String status;
+	
+	private String title;
+	private String name;
+	private String username;
 }

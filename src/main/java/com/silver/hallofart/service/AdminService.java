@@ -9,6 +9,7 @@ import com.silver.hallofart.dto.AdminDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
+import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.repository.interfaces.AdminRepository;
 import com.silver.hallofart.repository.model.Show;
 
@@ -40,6 +41,10 @@ public class AdminService {
 		return adminRepository.findBookingAll(paging);
 	}
 	
+	public List<RentalInfoDto> findRentalPaging(PagingDto paging) {
+		return adminRepository.findRentalPaging(paging);
+	}
+	
 	public int countShow(Pagination pagination) {
 		return adminRepository.countShow(pagination);
 	}
@@ -50,5 +55,9 @@ public class AdminService {
 	
 	public int countPayment(Pagination pagination) {
 		return adminRepository.countPayment(pagination);
+	}
+	
+	public int countRental(Pagination pagination) {
+		return adminRepository.countRental(pagination);
 	}
 }

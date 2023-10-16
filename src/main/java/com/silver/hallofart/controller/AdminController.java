@@ -168,6 +168,22 @@ public class AdminController {
 		model.addAttribute("list", list);
 		return "admin/merchantList";
 	}
+
+	@GetMapping("/rentalList")
+	public String rentalList(@ModelAttribute("paging") PagingDto paging , 
+			@RequestParam(value="page", required = false, defaultValue="1")int page, 
+			Model model) {
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(service.countRental(pagination));
+		
+		model.addAttribute("pagination", pagination);
+		List<RentalInfoDto> list = service.findRentalPaging(paging);
+		model.addAttribute("list", list);
+		System.out.println("rental : "+list);
+		return "admin/rentalList";
+	}
 	
 	@GetMapping("/modal")
 	public String loginModal(Model model) {

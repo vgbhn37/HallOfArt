@@ -73,6 +73,7 @@
                                     <a class="nav-link" href="showList">조회</a>
 									<a class="nav-link" data-bs-toggle="modal" href="#myModal">입력</a>
 <!--                                     <a class="nav-link" href="insertShow">입력</a> -->
+                                    <a class="nav-link" href="rentalList">대관 신청 조회</a>
                                     <a class="nav-link" href="bookList">예매 현황</a>
                                     <a class="nav-link" href="merchantList">결제 현황</a>
                                 </nav>

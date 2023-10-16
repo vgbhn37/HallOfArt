@@ -72,4 +72,18 @@
 	<select id="countPayment" parameterType="com.silver.hallofart.dto.Pagination" resultType="int">
 		select count(*) from payment_tb
 	</select>
+	
+	<select id="countRental" parameterType="com.silver.hallofart.dto.Pagination" resultType="int">
+		select count(*) from rental_tb
+	</select>
+	
+	<select id="findRentalPaging" resultType="com.silver.hallofart.dto.RentalInfoDto">
+		select * 
+		from rental_tb r
+		join show_tb s on s.id = r.show_tb_id
+		join hall_tb h on h.id = r.hall_tb_id
+		join user_tb u on u.id = r.user_tb_id
+		order by created_at desc
+		limit #{offset}, #{recordSize}
+	</select>
 </mapper>
