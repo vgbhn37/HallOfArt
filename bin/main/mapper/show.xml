@@ -62,8 +62,8 @@
 		where name=#{name}
 	</select>
 	
-	<select id="findHallType" resultType="int">
-		select id from hall_tb
+	<select id="findHallByName" resultType="com.silver.hallofart.repository.model.Hall">
+		select * from hall_tb
 		where name=#{name}
 	</select>
 	
@@ -78,7 +78,7 @@
 		)
 	  	values(
 	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId}, #{rentalStartTime}, #{rentalEndTime},
-	  		'승인 요청', #{price}, now()
+	  		'승인 요청', #{amount}, now()
   		)
 	</insert>
 </mapper>

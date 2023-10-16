@@ -91,6 +91,9 @@
 	#showImg{
 		width: 250px;
 	}
+	#hallInfoTd{
+		font-size: 20px;
+	}
 </style>
 
 </head>
@@ -128,6 +131,12 @@
 				       				<td>
 				       					End :&nbsp;&nbsp;<input type="text" class="datepicker" id="datepicker2" name="endDate" autocomplete="off" style="width: 200px;" readonly="readonly">
 				       					<button type="button" id="date2resetBtn">reset</button>
+				       					<input type="hidden" id="amount" name="amount">
+				       				</td>
+				       			</tr>
+				       			<tr>
+				       				<td>대관료</td>
+				       				<td id="hallInfoTd">
 				       				</td>
 				       			</tr>
 				  				<tr>
@@ -240,6 +249,11 @@
 		    			break;
 					}
 				}
+		    	if($("#datepicker2").val().length!=0){
+		    		amount = ${hallInfo.basicPrice}+(new Date($("#datepicker2").val()) - new Date($("#datepicker1").val()) )/(1000*60*60*24)*${hallInfo.perTimePrice};
+		    		$("#hallInfoTd").html(amount.toLocaleString('ko-KR') + " 원");
+		    		$("#amount").val(amount);
+		    	}
 		    });
 			$('#date1resetBtn').on('click', function(){
 		    	$("#datepicker1").val('');
@@ -254,6 +268,11 @@
 		    			break;
 					}
 				}
+		    	if($("#datepicker1").val().length!=0){
+		    		amount = ${hallInfo.basicPrice}+(new Date($("#datepicker2").val()) - new Date($("#datepicker1").val()) )/(1000*60*60*24)*${hallInfo.perTimePrice};
+		    		$("#hallInfoTd").html(amount.toLocaleString('ko-KR') + " 원");
+		    		$("#amount").val(amount);
+		    	}
 		    });
 			$('#date2resetBtn').on('click', function(){
 		    	$("#datepicker2").val('');
@@ -300,7 +319,7 @@
 				$("select").css("border", "1px solid #999");
 				$("textarea").css("border", "1px solid #999");
 				// ---------------- 유효성 : 이미지 파일
-				if($("#showImg").val().length==0){
+				if($("#uploadImg").val().length==0){
 					$("#uploadImg").css("border", "2px solid red");
 					checkMsg+="이미지를 업로드해주세요\n";
 				}

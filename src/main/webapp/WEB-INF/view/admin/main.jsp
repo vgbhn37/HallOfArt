@@ -106,9 +106,8 @@
 		                   			<tr style="height: 70px; padding-top: 30px;">
 		                   				<td style="width:10%">no.</td>
 		                   				<td style="width:10%">유형</td>
-		                   				<td style="width:25%">제목</td>
-		                   				<td style="width:25%">날짜</td>
-		                   				<td style="width:25%">상태</td>
+		                   				<td style="width:45%">제목</td>
+		                   				<td style="width:35%">날짜</td>
 		                   			</tr>
 		                   			<c:forEach var="li" items="${list}" varStatus="status">
 		                   				<c:if test="${status.count <= 5}">
@@ -129,19 +128,14 @@
 		                   						</td>
 			                   					<td class="titleTd">${li.title}</td>
 			                   					<td>${li.startDate} ~ ${li.endDate}</td>
-			                   					<td>
-			                   						<input type="hidden" id="statusId" value="${li.id}">
-			                   						${li.showStatus}
-			               						</td>
 			                   				</tr>
 		                   				</c:if>
 		                   				<c:if test="${status.count == 5}">
 				                   			<tr>
 				                   				<td style="width:10%">...</td>
 				                   				<td style="width:10%">...</td>
-				                   				<td style="width:25%">...</td>
-				                   				<td style="width:25%">...</td>
-				                   				<td style="width:25%">...</td>
+				                   				<td style="width:45%">...</td>
+				                   				<td style="width:35%">...</td>
 				                   			</tr>
 			                   			</c:if>
 		                   			</c:forEach>

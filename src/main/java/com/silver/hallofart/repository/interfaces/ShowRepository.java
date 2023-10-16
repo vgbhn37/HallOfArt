@@ -22,7 +22,7 @@ public interface ShowRepository {
 	
 	public List<Hall> findHallAll();
 	public List<HallTimeDto> findHallTime(String name);
-	public int findHallType(String name);
+	public Hall findHallByName(String name);
 	public int insertRental(Rental rental);
 	public List<RentalInfoDto> findRentalAll();
 }

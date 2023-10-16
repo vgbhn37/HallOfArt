@@ -72,8 +72,8 @@ public class ShowService {
 		return list;
 	}
 	
-	public int findHallType(String name){
-		return showRepository.findHallType(name);
+	public Hall findHallByName(String name){
+		return showRepository.findHallByName(name);
 	}
 	
 	public int insertRental(Rental rental) {

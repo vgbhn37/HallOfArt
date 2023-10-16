@@ -118,6 +118,10 @@ public class AdminController {
 		model.addAttribute("rentalList", list);
 		model.addAttribute("name", name);
 		
+		Hall hallInfo = showService.findHallByName(name);
+		model.addAttribute("hallInfo", hallInfo);
+		System.out.println("hallInfo : "+hallInfo);
+		
 		return "admin/insertShow";
 	}
 	@PostMapping("/insert")

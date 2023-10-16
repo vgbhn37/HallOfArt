@@ -130,8 +130,9 @@ public class ShowController {
 		model.addAttribute("rentalList", list);
 		model.addAttribute("name", name);
 		
-		int hallType = showService.findHallType(name);
-		model.addAttribute("hallType", hallType);
+		Hall hallInfo = showService.findHallByName(name);
+		model.addAttribute("hallInfo", hallInfo);
+		System.out.println("hallInfo : "+hallInfo);
 		
 		return "show/applyShow";
 	}
