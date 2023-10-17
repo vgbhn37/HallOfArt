@@ -9,7 +9,7 @@
 	<hr>
 
 	<c:forEach var="booking" items="${ticketList }">
-			<div class="my-3">
+			<div class="my-3" style="font-family: 'NanumSquareRound'">
 				<div class="card flex-row flex-wrap">
 					<div class="card-header border-0">
 						<img src="/imagePath/${booking.showImg}" onerror="this.src='/resources/images/errorImage.png'"

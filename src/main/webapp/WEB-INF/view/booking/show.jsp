@@ -11,7 +11,7 @@
 
 	<div class="container" style="margin-top: 60px;">
 
-		<h1 class="title--booking">좌석 예약</h1>
+		<h1 class="title--booking">공연 좌석 예약</h1>
 		<div style="font-family: 'NanumSquareRound'">
 
 			<div style="background: #FAFAFA; margin-bottom: 40px;">
