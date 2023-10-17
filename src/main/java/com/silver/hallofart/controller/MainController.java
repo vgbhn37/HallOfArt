@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.silver.hallofart.dto.MainShowDto;
+import com.silver.hallofart.dto.PagingDto;
+import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Show;
+import com.silver.hallofart.service.CustomerServiceService;
 import com.silver.hallofart.service.PaymentService;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +31,9 @@ public class MainController {
 	// 추후 showService로 수정
 	@Autowired
 	private PaymentService paymantService;
+	
+	@Autowired
+	private CustomerServiceService customerService;
 
 	@GetMapping({ "/main", "/" })
 	public String main(Model model) {
@@ -69,6 +75,9 @@ public class MainController {
 		} else {
 			model.addAttribute("showsList", showsList);
 		}
+		
+		List<Announcement> announcementList = customerService.selectMainAnnouncement();
+		model.addAttribute("announcementList", announcementList);
 
 		return "main";
 	}
