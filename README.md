@@ -13,7 +13,7 @@
 
 황병준 - 공연대관, 등록, 관리자페이지
 
-황정민 - 유저관리, 메일API, 문자API
+황정민 - 유저관리, 로그인 API, 메일API, 문자API
 
 ## 프로젝트 구현 환경
 + Languages: <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/>
