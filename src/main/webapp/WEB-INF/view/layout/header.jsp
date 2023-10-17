@@ -45,28 +45,28 @@
 			<div class="HorizontalList">
 				<div class="HorizontalList_container">
 					<ul class="HorizontalList_track">
-						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;회원&nbsp;</span></a>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">회원</span></a>
 							<ul class="dropdown-menu">
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
 						  </ul>
 						</li>
-						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;공연/예매&nbsp;</span></a>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">공연/예매</span></a>
 							<ul class="dropdown-menu">
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
 						  </ul>
 						</li>
-						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;대관&nbsp;</span></a>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">대관</span></a>
 							<ul class="dropdown-menu">
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
 						  </ul>
 						</li>
-						<li class="HorizontalList_item dropright"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">&nbsp;고객센터&nbsp;</span></a>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">고객센터</span></a>
 							<ul class="dropdown-menu">
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
 							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
