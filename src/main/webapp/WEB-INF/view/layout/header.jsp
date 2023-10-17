@@ -10,123 +10,72 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
 	rel='stylesheet' type='text/css'>
-<!-- <link rel="stylesheet" href="../resources/css/style.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<style>
-@font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-
+<link rel="stylesheet" href="/resources/css/header.css">
 </head>
 
 <body>
-	<section class="ftco-section" style="font-family: 'NanumSquareRound'">
-		<div id="header_back"
-			style="background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('/resources/images/headertest.png'); height: 92px;">
-			<div class="container-fluid px-md-5">
-				<div class="row justify-content-between">
-					<div class="col-md-8 order-md-last">
-						<div class="row">
-							<div class="col-md-6 text-center">
-								<a class="navbar-brand" href="http://localhost/">
-								<h1 style="font-weight: 900; color: black">예술의 전당</h1>
-									<!-- <span>예매하십셔</span> -->
-								</a>
-							</div>
-							<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-								<form action="#" class="searchform order-lg-last"></form>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 d-flex">
-						<div class="social-media">
-							<p class="mx-auto mt-5 d-flex">
-								<a href="https://www.facebook.com/SeoulArtsCenter.Korea" target="_blank"
-									class="d-flex align-items-center justify-content-center"><span
-									class="fa-brands fa-facebook"><i class="sr-only">Facebook</i></span></a> <a
-									href="https://twitter.com/I_Love_SAC" target="_blank"
-									class="d-flex align-items-center justify-content-center"><span
-									class="fa-brands fa-twitter"><i class="sr-only">Twitter</i></span></a> <a
-									href="https://www.instagram.com/seoul_arts_center/" target="_blank"
-									class="d-flex align-items-center justify-content-center"><span
-									class="fa-brands fa-instagram"><i class="sr-only">Instagram</i></span></a>
-							</p>
-						</div>
-					</div>
-				</div>
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-md-6 text-center mb-5">
-<!-- 						<h1 style="font-weight: 900">예술의 전당</h1> -->
-					</div>
-				</div>
+	<header role = "banner" class = "Header">
+		<div class = "Header_top">
+			<div class="Header_home">
+				<h1>
+					<a href="/" style="--ratio:5.230769230769231"><img alt="#" src="/resources/images/htest.jpg" style="width: 30%;"></a>
+				</h1>
 			</div>
-			</div>
+			<ul class="Header_links">
+				<c:if test="${empty user}">
+					<li><a href="http://localhost/user/sign-in" style="--color:#000; --color-hover:#fff; margin-right: 20px;" class="login_btn"><span><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Login</span></a></li>
+					<li><a href="http://localhost/user/sign-up" style="--color:#008573; --color-hover:#0a4f51" class="signIn_button"><span><i class="fa-solid fa-user-plus"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Sign-up</span></a></li>
+				</c:if>
+				<c:if test="${user.roleTypeId == 2}">
+					<li><a href="http://localhost/admin/main" style="--color:#000; --color-hover:#fff; margin-right: 20px;" class="login_btn"><span><i class="fa-solid fa-screwdriver-wrench"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Admin</span></a></li>
+					<li><a href="http://localhost/user/sign-out" style="--color:#008573; --color-hover:#0a4f51" class="signIn_button"><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a></li>
+				</c:if>
+				<c:if test="${user.roleTypeId == 1}">
+					<li><a href="http://localhost/user/my-info" style="--color:#000; --color-hover:#fff; margin-right: 20px;" class="login_btn"><span><i class="fa-solid fa-house-user"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Mypage</span></a></li>
+					<li><a href="http://localhost/user/sign-out" style="--color:#008573; --color-hover:#0a4f51" class="signIn_button"><span><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i></span><span>&nbsp;&nbsp;&nbsp;</span><span class="btn_label">Logout</span></a></li>
+				</c:if>
+			</ul>
 		</div>
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light"
-			id="ftco-navbar" style="background-color: #252525">
-			<div class="container-fluid">
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> 메뉴
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav mx-auto">
-						<li class="nav-item active"><a href="http://localhost/" class="nav-link" style="color: red">홈</a></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdown04"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown04">
-								<a class="dropdown-item" href="#">회원정보</a> <a
-									class="dropdown-item" href="#">회원어쩌구</a> <a class="dropdown-item"
-									href="#">회원엄준식123</a> <a class="dropdown-item" href="#">회원4</a>
-							</div></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdown04"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">예매</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown04">
-								<a class="dropdown-item" href="#">예매1</a> <a
-									class="dropdown-item" href="#">예매2</a> <a class="dropdown-item"
-									href="#">예매3</a> <a class="dropdown-item" href="#">예매4</a>
-							</div></li>
-						<li class="nav-item"><a href="#" class="nav-link">오시는길</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">문의센터</a></li>
-					</ul>
-					<ul class="navbar-nav" style="margin-left:-144px">
-						<c:choose>
-							<c:when test="${empty user}">
-								<li class="nav-item"><a href="http://localhost/user/sign-in" class="nav-link">로그인</a></li>
-								<li class="nav-item"><a href="http://localhost/user/sign-up" class="nav-link">회원가입</a></li>
-							</c:when>
-							<c:otherwise>
-								<c:choose>
-									<c:when test="${user.roleTypeId == 2}">
-										<li class="nav-item"><a href="http://localhost/user/my-info" class="nav-link">관리자 ${user.username}님 환영합니다</a></li>
-										<li class="nav-item"><a href="http://localhost/admin/main" class="nav-link">관리 페이지</a></li>
-									</c:when>
-									<c:otherwise>
-										<li class="nav-item"><a href="http://localhost/user/my-info" class="nav-link">${user.username}님 환영합니다</a></li>
-									</c:otherwise>
-								</c:choose>
-								<li class="nav-item"><a href="http://localhost/user/my-info" class="nav-link">내 정보</a></li>
-								<li class="nav-item"><a href="http://localhost/user/sign-out" class="nav-link">로그아웃</a></li>
-							</c:otherwise>
-						</c:choose>
+		<nav role="navigation" class="Header_Navigation">
+			<div class="HorizontalList">
+				<div class="HorizontalList_container">
+					<ul class="HorizontalList_track">
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">회원</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">공연/예매</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">대관</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">고객센터</span></a>
+							<ul class="dropdown-menu">
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+						  </ul>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-	</section>
-	
-	<section style="min-height: calc(100vh - 204px);">
+	</header>
+<section style="min-height: calc(100vh - 204px);">
