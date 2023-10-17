@@ -47,23 +47,16 @@
 					<ul class="HorizontalList_track">
 						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">회원</span></a>
 							<ul class="dropdown-menu">
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/user/payList/${user.id}">대기 목록</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/user/ticketList/${user.id}">예매 목록</a></li>
 						  </ul>
 						</li>
-						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">공연/예매</span></a>
-							<ul class="dropdown-menu">
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
-						  </ul>
+						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="http://localhost/show/schedule" ><span class="Header_Nav_text"  id="item_customer">공연 목록</span></a>
 						</li>
 						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">대관</span></a>
 							<ul class="dropdown-menu">
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/announcement">공지사항</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/information">오시는길</a></li>
-							    <li class="dropdown-item"><a href="http://localhost/customerservice/inquiry">1:1문의하기</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/show/applyIntro">대관 신청</a></li>
+							    <li class="dropdown-item"><a href="http://localhost/user/rentalList/${user.id}">대관 목록</a></li>
 						  </ul>
 						</li>
 						<li class="HorizontalList_item dropdown"><a class="Header_Nav_link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="Header_Nav_text"  id="item_customer">고객센터</span></a>
