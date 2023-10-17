@@ -24,8 +24,8 @@
 				<tr>
 					<th scope="row">${rental.status }</th>
 					<td>${rental.hallName }</td>
-					<td>${rental.rentalStartTime }</td>
-					<td>${rental.rentalEndTime }</td>
+					<td><fmt:formatDate value="${rental.rentalStartTime }" pattern="yyyy-MM-dd"/></td>
+					<td><fmt:formatDate value="${rental.rentalEndTime }" pattern="yyyy-MM-dd"/></td>
 					<td><fmt:formatNumber value="${rental.amount }"/> 원</td>
 					<c:choose>
 						<c:when test="${rental.status=='결제 요청' }">

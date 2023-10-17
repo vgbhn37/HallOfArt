@@ -73,7 +73,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<a id="booking" href="#">예매하기</a>
+					<a id="booking" href="/booking/booking/${show.id }">예매하기</a>
 				</td>
 			</tr>
 		</table>
