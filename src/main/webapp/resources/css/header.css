@@ -8,14 +8,21 @@
     position: relative;
     align-items: center;
 }
+body{
+	margin-top:220px !important;
+}
 .Header {
-	position: sticky;
+	position: fixed;
+	width:100%;
     top: -1px;
     padding-top: 1px;
     z-index: 300;
     color: #fff;
     background: #000;
-    transition: transform .3s;
+    transition: top 0.3s ease-in-out;
+}
+.nav-up {
+    top: -240px;
 }
 .Header_top {
 	font: 400 16px/1.56 Roboto,Open Sans,Arial,Helvetica,sans-serif;
