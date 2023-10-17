@@ -12,37 +12,66 @@
 <link href="/resources/css/showSchedule.css" rel="stylesheet" />
 <style>
 .schedule_content {
+	width: 80%;
+	min-width: 900px;
+	min-height: 1200px;
 	margin: 20px auto;
-	text-align: center;
 }
-
 .list_tb {
 	width: 900px;
 	margin: 20px auto;
 	text-align: center;
 }
-
 .list_tb td {
 	border-bottom: 1px solid lightgrey;
 }
-
 .pagination {
 	justify-content: center;
+}
+.title--schedule {
+    position: relative;
+    color: #535353;
+    font-size: 35px;
+    line-height: 35px;
+    padding: 5px 0 20px 22px;
+    margin-bottom: 35px;
+    margin-top: 40px;
+    border-bottom: 1px solid #535353;
+    text-align: left;
+}
+.title--schedule:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #ed1a3b;
+    content: "";
+}
+.list_tb a{
+	font-size: 20px;
+	text-decoration: none;
+	color: black;
 }
 </style>
 <!-- --------------------------------------------------------- -->
 
 <div class="schedule_content">
-	<h2>공연 정보</h2>
+	<h1 class="title--schedule">공연 정보</h1>
 	<br>
-	날짜 선택 :
-	<input type="text" class="datepicker" id="datepicker">
-	<button type="button" id="dateSearchBtn">검색</button>
+	<div style="background-color: #f9f6f6; padding: 20px;">
+		<label for="datepicker">
+			날짜 선택 :
+			<input type="text" class="datepicker" id="datepicker">
+			<button type="button" id="dateSearchBtn">검색</button>
+		</label>
+	</div>
 	<table class="list_tb">
 		<tr style="height: 50px">
 			<td colspan="2" style="width: 50%">제목</td>
 			<td style="width: 10%">입장가격</td>
-			<td style="width: 40%">기간</td>
+			<td colspan="2" style="width: 40%">기간</td>
 		</tr>
 		<c:forEach var="li" items="${list}">
 			<tr>
@@ -50,7 +79,7 @@
 					<img src="/imagePath/${li.showImg}" onerror="this.src='/resources/images/errorImage.png'" style="width: 150px; height: 200px; margin: 20px;">
 				</td>
 				<td style="width: 30%">
-					<a href="detail?id=${li.id}">${li.title}</a>
+					<a id="a--detail" href="detail?id=${li.id}" style="">${li.title}</a>
 				</td>
 				<td>
 					<fmt:formatNumber value="${li.price}" pattern="#,###" />
@@ -73,19 +102,25 @@
 					
 					<c:choose>
 						<c:when test="${startDateFormatted > currentDateFormatted}">
-                        공연 전
+						<span style="background-color: lightblue; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+	                        공연 준비 중
+						</span>
                     </c:when>
 						<c:when test="${endDateFormatted < currentDateFormatted}">
-                        공연 종료
+						<span style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+	                        공연 종료
+                        </span>
                     </c:when>
 						<c:otherwise>
-                        공연 중
+						<span style="background-color: #8d8; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+                        	공연 중
+                       	</span>
                     </c:otherwise>
 					</c:choose>
 				</td>
-				<td style="width:30%"><a href="detail?id=${li.id}">${li.title}</a></td>
-				<td><fmt:formatNumber value="${li.price}" pattern="#,###"/></td>
-				<td>${li.startDate} ~ ${li.endDate}</td>
+<%-- 				<td style="width:30%"><a href="detail?id=${li.id}">${li.title}</a></td> --%>
+<%-- 				<td><fmt:formatNumber value="${li.price}" pattern="#,###"/></td> --%>
+<%-- 				<td>${li.startDate} ~ ${li.endDate}</td> --%>
 			</tr>
 		</c:forEach>
 	</table>

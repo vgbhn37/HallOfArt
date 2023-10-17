@@ -163,10 +163,16 @@
 				       			<tr>
 				       				<td style="width: 40%; min-width: 150px;">공연/전시 유형</td>
 				       				<td>
-				       					<select name="showTypeId1">
-				       						<option value="" selected disabled>- - - - - - -</option>
-				       						<option value="1">1 : 공연</option>
-				       						<option value="2">2 : 전시</option>
+				       					<select name="showTypeId1" disabled>
+				  						<c:choose>
+											<c:when test="${hallInfo.hallTypeId == 1}">
+					       						<option value="1" selected>1 : 공연</option>
+											</c:when>
+											<c:otherwise>
+					       						<option value="2" selected>2 : 전시</option>
+											</c:otherwise>
+										</c:choose>
+				       						
 				       					</select>
 				       					<input type="hidden" id="showImg" name="showImg">
 				    					</td>
