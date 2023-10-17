@@ -1,0 +1,181 @@
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+}
+.Header {
+	position: sticky;
+    top: -1px;
+    padding-top: 1px;
+    /* z-index: 300; */
+    color: #fff;
+    background: #000;
+    transition: transform .3s;
+}
+.Header_top {
+	font: 400 16px/1.56 Roboto,Open Sans,Arial,Helvetica,sans-serif;
+    padding: 24px 32px;
+    height: calc(1em * 1.71 + 64px);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    /* flex-wrap: wrap; */
+    position: relative;
+    height: 100%;
+}
+.Header_home {
+	flex: 1 1;
+	justify-content: center;
+	align-items: center; 
+	display: flex;
+}
+.Header_home h1{
+	display: flex;
+	margin-left: 210px;
+}
+.Header_home a {
+	text-decoration: inherit;
+	color: inherit;
+	cursor: pointer;
+}
+.Header_home img {
+	width: 30%;
+    display: block;
+    margin: 0 auto;
+}
+.Header_links {
+	list-style: none;
+	padding: 0;
+	text-align: -webkit-match-parent;
+	display: flex;
+}
+.login_btn{
+	border: 2px solid #333;
+    transition: border-color .15s;
+    background-color: var(--color);
+    color: #fff;
+    padding: 8px 16px;
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+    font: 400 14px/1.57 Roboto,Open Sans,Arial,Helvetica,sans-serif;
+    border-radius: calc(16px + 1em * 1.57);
+    text-decoration: inherit;
+    cursor: pointer;
+}
+.login_btn:hover {
+	border-color: var(--color-hover);
+	text-decoration: inherit;
+	color: #fff;
+}
+.btn_label {
+	white-space: normal;
+    text-decoration: underline;
+    -webkit-text-decoration-color: #0000;
+    text-decoration-color: #0000;
+    transition: -webkit-text-decoration-color .15s;
+    transition: text-decoration-color .15s;
+
+}
+.signIn_button {
+	background-color: var(--color);
+	color: #fff;
+    padding: 8px 16px;
+    text-align: center;
+    font-weight: 500;
+    transition-property: background-color,color;
+    transition-duration: .15s;
+    margin: 0;
+    font: 400 14px/1.57 Roboto,Open Sans,Arial,Helvetica,sans-serif;
+    border-radius: calc(16px + 1em * 1.57);
+    text-decoration: inherit;
+}
+.signIn_button:hover {
+	background-color: var(--color-hover);
+	text-decoration: inherit;
+	color: #fff;
+}
+.Header_top:after {
+	content: "";
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 80%;
+    background-color: #222;
+}
+.HorizontalList {
+	/* position: relative;
+    overflow: visible;
+    contain: layout paint; */
+}
+.HorizontalList_container {
+	display: flex;
+    justify-content: center;
+    /* --distance: calc(calc(var(--line-height, 1.7142857143) * 1em) + 40px); */
+}
+.HorizontalList_track {
+	list-style-type: none;
+    margin: 0;
+    white-space: nowrap;
+    width: 60%;
+    justify-content: space-between;
+    display: flex;
+    padding: 0 var(--body-padding);
+}
+.HorizontalList_item {
+	display: flex;
+    white-space: nowrap;
+    text-align: -webkit-match-parent;
+}
+.Header_Nav_link {
+	transition: color .3s;
+    padding: 16px 0;
+    text-decoration: inherit;
+    color: inherit;
+}
+.Header_Nav_text {
+	flex: 1;
+	position: relative;
+	font: 18px/1.33 Montserrat,Verdana,sans-serif;
+	padding-bottom: 5px;
+}
+.Header_Nav_text::after {
+	content: "";
+    position: absolute;
+    left: 50%;
+    width: 30px;
+    bottom: 0;
+    max-width: calc(100% - 24px);
+    height: 2px;
+    background-color: #fff;
+    transform: translateX(-50%) scaleX(0);
+    transition-property: transform;
+    transition-duration: .3s;
+}
+.Header_Nav_link:hover {
+	color: inherit;
+	text-decoration: inherit;
+}
+.Header_Nav_text:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+.dropdown-menu {
+    position: relative;
+    opacity: 1;
+    left: 10px;
+    background: #fff;
+    border: 1px solid #ccc; 
+}
+.dropdown-menu li {
+	width: 120px;
+	color:inherit;
+}
+.dropdown-menu a{
+	color:inherit;
+	text-decoration: none;
+}

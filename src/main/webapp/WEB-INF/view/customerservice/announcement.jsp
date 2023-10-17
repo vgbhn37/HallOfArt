@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/view/layout/header2.jsp"%>
+<%@include file="/WEB-INF/view/layout/header.jsp"%>
 <link rel="stylesheet" href="/resources/css/announcement.css">
 
 <!-- body  -->
