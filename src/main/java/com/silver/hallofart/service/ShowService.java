@@ -1,8 +1,10 @@
 package com.silver.hallofart.service;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,41 @@ public class ShowService {
 	public int insertShow(Show show) {
 		return showRepository.insertShow(show); 
 	}
-	public int insertShowTime(String startTime) {
-		return showRepository.insertShowTime(startTime); 
+	public int insertShowTime(String startTime, String endDate) {
+		String startDateStr = startTime.split(" ")[0];
+		String timeStr = startTime.split(" ")[1];
+		System.out.println("showService startDateStr : "+startDateStr);
+		System.out.println("showService endDate : "+endDate);
+		System.out.println("showService timeStr : "+timeStr);
+		int successInt = 0;
+        try {
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        	Date startDate = sdf.parse(startDateStr);
+			Date endDate1 = sdf.parse(endDate);
+			
+			List<String> dateRange = calculateDateRange(startDate, endDate1, timeStr);
+
+            for (String date : dateRange) {
+                showRepository.insertShowTime(date);
+                successInt++;
+            }
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return successInt; 
 	}
+	public static List<String> calculateDateRange(Date startDate, Date endDate, String time) {
+        List<String> dateRange = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        while (!startDate.after(endDate)) {
+            dateRange.add("" + sdf.format(startDate) + " " +  time);
+            startDate.setTime(startDate.getTime() + 86400000);
+        }
+
+        return dateRange;
+    }
 	
 	public List<Hall> findHallAll(){
 		return showRepository.findHallAll();

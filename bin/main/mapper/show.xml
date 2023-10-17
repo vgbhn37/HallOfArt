@@ -59,7 +59,9 @@
 		from show_tb s
 		join hall_tb h on s.hall_tb_id = h.id
 		join hall_type ht on h.hall_type_id = ht.id
+		join rental_tb r on s.id = r.show_tb_id
 		where name=#{name}
+		and not r.status like '환불%'
 	</select>
 	
 	<select id="findHallByName" resultType="com.silver.hallofart.repository.model.Hall">

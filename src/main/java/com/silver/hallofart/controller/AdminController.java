@@ -130,7 +130,7 @@ public class AdminController {
 		System.out.println("inserting seat : "+rental);
 		try {
 			showService.insertShow(show);
-			showService.insertShowTime(startTime);
+			showService.insertShowTime(startTime, show.getEndDate());
 			showService.insertRental(rental);
 		} catch (Exception e) {
 			e.printStackTrace();
