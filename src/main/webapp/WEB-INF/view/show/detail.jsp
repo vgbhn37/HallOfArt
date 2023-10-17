@@ -53,7 +53,7 @@
 			</c:choose>
 			${show.title}
 		</h2>
-		<p>${show.content}</p>
+		<p style="white-space: pre-line">${show.content}</p>
 		<table class="detail_tb">
 			<tr>
 				<td>기간</td>
