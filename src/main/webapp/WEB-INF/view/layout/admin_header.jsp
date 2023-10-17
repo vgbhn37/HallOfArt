@@ -113,6 +113,18 @@
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user-pen"></i></div>
                                 유저 관리
                             </a>
+                            <!-- 고객센터  -->
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCustomer" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-person-harassing"></i></div>
+                                고객센터
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseCustomer" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="http://localhost/customerservice/announcement/admin">공지 작성</a>
+                                    <a class="nav-link" href="http://localhost/customerservice/inquiry/admin/main">문의 관리</a>
+                                </nav>
+                            </div> <!-- end of 고객센터  -->
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

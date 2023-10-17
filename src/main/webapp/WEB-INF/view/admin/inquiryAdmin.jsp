@@ -67,9 +67,6 @@
 			</div>
 		</form>
 	</div>
-	<c:if test="${user.roleTypeId == 2}">
-	<a href="/customerservice/announcement/write" class="write-btn">글쓰기</a>
-</c:if>
 </div>
 </main>
 </div>

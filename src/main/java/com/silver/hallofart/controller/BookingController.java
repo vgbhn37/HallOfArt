@@ -63,15 +63,21 @@ public class BookingController {
 		}
 		
 		ShowDetailDto show = showService.showById(showId);
-		
-		// 쇼타임 
 		List<ShowTime> showTimeList = bookingService.findShowTime(showId);
 		Hall hall = bookingService.findHallByShowId(showId);
-		
 		model.addAttribute("show", show);
 		model.addAttribute("showTimeList", showTimeList);
 		model.addAttribute("hall", hall);
-		return "/booking/booking";
+		
+		//공연
+		if(show.getShowTypeId1()==1) {
+			return "/booking/show";		
+		} 
+		//전시
+		else if(show.getShowTypeId1()==2) {	
+			return "/booking/exhibition";
+		}
+			return "/";
 	}
 
 	// 해당 showtime의 좌석리스트
