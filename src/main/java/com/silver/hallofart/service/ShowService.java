@@ -9,10 +9,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.silver.hallofart.dto.HallTimeDto;
+import com.silver.hallofart.dto.MainShowDto;
 import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.ShowDetailDto;
+import com.silver.hallofart.repository.interfaces.BookingRepository;
 import com.silver.hallofart.repository.interfaces.ShowRepository;
 import com.silver.hallofart.repository.model.Hall;
 import com.silver.hallofart.repository.model.Rental;
@@ -23,6 +26,9 @@ public class ShowService {
 
 	@Autowired
 	private ShowRepository showRepository;
+	
+	@Autowired
+	private BookingRepository bookingRepository;
 	
 	public ShowDetailDto showById(Integer id){
 		return showRepository.findById(id);
@@ -118,5 +124,28 @@ public class ShowService {
 	
 	public List<RentalInfoDto> findRentalAll(){
 		return showRepository.findRentalAll();
+	}
+	
+	// 메인 페이지에 올라갈 공연 목록
+	@Transactional
+	public List<MainShowDto> findShowListOnMain(){
+		
+		List<MainShowDto> list = new ArrayList<>();
+		List<Show> showList = showRepository.findShowListOnMain();
+		for (Show show : showList) {
+			MainShowDto dto = new MainShowDto();
+			Integer showId = show.getId();
+			dto.setId(showId);
+			dto.setShowType("공연"); //추후 변경 요망
+			dto.setHallName(bookingRepository.findHallNameByShowId(showId));
+			dto.setTitle(show.getTitle());
+			dto.setStartDate(show.getStartDate());
+			dto.setEndDate(show.getEndDate());
+			dto.setShowImg(show.getShowImg());
+			
+			list.add(dto);
+		}
+		
+		return list;
 	}
 }

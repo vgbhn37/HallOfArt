@@ -83,4 +83,8 @@
 	  		'승인 요청', #{amount}, now()
   		)
 	</insert>
+	
+	<select id="findShowListOnMain" resultType="Show">
+		select * from show_tb s join rental_tb r on s.id = r.show_tb_id where r.status = '정상' AND end_date >= date_format(now(),'%Y-%m-%d') limit 5;
+	</select>
 </mapper>

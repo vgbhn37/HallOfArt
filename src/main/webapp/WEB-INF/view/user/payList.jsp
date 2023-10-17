@@ -100,9 +100,16 @@
 		selectedSeats.splice(selectedSeats.indexOf(id), 1);
 	}
 	
-  	
+  	// 카카오페이 버튼을 눌렀을 때
   	function moveToKakaoPay(){
   		
+  		// 결제금액이 0원일 경우 return
+  		if(totalPrice===0){
+  			alert('결제하실 좌석을 선택해주세요!');
+  			return;
+  		}
+  		
+  		// selectSeats를 body에 담아서 POST
   		const requestOptions = {
   				method: 'POST',
   				headers: {
@@ -126,6 +133,7 @@
   			});
   	}
   	
+  	// 결제가 성공적으로 이루어지고 팝업이 닫혔을 시, ticketList 페이지로
   	function checkPopupClosed(){
   		if(!paymentPopup || paymentPopup.closed){
   			
@@ -141,7 +149,7 @@
   			
   	}
   	
- 
+ 	// 좌석 취소 시
 	function deleteBooking(id){
 		
 		if(confirm("좌석을 취소하시겠습니까?")){

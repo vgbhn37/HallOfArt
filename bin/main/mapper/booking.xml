@@ -6,7 +6,7 @@
 
 	<select id="findShowTimeListByShowId" resultType="ShowTime">
 		select * from
-		show_time_tb where show_id = #{showId}
+		show_time_tb where show_id = #{showId} and datediff(start_time,now()) <![CDATA[>=]]> 1
 	</select>
 	<select id="findSeatListByShowTimeIdAndHallId"
 		resultType="com.silver.hallofart.dto.SeatStatusDto">

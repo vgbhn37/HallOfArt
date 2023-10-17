@@ -51,45 +51,32 @@ public class BookingController {
 	@GetMapping("/booking/booking/{showId}")
 	public String book(@PathVariable Integer showId, Model model, HttpServletRequest request) {
 		
-		// 주소창에 직접 입력시 오류 발생( 추후 필요)
-		/*
-		 * if (request.getHeader("REFERER") == null) { throw new
-		 * BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST); }
-		 */
 		// 인증 및 유효성검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
-		
+
 		ShowDetailDto show = showService.showById(showId);
 		List<ShowTime> showTimeList = bookingService.findShowTime(showId);
 		Hall hall = bookingService.findHallByShowId(showId);
 		model.addAttribute("show", show);
 		model.addAttribute("showTimeList", showTimeList);
 		model.addAttribute("hall", hall);
+
+		return "/booking/show";
 		
-		//공연
-		if(show.getShowTypeId1()==1) {
-			return "/booking/show";		
-		} 
-		//전시
-		else if(show.getShowTypeId1()==2) {	
-			return "/booking/exhibition";
-		}
-			return "/";
 	}
 
 	// 해당 showtime의 좌석리스트
 	@GetMapping("/booking/selectTime")
 	@ResponseBody
-	public List<SeatStatusDto> seatList(@RequestParam("showTimeId") Integer showTimeId, @RequestParam("hallId") Integer hallId, HttpServletRequest request) {
+	public List<SeatStatusDto> seatList(@RequestParam("showTimeId") Integer showTimeId,
+			@RequestParam("hallId") Integer hallId, HttpServletRequest request) {
 		// 주소창에 직접 입력시 오류 발생
 		if (request.getHeader("REFERER") == null) {
 			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
-		
-		
 		// 인증 및 유효성 검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
@@ -156,9 +143,8 @@ public class BookingController {
 
 		return "/user/payList";
 	}
-	
-	
-	//결제가 완료 된 티켓리스트
+
+	// 결제가 완료 된 티켓리스트
 	@GetMapping("/user/ticketList/{id}")
 	public String ticketList(@PathVariable int id, Model model) {
 
@@ -170,24 +156,22 @@ public class BookingController {
 		if (user.getId() != id) {
 			throw new ForbiddenException("잘못된 접근입니다.", HttpStatus.FORBIDDEN);
 		}
-		
+
 		// 결제 완료 된 티켓리스트를 가져와서 뿌림
 		List<BookedSeatDto> ticketList = bookingService.findTicketByUserId(id);
 		model.addAttribute("ticketList", ticketList);
-		
+
 		// (시작 시간 - 24시간)과 현재 시간을 비교해 환불 버튼을 숨기기 위해 요청 시 현재시간
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		model.addAttribute("currentTime", currentTimestamp);
-		
+
 		return "/user/ticketList";
 	}
-	
+
 	// 대관 신청 리스트
 	@GetMapping("/user/rentalList/{id}")
 	public String rentalList(@PathVariable int id, Model model) {
-		
-		// 사용자 인증 처리
-		// 사용자 인증 처리
+
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
@@ -195,12 +179,12 @@ public class BookingController {
 		if (user.getId() != id) {
 			throw new ForbiddenException("잘못된 접근입니다.", HttpStatus.FORBIDDEN);
 		}
-		
+
 		// 해당 로그인 된 아이디의 대관 신청 리스트
 		List<RentalInfoDto> rentalList = bookingService.findRentalList(id);
-		model.addAttribute("rentalList",rentalList);
+		model.addAttribute("rentalList", rentalList);
 		return "/user/rentalList";
-		
+
 	}
 
 	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
@@ -213,14 +197,12 @@ public class BookingController {
 		if (user == null) {
 			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
 		}
-
+ 
 		if (bookingService.deleteBookingById(id) != 1) {
 			return "fail";
 		}
 
 		return "success";
 	}
-	
-	
 
 }

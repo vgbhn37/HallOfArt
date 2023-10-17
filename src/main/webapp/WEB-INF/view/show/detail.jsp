@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@	include file="../layout/header.jsp" %>
 <!-- --------------------------------------------------------- -->
 <link rel="stylesheet" href="/resources/css/showDetail.css">
@@ -46,7 +47,17 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<a id="booking" href="/booking/booking/${show.id }">예매하기</a>
+					<c:set var="currentDate" value="<%=new java.util.Date()%>" />
+					<c:set var="currentDateFormatted">
+						<fmt:formatDate value="${currentDate}" pattern="yyyy-MM-dd" />
+					</c:set>
+					<fmt:parseDate value="${show.endDate }" var="endDate" pattern="yyyy-MM-dd" />
+					<c:set var="endDateFormatted">
+						<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd" />
+					</c:set>
+					<c:if test="${endDateFormatted > currentDateFormatted}">
+						<a id="booking" href="/booking/booking/${show.id }">예매하기</a>
+					</c:if>
 				</td>
 			</tr>
 		</table>
@@ -75,6 +86,7 @@
 		<br>
 		<h4>예매 및 환불·변경안내</h4>
 		<p>
+			공연 예매는 해당 공연일 하루 전까지 가능합니다. <br>
 			본 공연은 7세 이상부터 공연 관람이 가능하며, 7세 미만 아동은 보호자를 동반하여도 공연장에 입장할 수 없습니다. (단, 어린이 대상 공연은 제외)<br>
 			온라인(PC,모바일) 예매의 경우 1회 10매까지 구매 가능합니다.<br>
 			반복하여 예매하기 불편하거나 단체 티켓예매를 원하시면 고객센터 및 문의를 이용해 주시기 바랍니다.<br>
