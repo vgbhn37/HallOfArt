@@ -14,6 +14,10 @@
 	<select id="findAnnouncementById" resultType="Announcement">
 		select * from announcement_tb where id = #{id}
 	</select>
+	
+	<select id="selectMainAnnouncement" resultType="Announcement">
+		select * from announcement_tb order by created_at desc limit 8
+	</select>
 
 	<select id="count" parameterType="com.silver.hallofart.dto.Pagination" resultType="int">
 		select count(*) from announcement_tb

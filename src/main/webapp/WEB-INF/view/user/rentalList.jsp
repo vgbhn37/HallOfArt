@@ -8,7 +8,7 @@
 <div class="container my-5" style="width: 75%;">
 	<h2 class="title--list">대관 신청 리스트</h2>
 	<hr>
-	<table class="table">
+	<table class="table" style="font-family: 'NanumSquareRound'">
 		<thead>
 			<tr>
 				<th scope="col">상태</th>

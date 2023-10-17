@@ -58,4 +58,6 @@ public interface CustomerServiceRepository {
 	public List<Inquiry> findNoAnswer(PagingDto paging);
 
 	public int countNoAnswer(PagingDto paging);
+
+	public List<Announcement> selectMainAnnouncement();
 }

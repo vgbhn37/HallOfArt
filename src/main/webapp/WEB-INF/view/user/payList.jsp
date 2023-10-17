@@ -13,7 +13,7 @@
 		<hr>
 
 		<c:forEach var="booking" items="${payList }">
-			<div class="row my-3">
+			<div class="row my-3" style="font-family: 'NanumSquareRound'">
 				<div class="col-1 d-flex align-items-center justify-content-center">
 					<input type="checkbox" id="check-seat"
 						onchange="calcPrice(this,${booking.price},${booking.bookingId})">

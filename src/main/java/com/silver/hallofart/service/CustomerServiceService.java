@@ -156,4 +156,9 @@ public class CustomerServiceService {
 		int count = customerServiceRepository.countNoAnswer(paging);
 		return count;
 	}
+
+	public List<Announcement> selectMainAnnouncement() {
+		List<Announcement> announcementList = customerServiceRepository.selectMainAnnouncement();
+		return announcementList;
+	}
 }

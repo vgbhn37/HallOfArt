@@ -376,6 +376,7 @@ public class UserController {
 					.tel(tel.toString())
 					.birthDate(date)
 					.regDate(Timestamp.valueOf(LocalDateTime.now()))
+					.roleTypeId(1)
 					.build();
 			
 			log.info("userDto : " + userDto);
