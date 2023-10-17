@@ -5,15 +5,15 @@
 ## 개발기간
 + 2023.09.22 ~ 2023.10.18
 ## 프로젝트 설정
-공연 예약 / 대관 시스템
++ 공연 예약 / 대관 시스템
 ## 팀원
-이승호 - 공지사항, 오시는길(지도 API), 1:1문의하기
++ 이승호 - 공지사항, 오시는길(지도 API), 1:1문의하기
 
-임지훈 - 공연예약, 결제 API
++ 임지훈 - 공연예약, 결제 API
 
-황병준 - 공연대관, 등록, 관리자페이지
++ 황병준 - 공연대관, 등록, 관리자페이지
 
-황정민 - 유저관리, 로그인 API, 메일API, 문자API
++ 황정민 - 유저관리, 로그인 API, 메일API, 문자API
 
 ## 프로젝트 구현 환경
 + Languages: <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/>
