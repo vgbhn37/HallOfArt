@@ -22,6 +22,7 @@
 + API: <img src="https://img.shields.io/badge/kakao-FFCD00?style=flat-square&logo=kakao&logoColor=white"/>(로그인, 결제) <img src="https://img.shields.io/badge/Naver-03C75A?style=flat-square&logo=Naver&logoColor=white"/>(지도, 메일)
 + DB: <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/>
 + DVCS: <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
++ IDE: <img src="https://img.shields.io/badge/SpringToolSuite4-1b7f38?style=flat-square&logo=Spring&logoColor=white"/>
 ## 주요 기능
 + 공연 예약 / 결제
 + 대관 결제
