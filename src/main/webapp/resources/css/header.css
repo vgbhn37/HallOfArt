@@ -8,9 +8,11 @@
     position: relative;
     align-items: center;
 }
+
 body{
 	margin-top:220px !important;
 }
+
 .Header {
 	position: fixed;
 	width:100%;

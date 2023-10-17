@@ -206,7 +206,9 @@ content ul {
 
 .content {
 	/* font-family: 'SDSamliphopangche_Outline'; */
-	margin-left: 300px;
+	margin-left: 400px;
+	height: 1000px;
+	
 }
 
 .slider li {
@@ -255,15 +257,16 @@ content ul {
 }
 
 .info h1 {
-	width: 550px;
+	width: 600px;
 }
 
-.right div a img {
+.right div img {
 	display: flex;
 	text-align: center;
-	margin-top: 200px;
-	margin-left: -100px;
+	margin-left: 500px;
+	cursor: pointer;
 }
+
 
 .right {
 	width: 1000px;
@@ -319,13 +322,14 @@ content ul {
 }
 
 .content--box {
-	width: 2450px;
+	width: auto;
 	height: 700px;
 	border: 1px solid #f7ede4;
 	margin: 50px;
 	background-color: #2b354e;
 	margin-left: -500px;
 	color: #f0f0f0;
+	overflow: inherit;
 }
 
 .slide_wrapper {
@@ -720,7 +724,7 @@ button:hover {
 }
 </style>
 
-<div class="main--content--div" style="height: 100%; margin-left: 180px;">
+<div class="main--content--div" style="height: 100%; width: 100%">
 	<div class="content--box">
 		<div class="content">
 			<ul class="slider">
@@ -729,12 +733,12 @@ button:hover {
 						<div class="content--info">
 							<dl style="top: 300px;" class="right">
 								<div class="info">
-									<p style="margin-top: 50px; margin-left: -330px; background-color: #fff; border: 1px solid #fff; border-radius: 20px; font-size: 20px; font-weight: 400; padding: 5px 20px;">${showList.showType }</p>
+									<p style="margin-top: 60px; margin-left: -330px; background-color: #fff; border: 1px solid #fff; border-radius: 20px; font-size: 20px; font-weight: 400; padding: 5px 20px;">${showList.showType }</p>
 									<h2 style="margin-top: -10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ ${showList.hallName }</h2>
-									<h1 style="display: flex; align-items: center; margin-bottom: 50px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 60px;">${showList.title }</h1>
-									<a style="width: 480px; height: 600px;" href="/show/detail?id=${showList.id}">
-										<img style="margin-top: 0px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" width="480" height="600">
-									</a>
+									<h1 style="display: flex; align-items: center; margin-bottom: -180px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 100px;">${showList.title }</h1>
+									
+										<img style="margin-top: 0px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" onclick="href='/show/detail?id=${showList.id}'" width="480" height="600">
+								
 								</div>
 							</dl>
 						</div>
@@ -1002,9 +1006,9 @@ button:hover {
 
 		var theInterval;
 
-		function startSlide() {
-			theInterval = setInterval(next, 4000); //자동 슬라이드 설정
-		}
+		 function startSlide() {
+			theInterval = setInterval(next, 40000000); //자동 슬라이드 설정
+		} 
 
 		function stopSlide() { //자동 멈추기
 			clearInterval(theInterval);
