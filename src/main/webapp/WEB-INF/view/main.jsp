@@ -10,7 +10,6 @@
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <%--<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-
 <style>
 .google {
 	display: none;
@@ -246,6 +245,7 @@ content ul {
 }
 
 .info {
+	left: 200px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -324,8 +324,9 @@ content ul {
 .content--box {
 	width: auto;
 	height: 700px;
-	border: 1px solid #f7ede4;
-	margin: 50px;
+/* 	border: 1px solid #f7ede4; */
+/* 	margin: 50px; */
+	margin-top: -60px;
 	background-color: #2b354e;
 	margin-left: -500px;
 	color: #f0f0f0;
@@ -723,8 +724,8 @@ button:hover {
 	color: #f0f0f0 !important;
 }
 </style>
-
-<div class="main--content--div" style="height: 100%; width: 100%">
+<div style="width: 100%; height: 220px; background-color: #2b354e; margin-top: -220px;"></div>
+<div class="main--content--div" style="height: 100%; width: 100%;">
 	<div class="content--box">
 		<div class="content">
 			<ul class="slider">
