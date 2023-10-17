@@ -1,227 +1,158 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<%@page import="com.silver.hallofart.repository.model.Show"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<%@	include file="../layout/header.jsp"%>
+
+<!-- --------------------------------------------------------- -->
+<link href="/resources/css/showSchedule.css" rel="stylesheet" />
 <style>
-	body{
-		margin: 0; padding: 2px;
-		background-color: #444;
-	}
-	.nav{
-		background-color: #444;
-		width: 100%;
-		height: 100px;
-	}
-	
-	.banner{
-		width: 85%;
-		height: 220px;
-		margin: auto;
-		padding: 0 40px;
-		background-image: url("http://picsum.photos/2000/400");
-	}
-	
-	.content{
-		width: 85%;
-		min-height: 800px;
-		padding: 0 40px;
-		margin: auto;
-		background-color: white;
-		box-shadow: inset 0px 5px 10px 0px rgba(128, 128, 128, 0.3);
-/* 		display: flex; */
-		overflow: hidden;
-	}
-	.content_date{
-		flex: 0 0 300px;
-/* 		background-color: lightpink; */
-		text-align: center;
-		margin: auto;
-	}
-	.content_list{
-		flex: 0 0 500px;
-		min-height: 800px;
-/* 		background-color: lightblue; */
-		margin: auto;
-	}
-	#list_tb{
-		border: 1px solid grey;
-		width: 480px;
-		margin: auto;
-		margin-top: 100px;
-		text-align: center;
-	}
-	#list_tb td{
-		height: 50px;
-	}
-	.footer{
-		background-color: #999;
-		width: 100%;
-		height: 180px;
-	}
-</style>
-
-<script>
-function findByDateAjax(startDate, endDate){
-	// ajax
-   	$.ajax({
-	    type : 'post',           // 타입 (get, post, put 등등)
-	    url : '/show/schedule_proc',           // 요청할 서버url
-	    dataType : 'text',       // 데이터 타입 (html, xml, json, text 등등)
-	    data : {
-	      "startDate" : startDate,
-	      "endDate" : endDate
-	    },
-	    success : function(result) { // 결과 성공 콜백함수
-	    	var data = JSON.parse(result);
-	    	console.log(data);
-	    	
-	    	var table = $("#list_tb tbody");
-	        
-	    	table.empty();
-	    	
-	        $.each(data, function(index, item) {
-	            // 각 데이터 항목에 대한 새로운 행을 생성합니다.
-	            var row = $("<tr>");
-
-	            // 각 데이터 항목에 대한 데이터 셀을 생성하고 값을 설정합니다.
-	            var idCell = $("<td>").text(item.id);
-	            var titleCell = $("<td>").append($("<a>").attr("href", "detail?id="+item.id).text(item.title));
-	            var priceCell = $("<td>").text(item.price);
-	            var startDateCell = $("<td>").text(item.startDate);
-	            var endDateCell = $("<td>").text(item.endDate);
-	            var statusCell = $("<td>").text(item.showStatus);
-
-	            // 행에 데이터 셀을 추가합니다.
-	            row.append(idCell);
-	            row.append(titleCell);
-	            row.append(priceCell);
-	            row.append(startDateCell);
-	            row.append(endDateCell);
-	            row.append(statusCell);
-
-	            // 테이블의 tbody에 행을 추가합니다.
-	            table.append(row);
-	        });
-	    }
-	})
+.schedule_content {
+	width: 80%;
+	min-width: 900px;
+	min-height: 1200px;
+	margin: 20px auto;
 }
+.list_tb {
+	width: 900px;
+	margin: 20px auto;
+	text-align: center;
+}
+.list_tb td {
+	border-bottom: 1px solid lightgrey;
+}
+.pagination {
+	justify-content: center;
+}
+.title--schedule {
+    position: relative;
+    color: #535353;
+    font-size: 35px;
+    line-height: 35px;
+    padding: 5px 0 20px 22px;
+    margin-bottom: 35px;
+    margin-top: 40px;
+    border-bottom: 1px solid #535353;
+    text-align: left;
+}
+.title--schedule:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: #ed1a3b;
+    content: "";
+}
+.list_tb a{
+	font-size: 20px;
+	text-decoration: none;
+	color: black;
+}
+</style>
+<!-- --------------------------------------------------------- -->
 
-$(function() { // jquery
-	
-	// 현재 날짜를 startDate, endDate 로 default 설정 -----------------------------------------------------------
-	var currentDate = new Date();
-	var year = currentDate.getFullYear();
-	var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자릿수로 패딩
-	var day = String(currentDate.getDate()).padStart(2, '0'); // 일을 두 자릿수로 패딩
-	var formattedDate = year + '-' + month + '-' + day;
+<div class="schedule_content">
+	<h1 class="title--schedule">공연 정보</h1>
+	<br>
+	<div style="background-color: #f9f6f6; padding: 20px;">
+		<label for="datepicker">
+			날짜 선택 :
+			<input type="text" class="datepicker" id="datepicker">
+			<button type="button" id="dateSearchBtn">검색</button>
+		</label>
+	</div>
+	<table class="list_tb">
+		<tr style="height: 50px">
+			<td colspan="2" style="width: 50%">제목</td>
+			<td style="width: 10%">입장가격</td>
+			<td colspan="2" style="width: 40%">기간</td>
+		</tr>
+		<c:forEach var="li" items="${list}">
+			<tr>
+				<td style="width: 20%">
+					<img src="/imagePath/${li.showImg}" onerror="this.src='/resources/images/errorImage.png'" style="width: 150px; height: 200px; margin: 20px;">
+				</td>
+				<td style="width: 30%">
+					<a id="a--detail" href="detail?id=${li.id}" style="">${li.title}</a>
+				</td>
+				<td>
+					<fmt:formatNumber value="${li.price}" pattern="#,###" />
+				</td>
+				<td>${li.startDate}~${li.endDate}</td>
+				<td>
+					<c:set var="currentDate" value="<%=new java.util.Date()%>" />
+					<c:set var="currentDateFormatted">
+						<fmt:formatDate value="${currentDate}" pattern="yyyy-MM-dd" />
+					</c:set>
 
-	console.log(formattedDate);
-	
-	$("#start_date").html(formattedDate);
-   	$("#end_date").html(formattedDate);
-	
-   	var startDate = $("#start_date").html();
-   	var endDate = $("#end_date").html();
-    
-   	findByDateAjax(startDate, endDate);
-   	
-   	// datepicker 설정 --------------------------------------------------------------
-    $(".datepicker").datepicker({
-        dateFormat: 'yy-mm-dd',
-        prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년',
-    });
-    $('#datepicker1').datepicker('option', 'onSelect', function(dateString){
-    	$("#start_date").html(dateString);
-    	startDate = dateString;
-    	$("#datepicker2").datepicker('option', 'minDate', dateString);
-	   	findByDateAjax(startDate, endDate);
-    });
-    $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
-    	$("#end_date").html(dateString);
-    	endDate = dateString;
-    	$("#datepicker1").datepicker('option', 'maxDate', dateString);
-	   	findByDateAjax(startDate, endDate);
-    });
-    
-    // 반응형 위치 조정
-    $(window).resize(function() {
-        // 현재 윈도우의 너비를 가져옴
-        var windowWidth = $(window).width();
+					<fmt:parseDate value="${li.startDate }" var="startDate" pattern="yyyy-MM-dd" />
+					<fmt:parseDate value="${li.endDate }" var="endDate" pattern="yyyy-MM-dd" />
+					<c:set var="startDateFormatted">
+						<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd" />
+					</c:set>
+					<c:set var="endDateFormatted">
+						<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd" />
+					</c:set>
+					
+					<c:choose>
+						<c:when test="${startDateFormatted > currentDateFormatted}">
+						<span style="background-color: lightblue; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+	                        공연 준비 중
+						</span>
+                    </c:when>
+						<c:when test="${endDateFormatted < currentDateFormatted}">
+						<span style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+	                        공연 종료
+                        </span>
+                    </c:when>
+						<c:otherwise>
+						<span style="background-color: #8d8; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
+                        	공연 중
+                       	</span>
+                    </c:otherwise>
+					</c:choose>
+				</td>
+<%-- 				<td style="width:30%"><a href="detail?id=${li.id}">${li.title}</a></td> --%>
+<%-- 				<td><fmt:formatNumber value="${li.price}" pattern="#,###"/></td> --%>
+<%-- 				<td>${li.startDate} ~ ${li.endDate}</td> --%>
+			</tr>
+		</c:forEach>
+	</table>
+	<div class="paging">
+		<form action="showList" name="pageForm">
+			<div class="text-center clearfix">
+				<ul class="pagination" id="pagination">
+					<c:if test="${pagination.prev}">
+						<li class="page-item "><a class="page-link" href="#" data-page="${pagination.beginPage-1}">Prev</a></li>
+					</c:if>
 
-        if (windowWidth >= 920) {
-            $(".content").css("display", "flex");
-            $(".content_date").css("flex","0 0 300px");
-        } else {
-            $(".content").css("display", "block");
-            $(".content_date").css("width","300px");
-        }
-        if (windowWidth <= 600) {
-            $("#list_tb").css("width", "80%");
-        } else {
-            $("#list_tb").css("width", "480px");
-        }
-    });
-    $(window).trigger("resize");
-});
-</script>
+					<c:forEach var="num" begin="${pagination.beginPage}" end="${pagination.endPage}">
+						<li class="${pagination.paging.page == num ? 'age-item active' : ''}" page-item><a class="page-link" href="#" data-page="${num}">${num}</a></li>
+					</c:forEach>
 
-</head>
-<body>
-	<div class="nav">
-		<button type="button">메뉴</button>
-		<button type="button">로그인</button>
-		<button type="button">회원가입</button>
+					<c:if test="${pagination.next}">
+						<li class="page-item"><a class="page-link" href="#" data-page="${pagination.endPage+1}">Next</a></li>
+					</c:if>
+				</ul>
+
+				<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+				<input type="hidden" name="page" value="${pagination.paging.page}">
+				<input type="hidden" name="recordSize" value="${pagination.paging.recordSize}">
+
+			</div>
+		</form>
 	</div>
-	<div class="banner">
-		
-	</div>
-<%@ include file="/WEB-INF/view/layout/mid_menu.jsp"%>
-	
-	<div class="content">
-		<div class="content_date">
-			최소 날짜 : <span id="start_date"></span><br>
-			최대 날짜 : <span id="end_date"></span><br>
-			<div class="datepicker" id="datepicker1"></div>
-			<div class="datepicker" id="datepicker2"></div>
-		</div>
-		<div class="content_list">
-			<table id="list_tb">
-			<thead>
-				<tr>
-					<td width="30">id</td>
-					<td style="width: 150px;">title</td>
-					<td>price</td>
-					<td>start date</td>
-					<td>end date</td>
-					<td>status</td>
-				</tr>
-			</thead>
-			<tbody>
-				<!-- jquery - ajax -> 데이터 들어옴 -->
-			</tbody>
-			</table>
-		</div>
-	</div>
-	
-	<div class="footer">
-		footer
-	</div>
-</body>
-</html>
+</div>
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/resources/js/showSchedule.js"></script>
+<!-- --------------------------------------------------------- -->
+<%@ include file="../layout/footer.jsp"%>

@@ -4,26 +4,83 @@
 
 <mapper namespace="com.silver.hallofart.repository.interfaces.ShowRepository"> 
 
-	<select id="findById" resultType="com.silver.hallofart.repository.model.Show">
-		select id
+	<select id="findById" resultType="com.silver.hallofart.dto.ShowDetailDto">
+		select s.id
 				 ,title
 				 ,content
 				 ,start_date
 				 ,end_date
-				 ,FORMAT(price,0) price
-				 ,show_status
+				 ,price
 				 ,show_img
 				 ,show_type_id1
 				 ,hall_tb_id
-		from show_tb where id=#{id}
+				 ,name
+		from show_tb s
+		join hall_tb h on s.hall_tb_id = h.id
+		where s.id=#{id}
 	</select>
-		
-	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
-		select * from show_tb where start_date >= #{startDate} and not start_date > #{endDate}
-		union
-		select * from show_tb where #{endDate} >= end_date and not #{startDate} > end_date 
-		union
-		select * from show_tb where #{startDate} >= start_date and end_date >= #{endDate}
+	
+	<select id="findShowAll" resultType="com.silver.hallofart.repository.model.Show">
+		select * from show_tb 
 		order by end_date
+		limit #{offset}, #{recordSize}
 	</select>
+	
+	<select id="findByDate" resultType="com.silver.hallofart.repository.model.Show">
+		select * from show_tb 
+		where #{date} >= start_date and end_date >= #{date}
+		order by end_date
+		limit #{offset}, #{recordSize}
+	</select>
+	
+	<insert id="insertShow">
+		insert into show_tb(
+			title, content, start_date, end_date, price, show_img, show_type_id1, hall_tb_id	
+		)
+	  	values(
+	  		#{title}, #{content}, #{startDate}, #{endDate}, #{price}, #{showImg}, #{showTypeId1}, #{hallTbId}
+  		)
+	</insert>
+	<insert id="insertShowTime">
+		insert into show_time_tb(
+			start_time, show_id	
+		)
+	  	values(
+	  		#{startTime}, (select max(id) from show_tb)
+  		)
+	</insert>
+	
+	<select id="findHallAll" resultType="com.silver.hallofart.repository.model.Hall">
+		select * from hall_tb
+	</select>
+	
+	<select id="findHallTime" resultType="com.silver.hallofart.dto.HallTimeDto">
+		select start_date, end_date, name
+		from show_tb s
+		join hall_tb h on s.hall_tb_id = h.id
+		join hall_type ht on h.hall_type_id = ht.id
+		join rental_tb r on s.id = r.show_tb_id
+		where name=#{name}
+		and not r.status like '환불%'
+	</select>
+	
+	<select id="findHallByName" resultType="com.silver.hallofart.repository.model.Hall">
+		select * from hall_tb
+		where name=#{name}
+	</select>
+	
+	<select id="findRentalAll" resultType="com.silver.hallofart.dto.RentalInfoDto">
+		select * from rental_tb
+	</select>
+	
+	<insert id="insertRental">
+		insert into rental_tb(
+			show_tb_id, hall_tb_id, user_tb_id,
+			status, amount, created_at
+		)
+	  	values(
+	  		(select max(id) from show_tb), #{hallTbId}, #{userTbId},
+	  		'승인 요청', #{amount}, now()
+  		)
+	</insert>
 </mapper>

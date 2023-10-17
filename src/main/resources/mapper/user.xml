@@ -9,6 +9,40 @@
 	  	values(#{username}, #{password}, #{email}, #{tel}, #{birthDate}, now(), 1)
   	</insert>
   	
+  	<select id="findAllUser" resultType="com.silver.hallofart.dto.UserDto">
+		select * from user_tb
+	</select>
+	
+	<select id="findAllUserPaging" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		ORDER BY id DESC
+		LIMIT #{offset}, #{recordSize}
+	</select>
+
+	<select id="findAllUserByTypePaging" parameterType="com.silver.hallofart.dto.PagingDto" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		WHERE role_type_id = #{classification}
+		ORDER BY id DESC
+		LIMIT #{offset}, #{recordSize}
+	</select>
+
+	<select id="findAllUserByType" resultType="com.silver.hallofart.dto.UserDto">
+		SELECT *
+		FROM user_tb
+		WHERE role_type_id = #{classification}
+		ORDER BY id DESC
+	</select>
+	
+    <select id="userTotalCount" resultType="int">
+        SELECT count(*) FROM user_tb
+    </select>
+
+	<select id="userTotalCountClassification" resultType="int">
+		SELECT count(*) FROM user_tb WHERE role_type_id = #{classification}
+	</select>
+  	
   	<select id="findById" resultType="com.silver.hallofart.dto.UserDto">
 		select * from user_tb where id = #{id}
 	</select>
@@ -23,9 +57,29 @@
 		where username = #{username}
 	</select>
 	
+	<select id="findByEmail" resultType="com.silver.hallofart.dto.UserDto">
+		select * from user_tb 
+		where email = #{email}
+	</select>
+	
+	<select id="findByTel" resultType="com.silver.hallofart.dto.UserDto">
+		select * from user_tb 
+		where tel= #{tel}
+	</select>
+	
 	<update id="updateById">
-  		update user_tb set username = #{username}, password = #{password}, email = #{email}, tel = #{tel}, , birth_date = #{birthDate}
+  		update user_tb set password = #{password}, tel = #{tel}, birth_date = #{birthDate}
   		where id = #{id}
+	</update>
+
+	<update id="updateByIdAdmin">
+		update user_tb set role_type_id = #{roleTypeId}
+		where id = #{id}
+	</update>
+	
+	<update id="updatePassByUsername" parameterType="string">
+  		update user_tb set password = #{password}
+  		where username = #{username}
 	</update>
 	  
 	<delete id="deleteById">

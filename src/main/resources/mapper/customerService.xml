@@ -7,6 +7,10 @@
 		select * from announcement_tb order by created_at desc limit #{offset}, #{recordSize}
 	</select>
 	
+	<select id="findAnnouncement" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Announcement">
+		select * from announcement_tb where classification = #{classification} order by created_at desc limit #{offset}, #{recordSize}
+	</select>
+	
 	<select id="findAnnouncementById" resultType="Announcement">
 		select * from announcement_tb where id = #{id}
 	</select>
@@ -15,16 +19,36 @@
 		select count(*) from announcement_tb
 	</select>
 	
-	<select id="countInquiry" parameterType="com.silver.hallofart.dto.Pagination" resultType="int">
+	<select id="countInquiry" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from inquiry_tb where user_id = #{userId}
+	</select>
+	
+	<select id="countAllInquiry" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
 		select count(*) from inquiry_tb
 	</select>
 	
-	<select id="findInquiryByUserId" parameterType="com.silver.hallofart.dto.PagingDto" resultType="Inquiry">
-		select * from inquiry_tb where user_id = #{userId} order by created_at desc limit #{offset}, #{recordSize}
+	<select id="countPageClassification" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from announcement_tb where classification = #{classification}
+	</select>
+	
+	<select id="countNoAnswer" parameterType="com.silver.hallofart.dto.PagingDto" resultType="int">
+		select count(*) from inquiry_tb where answer = 0
+	</select>
+	
+	<select id="findInquiryByUserId" resultType="Inquiry">
+		select * from inquiry_tb where user_id = #{id} order by created_at desc limit #{paging.offset}, #{paging.recordSize}
 	</select>
 	
 	<select id="findInquiryById" resultType="Inquiry">
 		select * from inquiry_tb where id = #{id}
+	</select>
+	
+	<select id="findAllInquiry" resultType="Inquiry">
+		select * from inquiry_tb order by created_at desc limit #{offset}, #{recordSize}
+	</select>
+	
+	<select id="findNoAnswer" resultType="Inquiry">
+		select * from inquiry_tb where answer = 0 order by created_at desc limit #{offset}, #{recordSize}
 	</select>
 	
 	<select id="findInquiryAnswer" resultType="InquiryAnswer">
@@ -32,27 +56,31 @@
 	</select>
 	
 	<insert id="insertAnnouncement">
-		insert into announcement_tb(classification, title, content, file, created_at) 
-		values(#{classification}, #{title}, #{content}, #{file}, now())
+		insert into announcement_tb(classification, title, content, created_at) 
+		values(#{classification}, #{title}, #{content}, now())
 	</insert>
 	
 	<insert id="insertInquiry">
-		insert into inquiry_tb(classification, title, content, file, created_at, answer, user_id) 
-		values(#{classification}, #{title}, #{content}, #{file}, now(), #{answer}, #{user_id})
+		insert into inquiry_tb(classification, title, content, created_at, answer, user_id) 
+		values(#{classification}, #{title}, #{content}, now(), #{answer}, #{userId})
 	</insert>
 	
 	<insert id="insertInquiryAnswer">
-		insert into inquiry_answer_tb(title, content, file, created_at, inquiry_id) 
-		values(#{title}, #{content}, #{file}, now(), #{inquiryId})
+		insert into inquiry_answer_tb(title, content, created_at, inquiry_id) 
+		values(#{title}, #{content}, now(), #{inquiryId})
 	</insert>
 	
 	<update id="updateAnnouncement">
 		update announcement_tb set title = #{title}, classification = #{classification}, 
-		content = #{content}, file = #{file} where id = #{id}
+		content = #{content} where id = #{id}
 	</update>
 	
 	<update id="modifyinquiryAnswer">
 		update inquiry_tb set answer = 1 where id = #{inquiryId}
+	</update>
+	
+	<update id="changeAnswer">
+		update inquiry_tb set answer = 0 where id = #{id}
 	</update>
 	
 	<update id="updateInquiry">
@@ -65,5 +93,9 @@
 	
 	<delete id="deleteInquiry">
 		delete from inquiry_tb where id = #{id}
+	</delete>
+	
+	<delete id="deleteAnswer">
+		delete from inquiry_answer_tb where inquiry_id = #{id}
 	</delete>
 </mapper>
