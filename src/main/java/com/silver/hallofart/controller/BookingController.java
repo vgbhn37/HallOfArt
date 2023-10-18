@@ -124,6 +124,25 @@ public class BookingController {
 		return "booking/success";
 	}
 
+
+	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
+	@DeleteMapping("/booking/delete/{id}")
+	@ResponseBody
+	public String deleteBooking(@PathVariable Integer id) {
+
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+ 
+		if (bookingService.deleteBookingById(id) != 1) {
+			return "fail";
+		}
+
+		return "success";
+	}
+	
 	// 결제 대기 리스트
 	@GetMapping("/user/payList/{id}")
 	public String payList(@PathVariable int id, Model model) {
@@ -185,24 +204,6 @@ public class BookingController {
 		model.addAttribute("rentalList", rentalList);
 		return "/user/rentalList";
 
-	}
-
-	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
-	@DeleteMapping("/booking/delete/{id}")
-	@ResponseBody
-	public String deleteBooking(@PathVariable Integer id) {
-
-		// 사용자 인증 처리
-		UserDto user = (UserDto) session.getAttribute("user");
-		if (user == null) {
-			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
-		}
- 
-		if (bookingService.deleteBookingById(id) != 1) {
-			return "fail";
-		}
-
-		return "success";
 	}
 
 }
