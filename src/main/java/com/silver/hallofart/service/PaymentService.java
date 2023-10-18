@@ -13,6 +13,7 @@ import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.repository.interfaces.BookingRepository;
 import com.silver.hallofart.repository.interfaces.PaymentRepository;
+import com.silver.hallofart.repository.interfaces.ShowRepository;
 import com.silver.hallofart.repository.model.Show;
 
 @Service
@@ -23,6 +24,9 @@ public class PaymentService {
 
 	@Autowired
 	BookingRepository bookingRepository;
+	
+	@Autowired
+	ShowRepository showRepository;
 
 	@Transactional
 	public void insertPaymentInfo(String tid, String orderNumber, int amount, List<Integer> ids) {
@@ -120,7 +124,7 @@ public class PaymentService {
 	public List<MainShowDto> findShowListOnMain(){
 		
 		List<MainShowDto> list = new ArrayList<>();
-		List<Show> showList = paymentRepository.findShowListOnMain();
+		List<Show> showList = showRepository.findShowListOnMain();
 		for (Show show : showList) {
 			MainShowDto dto = new MainShowDto();
 			Integer showId = show.getId();

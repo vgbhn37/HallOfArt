@@ -29,8 +29,8 @@ public class BookingService {
 	public List<ShowTime> findShowTime(Integer showId) {
 		
 		List<ShowTime> showTimeList = bookingRepository.findShowTimeListByShowId(showId);
-		if(showTimeList==null) {
-			throw new CustomRestfulException("해당 공연이 없습니다", HttpStatus.BAD_REQUEST);
+		if(showTimeList.isEmpty()) {
+			throw new CustomRestfulException("예약할 수 있는 공연이 없습니다", HttpStatus.BAD_REQUEST);
 		}
 			return showTimeList;	
 	}

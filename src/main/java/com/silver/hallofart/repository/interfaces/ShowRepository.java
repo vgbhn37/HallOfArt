@@ -25,4 +25,6 @@ public interface ShowRepository {
 	public Hall findHallByName(String name);
 	public int insertRental(Rental rental);
 	public List<RentalInfoDto> findRentalAll();
+	
+	public List<Show> findShowListOnMain();
 }

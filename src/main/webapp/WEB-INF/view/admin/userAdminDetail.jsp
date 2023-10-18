@@ -98,7 +98,7 @@
                             </c:otherwise>
                         </c:choose>
                     </select>
-                        <button class="btn btn-dark btn-lg btn-block" type="button" id="changeRole">변경하기</button>
+                        <button class="btn btn-dark btn-block" type="button" id="changeRole">변경하기</button>
                 </div>
 
 
@@ -108,7 +108,7 @@
 <%--                        style="font-size: 0.8rem;" type="submit">정보수정--%>
 <%--                </button>--%>
 
-                <button class="btn btn-dark btn-lg btn-block" type="button" onClick="location.href='/admin/user?page=${page}'">목록보기
+                <button class="btn btn-dark btn-block" type="button" onClick="location.href='/admin/user?page=${page}'">목록보기
                 </button>
 
             </div>

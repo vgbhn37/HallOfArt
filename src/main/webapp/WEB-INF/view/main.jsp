@@ -18,21 +18,8 @@
 	display: none;
 }
 
-.user--btn form {
-	margin-top: 18px;
-}
-
 .body--content--main {
 	background-color: #fff;
-}
-
-.showView {
-	margin-left: 0;
-	border: none;
-	width: 300px;
-	height: 40px;
-	background-color: #DBE4EB;
-	cursor: pointer;
 }
 
 .slide_wrapper {
@@ -139,48 +126,6 @@ li {
 	margin-top: 10px;
 }
 
-.user--btn {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.user--btn p {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.user--btn button {
-	height: 46px;
-	border-radius: 17px;
-	width: 100px;
-}
-
-.open-area {
-	background-color: #fff;
-	border-style: none;
-	color: black;
-}
-
-.signUp--btn {
-	background-color: #fff;
-	border-style: none;
-	color: black;
-}
-
-.login--btn {
-	background-color: #fff;
-	border-style: none;
-	color: black;
-}
-
-.logout--btn {
-	background-color: #fff;
-	border-style: none;
-	color: black;
-}
-
 button {
 	transition: all 0.2s linear;
 }
@@ -210,7 +155,6 @@ content ul {
 	/* font-family: 'SDSamliphopangche_Outline'; */
 	margin-left: 400px;
 	height: 1000px;
-	
 }
 
 .slider li {
@@ -266,7 +210,7 @@ content ul {
 .right div img {
 	display: flex;
 	text-align: center;
- 	margin-left: 500px;
+	margin-left: 500px;
 	cursor: pointer;
 }
 
@@ -326,10 +270,10 @@ content ul {
 .content--box {
 	width: auto;
 	height: 700px;
-/* 	border: 1px solid #f7ede4; */
-/* 	margin: 50px; */
+	/* 	border: 1px solid #f7ede4; */
+	/* 	margin: 50px; */
 	margin-top: -60px;
- 	margin-top: -60px;
+	margin-top: -60px;
 	background-color: #2b354e;
 	margin-left: -500px;
 	color: #f0f0f0;
@@ -374,152 +318,8 @@ content ul {
 	flex-direction: column;
 }
 
-.modal-overlay {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: rgba(255, 255, 255, 0.25);
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	backdrop-filter: blur(1.5px);
-	-webkit-backdrop-filter: blur(1.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	z-index: 1000;
-}
-
-#modal .modal-window {
-	background-color: #F8F6F6;
-	box-shadow: black;
-	backdrop-filter: blur(13.5px);
-	-webkit-backdrop-filter: blur(13.5px);
-	border-radius: 10px;
-	border: 1px solid gray;
-	width: 410px;
-	height: 500px;
-	position: relative;
-	top: -100px;
-	padding: 10px;
-}
-
-#modal .title {
-	padding-left: 10px;
-	display: flex;
-	width: 200px;
-	text-shadow: 1px 1px 1px gray;
-	color: black;
-	margin: 0;
-	margin-left: 170px;
-}
-
-#modal .title h2 {
-	display: flex;
-	justify-content: center;
-	margin: 0;
-	margin-bottom: 10px;
-	margin-right: 50px;
-}
-
-#modal .close-area {
-	display: flex;
-	justify-content: flex-end;
-	cursor: pointer;
-	padding: 5px 10px;
-	border: 1px;
-	width: 50px;
-}
-
-.close--area {
-	display: inline;
-	float: right;
-	padding-right: 10px;
-	cursor: pointer;
-	text-shadow: 1px 1px 2px #fff;
-	color: black;
-}
-
-.msg {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 350px;
-}
-
-#modal .content {
-	margin-top: 20px;
-	padding: 0px 10px;
-	text-shadow: 1px 1px 2px #A7A7B0;
-	color: #45454A;
-	font-weight: bold;
-	margin-left: 20px;
-}
-
 .hidden {
 	display: none;
-}
-
-.main__notice {
-	margin-bottom: 80px;
-	margin-left: 120px;
-}
-
-.main_notice_title {
-	text-align: center;
-	border-top: 1px solid #ccc;
-	padding-top: 15px;
-	font-size: 20px;
-	width: 70px;
-}
-
-.notice__title {
-	display: flex;
-	justify-content: space-between;
-	width: 1480px;
-}
-
-.notice__title h2 {
-	font-size: 20px;
-}
-
-.notice__content {
-	border-top: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	width: 1480px;
-	height: 70px;
-}
-
-.notice__content:last-child {
-	border-bottom: 1px solid #ccc;
-}
-
-.date {
-	color: gray;
-}
-
-.apilogout {
-	margin-top: -20px;
-	font-weight: lighter;
-	background-color: #FAFAFA;
-	color: black;
-}
-
-#columnchart_material svg g:nth-child(n+5) text {
-	font-size: 14px !important;
-}
-
-#user-calendar-container {
-	display: flex;
-	width: 1500px;
-	height: 600px;
-	justify-content: space-between;
-	align-items: center;
-	margin-left: -100px;
 }
 
 .main-map {
@@ -533,207 +333,13 @@ content ul {
 	margin-top: 35px;
 }
 
-.title .user--btn {
-	margin-top: 23px;
-}
-
-.user--btn form {
-	margin-top: 0;
-}
-
-.user--btn a {
-	margin-top: 23px;
-	margin-top: 0;
-	background-color: white;
-	font-weight: 400;
-	color: #303030;
-}
-
-.showView {
-	margin-left: 0;
-	border: none;
-	width: 300px;
-	height: 40px;
-	background-color: #DBE4EB;
-	cursor: pointer;
-}
-
-.show-content {
-	position: relative;
-	max-width: 1280px;
-	margin: 0 auto;
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
-
-.fc-event-time {
-	font-size: 17px !important;
-}
-
-.fc-event-title-container {
-	font-size: 17px !important;
-}
-
-.modal-content {
-	z-index: 1 !important;
-}
-
-#myModal {
-	z-index: 9999 !important;
-}
-
-.fc-daygrid-day-frame fc-scrollgrid-sync-inner {
-	z-index: 0 !important;
-}
-
-.show-title {
-	position: relative;
-	font-size: 30px;
-	line-height: 35px;
-	padding: 5px 0 20px 20px;
-	margin-bottom: 30px;
-	border-bottom: 1px solid black;
-}
-
-.user--btn p {
-	margin-top: 2px;
-}
-
-.show-title a {
-	text-decoration: none;
-	color: black;
-}
-
-.show-type {
-	border-spacing: 0;
-}
-
-.show-type-btn {
-	border: 0;
-	outline: 0;
-	background: none;
-	font-size: 16px;
-	color: gray;
-}
-
-.fc-scrollgrid-section fc-scrollgrid-section-body {
-	z-index: 100 !important;
-}
-
-.fc td {
-	padding: 0 !important;
-}
-
-.show-type-btn:hover {
-	color: black;
-	font-weight: bold;
-}
-
-#calendar {
-	margin-top: 100px;
-}
-
-.fc-event-title-container {
-	cursor: pointer;
-}
-
-.modal {
-	display: none;
-	position: relative;
-	z-index: 2;
-	width: 100%;
-	left: 500px;
-	bottom: 500px;
-	background-color: #ccc;
-}
-
-.modal-content {
-	background-color: white;
-	position: fixed;
-	border-radius: 10px;
-	margin: 15% auto;
-	padding: 20px;
-	top: 200px;
-	z-index: 1;
-	border: 1px solid #888;
-	width: 300px;
-	height: 420px;
-}
-
-.modal-content  button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.imgRoute {
-	text-align: center;
-}
-
-.modal-title {
-	margin-left: 0;
-	width: 250px;
-	margin: 5px 0px;
-	height: 30px;
-}
-
-.modal__btn {
-	margin-left: 0;
-	border: none;
-	width: 300px;
-	height: 40px;
-	background-color: #DBE4EB;
-	cursor: pointer;
-}
-
-button:hover {
-	transform: none;
-}
-
-.fc .fc-button-primary {
-	background-color: #FAEBD7;
-	border: 1px solid #ccc;
-	color: black;
-}
-
-.fc .fc-button-primary:disabled {
-	background-color: #FFCE6B;
-	border: 1px solid #ccc;
-	color: black;
-}
-
-.fc .fc-button-group>.fc-button:focus, .fc .fc-button-group>.fc-button:active,
-	.fc .fc-button-group>.fc-button.fc-button-active {
-	background-color: #f5de98;
-	border: 1px solid #ccc;
-	color: black;
-}
-
-.fc-toolbar-chunk button {
-	background-color: #2b354e !important;
-	color: #f0f0f0 !important;
-}
-
 /* 지도 */
-.way{
+.way {
 	background: #f9f6f6;
 	width: 400px;
-	height:400px;
-    display: flex;
-    align-items: center;
+	height: 400px;
+	display: flex;
+	align-items: center;
 }
 </style>
 <!-- slider  -->
@@ -751,7 +357,9 @@ button:hover {
 									<h2 style="margin-top: 10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ ${showList.hallName }</h2>
 									<h4 style="margin-top: 5px; margin-left: -330px; font-size: 25px; font-weight: 100;">기간 : ${showList.startDate} &nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp ${showList.endDate}</h4>
 									<h1 style="display: flex; align-items: center; margin-top: 10px; margin-bottom: -180px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 100px;">${showList.title }</h1>
-									<img style="margin-top: -65px; width: 480px; height: 600px; min-height: 600px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" onclick="location.href='/show/detail?id=${showList.id}'">
+									<img style="margin-top: -65px; width: 480px; height: 600px; min-height: 600px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'"
+										onclick="location.href='/show/detail?id=${showList.id}'"
+									>
 								</div>
 							</dl>
 						</div>
@@ -769,56 +377,51 @@ button:hover {
 					</ul>
 				</div>
 				<div class="btn">
-					<button type="button" id="prev" class="button"></button>
-					<button type="button" id="next" class="button"></button>
+					<button type="button" id="prev" class="button"><</button>
+					<button type="button" id="next" class="button">></button>
 				</div>
 			</div>
 		</div>
-	</div> <!-- end of slide -->
-	
+	</div>
+	<!-- end of slider -->
+
 </div>
 <!-- 공지사항 + 찾아오시는 길  -->
 <div class="row" style="width: 100%;">
 	<!-- 공지사항  -->
 	<div style="width: 40%; margin-left: 80px; margin-bottom: 50px;">
 		<h1 class="title--inquiry" style="margin-top: 120px;">공지사항</h1>
-	    <table class="table">
+		<table class="table">
 			<tbody id="inquiry-list-container">
 				<c:forEach var="announcement" items="${announcementList}">
 					<tr>
-						<td><a href="/customerservice/inquiry/detail?id=${announcement.id}">${announcement.title}</a></td>
-						<td><a href="#">${announcement.createdAt}</a></td>
+						<td>
+							<a href="/customerservice/announcement/detail?page=1&id=${announcement.id}">${announcement.title}</a>
+						</td>
+						<td>
+							<a href="#">
+								<fmt:formatDate value="${announcement.createdAt}" pattern="yyyy-MM-dd" />
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
-	<div style="width:7%"></div>
+	<div style="width: 7%"></div>
 	<!-- 오시는길  -->
 	<div style="width: 40%; margin-right: 80px; margin-bottom: 50px;">
 		<h1 class="title--way" style="margin-top: 120px !important;">오시는길</h1>
-		<div class="way" style="width:100%; height: 350px;">
-			<div style="width:5%;"></div>
-			<div id="map" style="width:90%;  height: 300px;"></div>
+		<div class="way" style="width: 100%; height: 350px;">
+			<div style="width: 5%;"></div>
+			<div id="map" style="width: 90%; height: 300px;"></div>
 		</div>
 	</div>
-</div> <!-- end of announce, info -->
+</div>
+<!-- end of announce, info -->
 
 
 <script>
-
-	//모달창
-	const modal = document.querySelector(".modal-overlay")
-	function init() {
-		$(".close-area").click(function() {
-			modal.classList.add("hidden");
-		});
-		$(".open-area").click(function() {
-			modal.classList.remove("hidden");
-		});
-	}
-	init();
-
 	// 중복 클릭 방지
 	$(".button").on("click", function() {
 		$(this).attr("disabled", true);
@@ -827,26 +430,12 @@ button:hover {
 		}, 550);
 	});
 
-	// 상단 메뉴바 드롭다운
-	$(document).ready(function() {
-		$(".main>li").mouseover(function() {
-			$(this).children(".sub").stop().slideDown(200);
-		});
-		$(".main>li").mouseleave(function() {
-			$(this).children(".sub").stop().slideUp(200);
-		});
-	});
-
 	// 이미지 흘러가기 기능 구현
-	var slides = document.querySelector('.slides'),
-			slide = document.querySelectorAll('.slides li'),
+	var slides = document.querySelector('.slides'), slide = document
+			.querySelectorAll('.slides li'),
 
-			currentIdx = 0,
-			slideCount = $('.slides li').length,
-			slideWidth = 150,
-			slideMargin = 30,
-			prevBtn = document.querySelector('.prev'),
-			nextBtn = document.querySelector('.next');
+	currentIdx = 0, slideCount = $('.slides li').length, slideWidth = 150, slideMargin = 30, prevBtn = document
+			.querySelector('.prev'), nextBtn = document.querySelector('.next');
 	makeClone();
 
 	function makeClone() {
@@ -871,7 +460,8 @@ button:hover {
 		var currentSlides = document.querySelectorAll('.slides li');
 		var newSlideCount = currentSlides.length;
 
-		var newWidth = (slideWidth + slideMargin) * newSlideCount - slideMargin + 'px';
+		var newWidth = (slideWidth + slideMargin) * newSlideCount - slideMargin
+				+ 'px';
 		slides.style.width = newWidth;
 	}
 	function setInitialPos() {
@@ -880,10 +470,8 @@ button:hover {
 	}
 
 	function moveSlide(num) {
-		slides.style.left = - num * (slideWidth + slideMargin) + 'px';
+		slides.style.left = -num * (slideWidth + slideMargin) + 'px';
 		currentIdx = num;
-
-
 
 		if (currentIdx == slideCount || currentIdx == -slideCount) {
 
@@ -902,27 +490,38 @@ button:hover {
 
 	// 슬라이드 뒷 배경
 	$(function() {
-		var $slider = $('.slider'),
-				$firstSlide = $slider.find('li').first() // 첫번째 슬라이드
-						.stop(true).animate({ 'opacity': 1 }, 1000); // 첫번째 슬라이드만 보이게 하기
+		var $slider = $('.slider'), $firstSlide = $slider.find('li').first() // 첫번째 슬라이드
+		.stop(true).animate({
+			'opacity' : 1
+		}, 1000); // 첫번째 슬라이드만 보이게 하기
 		function PrevSlide() { // 이전버튼 함수
-			stopSlide(); startSlide(); //타이머 초기화
+			stopSlide();
+			startSlide(); //타이머 초기화
 			var $lastSlide = $slider.find('li').last() //마지막 슬라이드
-					.prependTo($slider); //마지막 슬라이드를 맨 앞으로 보내기
+			.prependTo($slider); //마지막 슬라이드를 맨 앞으로 보내기
 			$secondSlide = $slider.find('li').eq(1)//두 번째 슬라이드 구하기
-					.stop(true).animate({ 'opacity': 0 }, 200); //밀려난 두 번째 슬라이드는 fadeOut 시키고
+			.stop(true).animate({
+				'opacity' : 0
+			}, 200); //밀려난 두 번째 슬라이드는 fadeOut 시키고
 			$firstSlide = $slider.find('li').first() //맨 처음 슬라이드 다시 구하기
-					.stop(true).animate({ 'opacity': 1 }, 500);//새로 들어온 첫 번째 슬라이드는 fadeIn 시키기
+			.stop(true).animate({
+				'opacity' : 1
+			}, 500);//새로 들어온 첫 번째 슬라이드는 fadeIn 시키기
 		}
-		PrevSlide
+		//PrevSlide
 		function NextSlide() { // 다음 버튼 함수
-			stopSlide(); startSlide(); //타이머 초기화
+			stopSlide();
+			startSlide(); //타이머 초기화
 			$firstSlide = $slider.find('li').first() // 첫 번째 슬라이드
-					.appendTo($slider); // 맨 마지막으로 보내기
+			.appendTo($slider); // 맨 마지막으로 보내기
 			var $lastSlide = $slider.find('li').last() // 맨 마지막으로 보낸 슬라이드
-					.stop(true).animate({ 'opacity': 0 }, 200); // fadeOut시키기
+			.stop(true).animate({
+				'opacity' : 0
+			}, 200); // fadeOut시키기
 			$firstSlide = $slider.find('li').first()// 맨 처음 슬라이드
-					.stop(true).animate({ 'opacity': 1 }, 500);// fadeIn 시키기
+			.stop(true).animate({
+				'opacity' : 1
+			}, 500);// fadeIn 시키기
 		}
 
 		function next() {
@@ -944,9 +543,9 @@ button:hover {
 
 		var theInterval;
 
-		 function startSlide() {
+		function startSlide() {
 			theInterval = setInterval(next, 5000); //자동 슬라이드 설정
-		} 
+		}
 
 		function stopSlide() { //자동 멈추기
 			clearInterval(theInterval);
@@ -960,21 +559,20 @@ button:hover {
 
 	});
 
-
 	//네이버 지도 api
 	var map = new naver.maps.Map('map', {
-		center: new naver.maps.LatLng(35.1596175, 129.06022),
-		zoom: 18
+		center : new naver.maps.LatLng(35.1596175, 129.06022),
+		zoom : 18
 	});
 
 	var map = new naver.maps.Map(document.getElementById('map'), {
-		center: new naver.maps.LatLng(35.1596175, 129.06022),
-		zoom: 18
+		center : new naver.maps.LatLng(35.1596175, 129.06022),
+		zoom : 18
 	});
 	//마커
 	var marker = new naver.maps.Marker({
-		position: new naver.maps.LatLng(35.1596175, 129.06022),
-		map: map
+		position : new naver.maps.LatLng(35.1596175, 129.06022),
+		map : map
 	});
 </script>
 
