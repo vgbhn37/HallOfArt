@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import com.silver.hallofart.handler.exception.CustomRestfulException;
+import com.silver.hallofart.handler.exception.ForbiddenException;
+import com.silver.hallofart.handler.exception.UnAuthorizedException;
+import com.silver.hallofart.service.BookingService;
 import com.silver.hallofart.service.MailService;
 import com.silver.hallofart.service.SmsService;
 import com.silver.hallofart.service.UserService;
@@ -43,6 +46,9 @@ public class UserController {
 	
 	@Autowired
 	private SmsService smsService;
+	
+	@Autowired
+	private BookingService bookingService;
 	
 	@Autowired
 	private HttpSession session;
@@ -439,5 +445,8 @@ public class UserController {
 		
 		return "redirect:/user/my-info";
 	}
+	
+	
+
 	
 }

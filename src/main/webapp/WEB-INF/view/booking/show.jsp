@@ -340,6 +340,9 @@ p {
 		
 		// 예매성공 페이지로 이동
 	 	function moveToBookingSuccessPage(){
+			if(selectedSeats.length==0){
+				alert('좌석을 선택해주세요.');ㅣ
+			}
 			   const requestOptions = {
 			        	method: 'POST',
 			            headers: {
