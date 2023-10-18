@@ -19,6 +19,9 @@ spring:
     multipart:
       enabled: true
       location: c:/workspace/upload/
+      max-file-size: 50MB
+      max-request-size: 50MB
+      
   profiles:
     include: API-KEY
 #  sql:
