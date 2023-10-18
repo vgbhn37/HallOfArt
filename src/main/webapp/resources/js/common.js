@@ -27,13 +27,15 @@ function send() {
 
 //summernote
 $(document).ready(function() {
-	$('#summernote').summernote({
-		placeholder: 'content',
-		minHeight: 370,
-		maxHeight: null,
-		focus: true,
-		lang: 'ko-KR'
-	});
+	if ($('#summernote').length) {
+		$('#summernote').summernote({
+			placeholder: 'content',
+			minHeight: 370,
+			maxHeight: null,
+			focus: true,
+			lang: 'ko-KR'
+		});
+	}
 });
 
 // 공지사항 드롭다운 항목을 클릭했을 때 호출되는 함수

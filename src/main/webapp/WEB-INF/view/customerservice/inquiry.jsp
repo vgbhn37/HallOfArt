@@ -67,7 +67,7 @@
 						</c:otherwise>
 						</c:choose>
 					</td>
-					<td><a href="#">${inquiry.createdAt}</a></td>
+					<td><a href="#"><fmt:formatDate value="${inquiry.createdAt}" pattern="yyyy-MM-dd" /></a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
