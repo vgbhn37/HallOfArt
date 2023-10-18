@@ -274,9 +274,9 @@ content ul {
 	/* 	margin: 50px; */
 	margin-top: -60px;
 	margin-top: -60px;
-	background-color: #2b354e;
+	background-color: #F7F8E0;
 	margin-left: -500px;
-	color: #f0f0f0;
+	color: #000;
 	overflow: inherit;
 }
 
@@ -343,7 +343,7 @@ content ul {
 }
 </style>
 <!-- slider  -->
-<div style="width: 100%; height: 220px; background-color: #2b354e; margin-top: -220px;"></div>
+<div style="width: 100%; height: 220px; background-color: #F7F8E0; margin-top: -220px;"></div>
 <div class="main--content--div" style="height: 100%; width: 100%">
 	<div class="content--box">
 		<div class="content">

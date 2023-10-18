@@ -2,6 +2,8 @@ package com.silver.hallofart.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +14,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silver.hallofart.dto.AdminDto;
+import com.silver.hallofart.dto.ClassificationDto;
 import com.silver.hallofart.dto.Pagination;
 import com.silver.hallofart.dto.PagingDto;
 import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.dto.RentalInfoDto;
+import com.silver.hallofart.dto.UserDto;
+import com.silver.hallofart.repository.model.Announcement;
 import com.silver.hallofart.repository.model.Hall;
+import com.silver.hallofart.repository.model.Inquiry;
 import com.silver.hallofart.repository.model.Rental;
 import com.silver.hallofart.repository.model.Show;
 import com.silver.hallofart.service.AdminService;
@@ -29,7 +36,10 @@ import com.silver.hallofart.service.ShowService;
 @RequestMapping("/admin")
 @Transactional
 public class AdminController {
-
+	
+	@Autowired
+	HttpSession session;
+	
 	@Autowired
 	public AdminService service;
 	
@@ -37,7 +47,7 @@ public class AdminController {
 	public ShowService showService;
 	
 	@Autowired
-	public CustomerServiceService customerService;
+	public CustomerServiceService customerServiceService;
 	
 	@GetMapping({"/main","/"})
 	public String main(@ModelAttribute("paging") PagingDto paging , 
@@ -193,5 +203,67 @@ public class AdminController {
 		System.out.println(halls);
 		
 	    return "layout/modal";
+	}
+	
+	@GetMapping("/announcement")
+	public String announcementAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification, Model model) {
+		//페이지네이션에 필요한 값 전달
+		paging.setPage(page);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countPage(pagination));
+		//공지사항 목록 전달
+		List<Announcement> announcementList = customerServiceService.selectAllAnnouncement(paging);
+		model.addAttribute("announcementList", announcementList);
+		model.addAttribute("pagination", pagination);
+		return "admin/announcementAdmin";
+
+	}
+	
+	@GetMapping("/inquiry/main")
+	public String inquiryAdmin(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification, Model model) {
+		UserDto user = (UserDto)session.getAttribute("user");
+		paging.setPage(page);
+		paging.setUserId(user.getId());
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		pagination.setArticleTotalCount(customerServiceService.countAllInquiryPage(paging));
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("inquiryList", customerServiceService.findAllInquiry(paging));
+		return "admin/inquiryAdmin";
+	}
+	
+	//문의 ajax활용
+	@GetMapping("/inquiry/classification")
+	@ResponseBody
+	public ClassificationDto inquiryClassification(@ModelAttribute("paging") PagingDto paging , @RequestParam(value="page", 
+		    required = false, defaultValue="1")int page, @RequestParam(value="classification", 
+		    required = false, defaultValue="전체")String classification) {
+		paging.setPage(page);
+		paging.setClassification(classification);
+		Pagination pagination = new Pagination();
+		pagination.setPaging(paging);
+		ClassificationDto classificationDto = new ClassificationDto();
+		//분류가 전체일 떄
+		if(classification.equals("전체")) {
+			pagination.setArticleTotalCount(customerServiceService.countAllInquiryPage(paging));
+			List<Inquiry> inquiryList = customerServiceService.findAllInquiry(paging);
+			classificationDto.setInquiryList(inquiryList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		} 
+		//분류값이 있을 때
+		else {
+			pagination.setArticleTotalCount(customerServiceService.countNoAnswer(paging));
+			paging.setClassification(classification);
+			List<Inquiry> inquiryList = customerServiceService.findNoAnswer(paging);
+			classificationDto.setInquiryList(inquiryList);
+			classificationDto.setPagination(pagination);
+			return classificationDto;
+		}
 	}
 }

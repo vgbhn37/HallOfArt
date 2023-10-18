@@ -90,8 +90,8 @@
                             </a>
                             <div class="collapse" id="collapseCustomer" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="http://localhost/customerservice/announcement/admin">공지 작성</a>
-                                    <a class="nav-link" href="http://localhost/customerservice/inquiry/admin/main">문의 관리</a>
+                                    <a class="nav-link" href="http://localhost/admin/announcement">공지 작성</a>
+                                    <a class="nav-link" href="http://localhost/admin/inquiry/main">문의 관리</a>
                                 </nav>
                             </div> <!-- end of 고객센터  -->
                         </div>
