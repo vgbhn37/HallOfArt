@@ -18,11 +18,9 @@
 	display: none;
 }
 
-
 .body--content--main {
 	background-color: #fff;
 }
-
 
 .slide_wrapper {
 	position: relative;
@@ -68,7 +66,7 @@ li {
 	list-style: none;
 }
 
- .main {
+.main {
 	margin: 30px;
 }
 
@@ -128,8 +126,6 @@ li {
 	margin-top: 10px;
 }
 
-
- 
 button {
 	transition: all 0.2s linear;
 }
@@ -159,7 +155,6 @@ content ul {
 	/* font-family: 'SDSamliphopangche_Outline'; */
 	margin-left: 400px;
 	height: 1000px;
-	
 }
 
 .slider li {
@@ -215,7 +210,7 @@ content ul {
 .right div img {
 	display: flex;
 	text-align: center;
- 	margin-left: 500px;
+	margin-left: 500px;
 	cursor: pointer;
 }
 
@@ -275,10 +270,10 @@ content ul {
 .content--box {
 	width: auto;
 	height: 700px;
-/* 	border: 1px solid #f7ede4; */
-/* 	margin: 50px; */
+	/* 	border: 1px solid #f7ede4; */
+	/* 	margin: 50px; */
 	margin-top: -60px;
- 	margin-top: -60px;
+	margin-top: -60px;
 	background-color: #2b354e;
 	margin-left: -500px;
 	color: #f0f0f0;
@@ -327,7 +322,6 @@ content ul {
 	display: none;
 }
 
-
 .main-map {
 	display: flex;
 	flex-direction: column;
@@ -339,15 +333,13 @@ content ul {
 	margin-top: 35px;
 }
 
-
-
 /* 지도 */
-.way{
+.way {
 	background: #f9f6f6;
 	width: 400px;
-	height:400px;
-    display: flex;
-    align-items: center;
+	height: 400px;
+	display: flex;
+	align-items: center;
 }
 </style>
 <!-- slider  -->
@@ -365,7 +357,9 @@ content ul {
 									<h2 style="margin-top: 10px; margin-left: -330px; font-size: 35px; font-weight: 200; margin-bottom: 20px;">🔔️ ${showList.hallName }</h2>
 									<h4 style="margin-top: 5px; margin-left: -330px; font-size: 25px; font-weight: 100;">기간 : ${showList.startDate} &nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp ${showList.endDate}</h4>
 									<h1 style="display: flex; align-items: center; margin-top: 10px; margin-bottom: -180px; margin-left: -330px; font-size: 57px; font-weight: 200; height: 100px;">${showList.title }</h1>
-									<img style="margin-top: -65px; width: 480px; height: 600px; min-height: 600px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'" onclick="location.href='/show/detail?id=${showList.id}'">
+									<img style="margin-top: -65px; width: 480px; height: 600px; min-height: 600px;" src="/imagePath/${showList.showImg}" onerror="this.src='/resources/images/errorImage.png'"
+										onclick="location.href='/show/detail?id=${showList.id}'"
+									>
 								</div>
 							</dl>
 						</div>
@@ -388,41 +382,48 @@ content ul {
 				</div>
 			</div>
 		</div>
-	</div> <!-- end of slider -->
-	
+	</div>
+	<!-- end of slider -->
+
 </div>
 <!-- 공지사항 + 찾아오시는 길  -->
 <div class="row" style="width: 100%;">
 	<!-- 공지사항  -->
 	<div style="width: 40%; margin-left: 80px; margin-bottom: 50px;">
 		<h1 class="title--inquiry" style="margin-top: 120px;">공지사항</h1>
-	    <table class="table">
+		<table class="table">
 			<tbody id="inquiry-list-container">
 				<c:forEach var="announcement" items="${announcementList}">
 					<tr>
-						<td><a href="/customerservice/inquiry/detail?id=${announcement.id}">${announcement.title}</a></td>
-						<td><a href="#">${announcement.createdAt}</a></td>
+						<td>
+							<a href="/customerservice/announcement/detail?page=1&id=${announcement.id}">${announcement.title}</a>
+						</td>
+						<td>
+							<a href="#">
+								<fmt:formatDate value="${announcement.createdAt}" pattern="yyyy-MM-dd" />
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
-	<div style="width:7%"></div>
+	<div style="width: 7%"></div>
 	<!-- 오시는길  -->
 	<div style="width: 40%; margin-right: 80px; margin-bottom: 50px;">
 		<h1 class="title--way" style="margin-top: 120px !important;">오시는길</h1>
-		<div class="way" style="width:100%; height: 350px;">
-			<div style="width:5%;"></div>
-			<div id="map" style="width:90%;  height: 300px;"></div>
+		<div class="way" style="width: 100%; height: 350px;">
+			<div style="width: 5%;"></div>
+			<div id="map" style="width: 90%; height: 300px;"></div>
 		</div>
 	</div>
-</div> <!-- end of announce, info -->
+</div>
+<!-- end of announce, info -->
 
 
 <script>
-
 	// 중복 클릭 방지
- 	$(".button").on("click", function() {
+	$(".button").on("click", function() {
 		$(this).attr("disabled", true);
 		setTimeout(function() {
 			$(".button").attr("disabled", false);
@@ -430,15 +431,11 @@ content ul {
 	});
 
 	// 이미지 흘러가기 기능 구현
-	var slides = document.querySelector('.slides'),
-			slide = document.querySelectorAll('.slides li'),
+	var slides = document.querySelector('.slides'), slide = document
+			.querySelectorAll('.slides li'),
 
-			currentIdx = 0,
-			slideCount = $('.slides li').length,
-			slideWidth = 150,
-			slideMargin = 30,
-			prevBtn = document.querySelector('.prev'),
-			nextBtn = document.querySelector('.next');
+	currentIdx = 0, slideCount = $('.slides li').length, slideWidth = 150, slideMargin = 30, prevBtn = document
+			.querySelector('.prev'), nextBtn = document.querySelector('.next');
 	makeClone();
 
 	function makeClone() {
@@ -463,7 +460,8 @@ content ul {
 		var currentSlides = document.querySelectorAll('.slides li');
 		var newSlideCount = currentSlides.length;
 
-		var newWidth = (slideWidth + slideMargin) * newSlideCount - slideMargin + 'px';
+		var newWidth = (slideWidth + slideMargin) * newSlideCount - slideMargin
+				+ 'px';
 		slides.style.width = newWidth;
 	}
 	function setInitialPos() {
@@ -472,10 +470,8 @@ content ul {
 	}
 
 	function moveSlide(num) {
-		slides.style.left = - num * (slideWidth + slideMargin) + 'px';
+		slides.style.left = -num * (slideWidth + slideMargin) + 'px';
 		currentIdx = num;
-
-
 
 		if (currentIdx == slideCount || currentIdx == -slideCount) {
 
@@ -494,27 +490,38 @@ content ul {
 
 	// 슬라이드 뒷 배경
 	$(function() {
-		var $slider = $('.slider'),
-				$firstSlide = $slider.find('li').first() // 첫번째 슬라이드
-						.stop(true).animate({ 'opacity': 1 }, 1000); // 첫번째 슬라이드만 보이게 하기
+		var $slider = $('.slider'), $firstSlide = $slider.find('li').first() // 첫번째 슬라이드
+		.stop(true).animate({
+			'opacity' : 1
+		}, 1000); // 첫번째 슬라이드만 보이게 하기
 		function PrevSlide() { // 이전버튼 함수
-			stopSlide(); startSlide(); //타이머 초기화
+			stopSlide();
+			startSlide(); //타이머 초기화
 			var $lastSlide = $slider.find('li').last() //마지막 슬라이드
-					.prependTo($slider); //마지막 슬라이드를 맨 앞으로 보내기
+			.prependTo($slider); //마지막 슬라이드를 맨 앞으로 보내기
 			$secondSlide = $slider.find('li').eq(1)//두 번째 슬라이드 구하기
-					.stop(true).animate({ 'opacity': 0 }, 200); //밀려난 두 번째 슬라이드는 fadeOut 시키고
+			.stop(true).animate({
+				'opacity' : 0
+			}, 200); //밀려난 두 번째 슬라이드는 fadeOut 시키고
 			$firstSlide = $slider.find('li').first() //맨 처음 슬라이드 다시 구하기
-					.stop(true).animate({ 'opacity': 1 }, 500);//새로 들어온 첫 번째 슬라이드는 fadeIn 시키기
+			.stop(true).animate({
+				'opacity' : 1
+			}, 500);//새로 들어온 첫 번째 슬라이드는 fadeIn 시키기
 		}
 		//PrevSlide
 		function NextSlide() { // 다음 버튼 함수
-			stopSlide(); startSlide(); //타이머 초기화
+			stopSlide();
+			startSlide(); //타이머 초기화
 			$firstSlide = $slider.find('li').first() // 첫 번째 슬라이드
-					.appendTo($slider); // 맨 마지막으로 보내기
+			.appendTo($slider); // 맨 마지막으로 보내기
 			var $lastSlide = $slider.find('li').last() // 맨 마지막으로 보낸 슬라이드
-					.stop(true).animate({ 'opacity': 0 }, 200); // fadeOut시키기
+			.stop(true).animate({
+				'opacity' : 0
+			}, 200); // fadeOut시키기
 			$firstSlide = $slider.find('li').first()// 맨 처음 슬라이드
-					.stop(true).animate({ 'opacity': 1 }, 500);// fadeIn 시키기
+			.stop(true).animate({
+				'opacity' : 1
+			}, 500);// fadeIn 시키기
 		}
 
 		function next() {
@@ -536,9 +543,9 @@ content ul {
 
 		var theInterval;
 
-		 function startSlide() {
+		function startSlide() {
 			theInterval = setInterval(next, 5000); //자동 슬라이드 설정
-		} 
+		}
 
 		function stopSlide() { //자동 멈추기
 			clearInterval(theInterval);
@@ -552,21 +559,20 @@ content ul {
 
 	});
 
-
 	//네이버 지도 api
 	var map = new naver.maps.Map('map', {
-		center: new naver.maps.LatLng(35.1596175, 129.06022),
-		zoom: 18
+		center : new naver.maps.LatLng(35.1596175, 129.06022),
+		zoom : 18
 	});
 
 	var map = new naver.maps.Map(document.getElementById('map'), {
-		center: new naver.maps.LatLng(35.1596175, 129.06022),
-		zoom: 18
+		center : new naver.maps.LatLng(35.1596175, 129.06022),
+		zoom : 18
 	});
 	//마커
 	var marker = new naver.maps.Marker({
-		position: new naver.maps.LatLng(35.1596175, 129.06022),
-		map: map
+		position : new naver.maps.LatLng(35.1596175, 129.06022),
+		map : map
 	});
 </script>
 
