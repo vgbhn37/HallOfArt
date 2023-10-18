@@ -6,7 +6,6 @@ $(document).ready(function() {
 	$('.tab--announcement li').click(function() {
 
 		var classification = $(this).data('classification');
-
 		$('.tab--announcement li').removeClass('active');
 		$(this).addClass('active');
 

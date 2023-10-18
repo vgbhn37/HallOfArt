@@ -17,7 +17,7 @@
 		<p class="classification">${inquiry.classification}</p>
 	</div>
 	<!-- 작성일 -->
-	<p class="createdAt">${inquiry.createdAt}</p>
+	<p class="createdAt"><fmt:formatDate value="${inquiry.createdAt}" pattern="yyyy-MM-dd" /></p>
 	<!-- 내용 -->
 	<div class="content">
 		<p>${inquiry.content}</p>

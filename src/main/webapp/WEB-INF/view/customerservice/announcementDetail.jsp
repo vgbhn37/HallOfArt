@@ -12,7 +12,7 @@
 		<p class="classification">${announcement.classification}</p>
 	</div>
 	<!-- 작성일 -->
-	<p class="createdAt">${announcement.createdAt}</p>
+	<p class="createdAt"><fmt:formatDate value="${announcement.createdAt}" pattern="yyyy-MM-dd" /></p>
 	<!-- 내용 -->
 	<div class="content">
 		<p>${announcement.content}</p>
