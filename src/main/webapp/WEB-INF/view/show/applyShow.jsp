@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	include file="../layout/header.jsp" %>
 <!-- --------------------------------------------------------- -->	
 <link href="/resources/css/showApply.css" rel="stylesheet" />
@@ -42,31 +43,31 @@
        				</td>
        			</tr>
        			<tr>
-       				<td>대관료</td>
+       				<td rowspan="2">대관료</td>
        				<td id="hallInfoTd">
+       				</td>
+       			</tr>
+       			<tr>
+       				<td style="color: #bbb">
+       					${hallInfo.name} - 기본 대관 가격 : 
+       					<fmt:formatNumber value="${hallInfo.basicPrice}" pattern="#,###" /> 원 , 
+       					1일 당 <fmt:formatNumber value="${hallInfo.perTimePrice}" pattern="#,###" /> 원 추가
        				</td>
        			</tr>
     			<tr>
     				<td colspan="2">
        					<br><h3>공연 정보</h3>
-    				</td>
-    			</tr>
-  				<tr>
-  					<td>신청인</td>
-  					<td>
-  						<c:choose>
+       					<c:choose>
 							<c:when test="${empty user}">
-								비로그인
 								<input type="hidden" id="userTbIdd" value="">
 							</c:when>
 							<c:otherwise>
-								id : <c:out value="${user.id}"></c:out>
 								<input type="hidden" name="userTbId" value="${user.id}">
 								<input type="hidden" name="showTbId" value="1">
 							</c:otherwise>
 						</c:choose>
-  					</td>
-  				</tr>
+    				</td>
+    			</tr>
        			<tr>
        				<td>공연/전시 제목</td>
        				<td><input type="text" name="title">
@@ -109,12 +110,12 @@
 	   			</tr>
 	   			<tr id="thumbTr">
 	   				<td>미리보기</td>
-	   				<td id="thumbTd" style="height: 300px; padding: 10px; background-color: #eee">
+	   				<td id="thumbTd" style="padding: 10px;">
 	   				</td>
 	   			</tr>
 			</table>
 		</form>
-		<a id="booking" href="#">신청하기</a>
+		<a id="booking" href="#">신청하기</a><br><br>
 	</div>
 <!-- --------------------------------------------------------- -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -136,6 +137,9 @@ $(document).ready(function() {
         beforeShowDay: disableDates
     });
 	
+	$("#datepicker1").datepicker('option', 'minDate', new Date());
+	$("#datepicker2").datepicker('option', 'minDate', new Date());
+	
 	// datepicker 범위 제약 옵션
 	$('#datepicker1').datepicker('option', 'onSelect', function(dateString){
     	$("#datepicker2").datepicker('option', 'minDate', dateString);
@@ -153,7 +157,7 @@ $(document).ready(function() {
     });
 	$('#date1resetBtn').on('click', function(){
     	$("#datepicker1").val('');
-    	$("#datepicker2").datepicker('option', 'minDate', '');
+    	$("#datepicker2").datepicker('option', 'minDate', new Date());
     	$("#datepicker2").datepicker('option', 'maxDate', '');
 	});
     $('#datepicker2').datepicker('option', 'onSelect', function(dateString){
@@ -172,8 +176,8 @@ $(document).ready(function() {
     });
 	$('#date2resetBtn').on('click', function(){
     	$("#datepicker2").val('');
+    	$("#datepicker1").datepicker('option', 'minDate', new Date());
     	$("#datepicker1").datepicker('option', 'maxDate', '');
-    	$("#datepicker1").datepicker('option', 'minDate', '');
 	});		
 
 //		datepicker 특정 일 비활성화
@@ -328,8 +332,9 @@ $(document).ready(function() {
 					console.log("업로드 성공 : "+data);
 					let thumb = document.createElement("img");
 					thumb.src = "/imagePath/"+data;
-					thumb.style.width = "100%";
-					thumb.style.height = "100%";
+					thumb.style.width = "400px";
+					thumb.style.height = "500px";
+					thumb.style.border = "10px solid #eee";
 					$("#thumbTd").empty();
 					$("#thumbTd").append(thumb);
 					$("#thumbTr").show();
