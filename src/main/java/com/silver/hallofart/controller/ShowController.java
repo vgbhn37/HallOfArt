@@ -152,7 +152,7 @@ public class ShowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:main";
+		return "redirect:http://localhost";
 	}
 	
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,8 +136,15 @@
 				       				</td>
 				       			</tr>
 				       			<tr>
-				       				<td>대관료</td>
+				       				<td rowspan="2">대관료</td>
 				       				<td id="hallInfoTd">
+				       				</td>
+				       			</tr>
+				       			<tr>
+       								<td style="color: #bbb">
+				       					${hallInfo.name} - 기본 대관 가격 : 
+				       					<fmt:formatNumber value="${hallInfo.basicPrice}" pattern="#,###" /> 원 , 
+				       					1일 당 <fmt:formatNumber value="${hallInfo.perTimePrice}" pattern="#,###" /> 원 추가
 				       				</td>
 				       			</tr>
 				  				<tr>
@@ -218,12 +226,12 @@
 					   			</tr>
 					   			<tr id="thumbTr">
 					   				<td>미리보기</td>
-					   				<td id="thumbTd" style="height: 300px; padding: 10px; background-color: #eee">
+					   				<td id="thumbTd" style="padding: 10px;">
 					   				</td>
 					   			</tr>
 							</table>
 						</form>
-	    				<a id="booking" href="#">신청하기</a>
+	    				<a id="booking" href="#">신청하기</a><br><br>
 					</div>
                 </div>
             </main>
@@ -439,8 +447,9 @@
 							console.log("업로드 성공 : "+data);
 							let thumb = document.createElement("img");
 							thumb.src = "/imagePath/"+data;
-							thumb.style.width = "100%";
-							thumb.style.height = "100%";
+							thumb.style.width = "400px";
+							thumb.style.height = "500px";
+							thumb.style.border = "10px solid #eee";
 							$("#thumbTd").empty();
 							$("#thumbTd").append(thumb);
 							$("#thumbTr").show();
