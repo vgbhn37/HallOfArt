@@ -42,6 +42,8 @@ dependencies {
 	
     implementation 'javax.mail:javax.mail-api:1.6.2'
 	
+	implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+	implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
 }
 
 tasks.named('test') {

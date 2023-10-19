@@ -27,7 +27,7 @@
 						
 						<c:set var="currentTimeMillis" value="${currentTime.time}" />
 						<c:set var="twentyFourHoursAgoMillis" value="${booking.startTime.time - 86400000}" />
-						
+<!-- 						<a href="/qr/ticket">ticket</a> -->
 						<c:if test="${twentyFourHoursAgoMillis > currentTimeMillis }">
 							<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">환불요청</button>
 						</c:if>
