@@ -13,6 +13,7 @@ public class Booking {
 	private Integer seatTbId;
 	private Integer showTimeTbId;
 	private Integer showTbId;
+	private Integer Quantity;
 	private String paymentTid;
 	private Timestamp createdAt;
 }

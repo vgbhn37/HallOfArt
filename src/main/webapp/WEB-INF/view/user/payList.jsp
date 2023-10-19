@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -15,27 +14,41 @@
 		<c:forEach var="booking" items="${payList }">
 			<div class="row my-3" style="font-family: 'NanumSquareRound'">
 				<div class="col-1 d-flex align-items-center justify-content-center">
-					<input type="checkbox" id="check-seat"
-						onchange="calcPrice(this,${booking.price},${booking.bookingId})">
+					<input type="checkbox" id="check-seat" onchange="calcPrice(this,${booking.price},${booking.bookingId},${booking.quantity })">
 				</div>
 				<div class="col-11">
 					<div class="card flex-row flex-wrap">
 						<div class="card-header border-0">
-							<img src="/imagePath/${booking.showImg}"
-								onerror="this.src='/resources/images/errorImage.png'"
-								style="width: 150px; height: 200px;">
+							<img src="/imagePath/${booking.showImg}" onerror="this.src='/resources/images/errorImage.png'" style="width: 150px; height: 200px;">
 						</div>
 						<div class="card-body p-5">
+						<c:choose>
+						<c:when test="${booking.quantity==null }">
+							<span class="card-title" style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold; margin-bottom: 20px; margin-top: 10px;"> 공연 </span>
+						</c:when>
+						<c:otherwise>
+							<span class="card-title" style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold; margin-bottom: 20px; margin-top: 10px;"> 전시 </span>
+						</c:otherwise>
+					</c:choose>
+					<br>
+					<br>
 							<h4 class="card-title pb-3">${booking.title }</h4>
-							<span class="card-text">${booking.hallName }(${booking.seatName })</span>
-							<span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
+							
+							<span class="card-text">${booking.hallName }( <c:choose>
+									<c:when test="${booking.quantity==null }">${booking.seatName }</c:when>
+									<c:otherwise>${booking.quantity }매</c:otherwise>
+								</c:choose> )
+							</span> <span class="card-text"><fmt:formatNumber type="number">
+									<c:choose>
+										<c:when test="${booking.quantity==null }">${booking.price}</c:when>
+										<c:otherwise>${booking.price * booking.quantity }</c:otherwise>
+									</c:choose>
+								</fmt:formatNumber>원</span>
 							<p class="card-text">
 								공연 일시 :
-								<fmt:formatDate value="${booking.startTime}"
-									pattern="yyyy-MM-dd HH:mm" />
+								<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
 							</p>
-							<button type="button" class="btn btn-outline-danger float-right"
-								onclick="deleteBooking(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">취소</button>
+							<button type="button" class="btn btn-outline-danger float-right" onclick="deleteBooking(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">취소</button>
 						</div>
 						<div class="w-100"></div>
 					</div>
@@ -43,13 +56,9 @@
 			</div>
 		</c:forEach>
 		<div class="my-5" style="width: 100%">
-			<span style="font-size: 20px;">결제 금액: </span><span
-				style="font-size: 20px;" id="totalPrice">0</span><span
-				style="font-size: 20px;"> 원</span>
+			<span style="font-size: 20px;">결제 금액: </span><span style="font-size: 20px;" id="totalPrice">0</span><span style="font-size: 20px;"> 원</span>
 			<div class="button-group float-right">
-				<img class="kakao-button"
-					src="/images/payment_icon_yellow_small.png"
-					onclick="moveToKakaoPay()">
+				<img class="kakao-button" src="/images/payment_icon_yellow_small.png" onclick="moveToKakaoPay()">
 			</div>
 		</div>
 
@@ -79,15 +88,24 @@
 	let paymentPopup;
 	
 	// 각 좌석을 체크, 체크 해제 시 총 가격을 계산
-	function calcPrice(checked,price,id){
+	function calcPrice(checked,price,id,quantity){
 		 if(checked.checked){
-			totalPrice+=price;
+			 if(quantity==null){
+				 totalPrice+= price;	 
+			 } else{
+				 totalPrice+= price*quantity;
+			 }	
 			addToList(id);
+			
 		}else{
-			totalPrice-=price;
+			if(quantity==null){
+				totalPrice-= price;
+			} else{
+				totalPrice-= price*quantity;
+			}		
 			removeFromList(id);
 		}
-		totalPriceElement.textContent = totalPrice.toString();	
+		totalPriceElement.textContent = totalPrice.toLocaleString();	
 	}
 	
 	//선택 리스트에 추가

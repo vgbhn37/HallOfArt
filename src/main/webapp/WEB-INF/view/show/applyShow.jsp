@@ -56,7 +56,13 @@
        			</tr>
     			<tr>
     				<td colspan="2">
-       					<br><h3>공연 정보</h3>
+       					<br>
+       					<c:choose>
+       						<c:when test="${hallInfo.hallTypeId == 1 }"><h3>공연 정보</h3></c:when>
+       						<c:when test="${hallInfo.hallTypeId == 2 }"><h3>전시 정보</h3></c:when>
+       					</c:choose>
+       					
+       					
        					<c:choose>
 							<c:when test="${empty user}">
 								<input type="hidden" id="userTbIdd" value="">
