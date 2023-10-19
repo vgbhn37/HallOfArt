@@ -145,7 +145,6 @@
 		s
 		on h.id = s.hall_tb_id where s.id = #{showId};
 	</select>
-
 	<insert id="insertBookingInfo">
 		insert into booking_tb (status, user_tb_id,
 		seat_tb_id, show_time_tb_id, show_tb_id, quantity, created_at)

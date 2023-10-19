@@ -574,6 +574,8 @@ content ul {
 		position : new naver.maps.LatLng(35.1596175, 129.06022),
 		map : map
 	});
+	
+	
 </script>
 
 <script type="text/javascript" src="/resources/js/common.js"></script>

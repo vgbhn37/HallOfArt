@@ -82,7 +82,7 @@
 					<a id="a--detail" href="detail?id=${li.id}" style="">${li.title}</a>
 				</td>
 				<td>
-					<fmt:formatNumber value="${li.price}" pattern="#,###" />
+					<fmt:formatNumber value="${li.price}" pattern="#,###" /> 원
 				</td>
 				<td>${li.startDate}~${li.endDate}</td>
 				<td>

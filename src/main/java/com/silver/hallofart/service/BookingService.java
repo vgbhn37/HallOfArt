@@ -212,4 +212,9 @@ public class BookingService {
 		}
 		return findRentalList;
 	}
+
+	public Booking findBookingById(Integer bookId) {
+		
+		return bookingRepository.findBookingById(bookId);
+	}
 }

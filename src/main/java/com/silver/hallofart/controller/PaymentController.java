@@ -36,6 +36,7 @@ import com.silver.hallofart.dto.PaymentRequestDto;
 import com.silver.hallofart.dto.UserDto;
 import com.silver.hallofart.handler.exception.CustomRestfulException;
 import com.silver.hallofart.handler.exception.UnAuthorizedException;
+import com.silver.hallofart.repository.model.Booking;
 import com.silver.hallofart.service.BookingService;
 import com.silver.hallofart.service.PaymentService;
 
@@ -205,12 +206,22 @@ public class PaymentController {
 		// 헤더에 담길 내용
 		headers.add("Authorization", kakaoApiKey);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
+		
+		// bookId로 예약 정보 가져오기
+		Booking booking = bookingService.findBookingById(bookId);
+		
+		// 예약 정보에 수량 (quantity)가 있으면 전시, 없으면 공연
+		// 환불할 가격을 불러와서 전시라면 수량과 곱해준다.
+		
+		int price = bookingService.findPriceByBookingId(bookId);
+		Integer quantity = booking.getQuantity(); 
+		int amount = quantity == null ? price : price * quantity;
+		
 		// 바디에 들어갈 내용 싣기
 		MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
 		params.add("cid", "TC0ONETIME");
 		params.add("tid", paymentService.findPaymentTidByBookingId(bookId));
-		params.add("cancel_amount", bookingService.findPriceByBookingId(bookId));
+		params.add("cancel_amount", amount);
 		params.add("cancel_tax_free_amount", 0);
 
 		// 헤더와 바디를 포함하는 HTTP 객체
