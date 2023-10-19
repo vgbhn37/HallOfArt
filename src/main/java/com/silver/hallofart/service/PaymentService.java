@@ -120,26 +120,5 @@ public class PaymentService {
 		return paymentRepository.findPriceByPaymentTid(tid);
 	}
 	
-	@Transactional
-	public List<MainShowDto> findShowListOnMain(){
-		
-		List<MainShowDto> list = new ArrayList<>();
-		List<Show> showList = showRepository.findShowListOnMain();
-		for (Show show : showList) {
-			MainShowDto dto = new MainShowDto();
-			Integer showId = show.getId();
-			dto.setId(showId);
-			dto.setShowType("공연"); //추후 변경 요망
-			dto.setHallName(bookingRepository.findHallNameByShowId(showId));
-			dto.setTitle(show.getTitle());
-			dto.setStartDate(show.getStartDate());
-			dto.setEndDate(show.getEndDate());
-			dto.setShowImg(show.getShowImg());
-			
-			list.add(dto);
-		}
-		
-		return list;
-	}
 
 }

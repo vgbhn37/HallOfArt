@@ -58,7 +58,7 @@
 <!-- --------------------------------------------------------- -->
 
 <div class="schedule_content">
-	<h1 class="title--schedule">공연 정보</h1>
+	<h1 class="title--schedule">공연/전시 정보</h1>
 	<br>
 	<div style="background-color: #f9f6f6; padding: 20px;">
 		<label for="datepicker">
@@ -82,7 +82,7 @@
 					<a id="a--detail" href="detail?id=${li.id}" style="">${li.title}</a>
 				</td>
 				<td>
-					<fmt:formatNumber value="${li.price}" pattern="#,###" />
+					<fmt:formatNumber value="${li.price}" pattern="#,###" /> 원
 				</td>
 				<td>${li.startDate}~${li.endDate}</td>
 				<td>
@@ -103,17 +103,17 @@
 					<c:choose>
 						<c:when test="${startDateFormatted > currentDateFormatted}">
 						<span style="background-color: lightblue; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
-	                        공연 준비 중
+	                        준비 중
 						</span>
                     </c:when>
 						<c:when test="${endDateFormatted < currentDateFormatted}">
 						<span style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
-	                        공연 종료
+	                        공연/전시 종료
                         </span>
                     </c:when>
 						<c:otherwise>
 						<span style="background-color: #8d8; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold;">
-                        	공연 중
+                        	공연/전시 중
                        	</span>
                     </c:otherwise>
 					</c:choose>

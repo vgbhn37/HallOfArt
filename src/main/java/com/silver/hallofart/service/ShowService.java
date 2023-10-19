@@ -136,7 +136,7 @@ public class ShowService {
 			MainShowDto dto = new MainShowDto();
 			Integer showId = show.getId();
 			dto.setId(showId);
-			dto.setShowType("공연"); //추후 변경 요망
+			dto.setShowType(bookingRepository.findShowTypeByShowId(showId)); //추후 변경 요망
 			dto.setHallName(bookingRepository.findHallNameByShowId(showId));
 			dto.setTitle(show.getTitle());
 			dto.setStartDate(show.getStartDate());

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silver.hallofart.dto.BookedSeatDto;
+import com.silver.hallofart.dto.BookingExhibitionDto;
 import com.silver.hallofart.dto.PaymentDto;
 import com.silver.hallofart.dto.RentalInfoDto;
 import com.silver.hallofart.dto.SeatStatusDto;
@@ -50,7 +51,7 @@ public class BookingController {
 	// 해당 show의 좌석예매 페이지로 진입
 	@GetMapping("/booking/booking/{showId}")
 	public String book(@PathVariable Integer showId, Model model, HttpServletRequest request) {
-		
+
 		// 인증 및 유효성검사 체크 필요
 		UserDto user = (UserDto) session.getAttribute("user");
 		if (user == null) {
@@ -64,8 +65,13 @@ public class BookingController {
 		model.addAttribute("showTimeList", showTimeList);
 		model.addAttribute("hall", hall);
 
-		return "/booking/show";
-		
+		if (hall.getHallTypeId() == 1) {
+			return "/booking/show";
+		} else if (hall.getHallTypeId() == 2) {
+			return "/booking/exhibition";
+		}
+
+		return "/";
 	}
 
 	// 해당 showtime의 좌석리스트
@@ -86,6 +92,29 @@ public class BookingController {
 		return seatList;
 	}
 
+	@GetMapping("/booking/showBookableEx")
+	@ResponseBody
+	public BookingExhibitionDto bookableExhibition(@RequestParam("showTimeId") Integer showTimeId,
+			@RequestParam("showId") Integer showId, HttpServletRequest request) {
+		// 주소창에 직접 입력시 오류 발생
+		if (request.getHeader("REFERER") == null) {
+			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		// 인증 및 유효성 검사 체크 필요
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+		
+		System.out.println(showTimeId);
+		System.out.println(showId);
+		
+		BookingExhibitionDto dto =  bookingService.findExhibitionInfo(showTimeId, showId);
+		System.out.println(dto.getRemaining());
+		System.out.println(dto.getMaxSeat());
+		return dto;
+	}
+
 	// 예매하기 버튼을 눌렀을 때, 유효성 체크 후 성공시 success 실패시 fail 문자열을 response
 	@PostMapping("/booking/book-proc")
 	@ResponseBody
@@ -97,18 +126,19 @@ public class BookingController {
 		}
 		// script에서 받아온 seletedSeat 리스트
 		List<SelectedSeatDto> selectedSeatList = selectedSeats.get("selectedSeats");
-		for (SelectedSeatDto selectedSeatDto : selectedSeatList) {
-			System.out.print(selectedSeatDto.getShowTimeId());
-			System.out.print(" ");
-			System.out.print(selectedSeatDto.getSeatId());
-			System.out.print("\n");
+		for (SelectedSeatDto dto : selectedSeatList) {
+			System.out.println(dto.getQuantity());
+			System.out.println(dto.getSeatId());
+			System.out.println(dto.getShowId());
+			System.out.println(dto.getShowTimeId());
 		}
-
+		
 		// 리스트로 booking_tb에 데이터 삽입
 		try {
 			bookingService.insertBookingInfo(selectedSeatList, user.getId());
 		} catch (Exception e) {
 			// 오류 발생 시 fail 문자열 response (js에서 처리)
+			System.out.println(e.getMessage());
 			return "fail";
 		}
 		return "success";
@@ -122,6 +152,24 @@ public class BookingController {
 			throw new BadRequestException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		return "booking/success";
+	}
+
+	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
+	@DeleteMapping("/booking/delete/{id}")
+	@ResponseBody
+	public String deleteBooking(@PathVariable Integer id) {
+
+		// 사용자 인증 처리
+		UserDto user = (UserDto) session.getAttribute("user");
+		if (user == null) {
+			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+		}
+
+		if (bookingService.deleteBookingById(id) != 1) {
+			return "fail";
+		}
+
+		return "success";
 	}
 
 	// 결제 대기 리스트
@@ -185,24 +233,6 @@ public class BookingController {
 		model.addAttribute("rentalList", rentalList);
 		return "/user/rentalList";
 
-	}
-
-	// 해당 예약 내역 삭제 (결제 전 취소건은 DB에서 삭제)
-	@DeleteMapping("/booking/delete/{id}")
-	@ResponseBody
-	public String deleteBooking(@PathVariable Integer id) {
-
-		// 사용자 인증 처리
-		UserDto user = (UserDto) session.getAttribute("user");
-		if (user == null) {
-			throw new UnAuthorizedException("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
-		}
- 
-		if (bookingService.deleteBookingById(id) != 1) {
-			return "fail";
-		}
-
-		return "success";
 	}
 
 }

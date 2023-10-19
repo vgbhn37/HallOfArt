@@ -19,7 +19,7 @@
                 <button class="dropdown-btn" type="button">분류</button>
                 <div class="dropdown-content">
                     <a onclick="selectItem('대관')">대관</a>
-                    <a onclick="selectItem('전시')">전시</a>
+                    <a onclick="selectItem('공연')">공연</a>
                     <a onclick="selectItem('예매')">예매</a>
                     <a onclick="selectItem('회원')">회원</a>
                 </div>

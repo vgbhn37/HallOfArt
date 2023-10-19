@@ -56,7 +56,7 @@
 					<p style="text-align: center;">선택 된 좌석이 없습니다</p>
 				</div>
 			</div>
-			<div style="text-align: end; margin-top: 20px;">
+			<div style="text-align: end; margin: 20px 0;">
 				<button onclick="moveToBookingSuccessPage()" class="btn btn-primary">예매하기</button>
 			</div>
 		</div>
@@ -340,6 +340,9 @@ p {
 		
 		// 예매성공 페이지로 이동
 	 	function moveToBookingSuccessPage(){
+			if(selectedSeats.length==0){
+				alert('좌석을 선택해주세요.');ㅣ
+			}
 			   const requestOptions = {
 			        	method: 'POST',
 			            headers: {

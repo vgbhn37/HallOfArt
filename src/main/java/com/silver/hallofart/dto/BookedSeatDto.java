@@ -13,5 +13,6 @@ public class BookedSeatDto {
 	private String seatName;
 	private String showImg;
 	private Integer price;
+	private Integer quantity;
 	private Timestamp startTime;
 }

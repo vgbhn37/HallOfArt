@@ -10,7 +10,7 @@
 	<ul class = tab--announcement>
 	    <li class="active" data-classification="전체"><a href="#">전체</a></li>
 	    <li data-classification="대관"><a href="#">대관</a></li>
-	    <li data-classification="전시"><a href="#">전시</a></li>
+	    <li data-classification="공연"><a href="#">공연</a></li>
 	    <li data-classification="예매"><a href="#">예매</a></li>
 	    <li data-classification="회원"><a href="#">회원</a></li>
 	</ul>

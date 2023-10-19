@@ -6,7 +6,13 @@
 
 	<select id="findShowTimeListByShowId" resultType="ShowTime">
 		select * from
-		show_time_tb where show_id = #{showId} and datediff(start_time,now()) <![CDATA[>=]]> 1
+		show_time_tb where show_id = #{showId} and
+		datediff(start_time,now()) <![CDATA[>=]]>
+		1
+	</select>
+	<select id="findBookingById" resultType="Booking">
+		select * from booking_tb
+		where id = #{id}
 	</select>
 	<select id="findSeatListByShowTimeIdAndHallId"
 		resultType="com.silver.hallofart.dto.SeatStatusDto">
@@ -20,7 +26,8 @@
 		where hall_tb_id =#{hallId}
 	</select>
 	<select id="findHallByShowId" resultType="Hall">
-		select h.id,name,max_seat,hall_type_id,basic_price,per_time_price from
+		select
+		h.id,name,max_seat,hall_type_id,basic_price,per_time_price from
 		hall_tb h join show_tb s on h.id = s.hall_tb_id
 		where s.id = #{showId};
 	</select>
@@ -88,56 +95,84 @@
 	</select>
 	<select id="findShowImgByshowId" resultType="String">
 		select show_img
-		from show_tb
+		from
+		show_tb
 		where id = #{id}
 	</select>
-	<select id = "findRentalAmountByShowId" resultType="Integer">
+	<select id="findRentalAmountByShowId" resultType="Integer">
 		select amount
 		from rental_tb
 		where show_tb_id = #{showTbId}
 	</select>
-	<select id = "findRentalByUserId" resultType="Rental">
+	<select id="findRentalByUserId" resultType="Rental">
 		select *
-		from rental_tb
+		from
+		rental_tb
 		where user_tb_id = #{userTbId}
 	</select>
-	<select id = "findStatusByShowId" resultType="String">
+	<select id="findStatusByShowId" resultType="String">
 		select status
-		from rental_tb
+		from
+		rental_tb
 		where show_tb_id = #{id}
 	</select>
-	<select id = "findStartDateByShowId">
+	<select id="findStartDateByShowId">
 		select start_date from show_tb
 		where id = #{id}
 	</select>
-	<select id = "findEndDateByShowId">
+	<select id="findEndDateByShowId">
 		select end_date from show_tb
 		where id = #{id}
 	</select>
-	
+	<select id="findShowTypeByShowTypeId">
+		select type from show_type
+		where id = #{id}
+	</select>
+	<select id="findShowTypeByShowId">
+		select type from show_type stp
+		join show_tb s on
+		stp.id = s.show_type_id1
+		where s.id=#{id}
+	</select>
+	<select id="findCountBookingByShowTimeId">
+		select ifnull(sum(quantity),0) from (select show_time_tb_id,quantity from
+		booking_tb where status != '환불') b
+		right outer join show_time_tb s on b.show_time_tb_id = s.id
+		group by s.id having s.id = #{showTbId};
+	</select>
+	<select id="findMaxSeatByShowId">
+		select distinct max_seat from hall_tb h join show_tb
+		s
+		on h.id = s.hall_tb_id where s.id = #{showId};
+	</select>
 	<insert id="insertBookingInfo">
 		insert into booking_tb (status, user_tb_id,
-		seat_tb_id, show_time_tb_id, show_tb_id,created_at)
-		values (#{status},
-		#{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId},now())
+		seat_tb_id, show_time_tb_id, show_tb_id, quantity, created_at)
+		values
+		(#{status},
+		#{userTbId}, #{seatTbId}, #{showTimeTbId}, #{showTbId},
+		#{quantity} ,now())
 	</insert>
 	<update id="updateBookingToSuccess">
 		update booking_tb set status='정상' where id = #{id}
 	</update>
 	<update id="updateRentalToSuccess">
-		update rental_tb set status='정상' where show_tb_id = #{id}
+		update rental_tb set status='정상' where show_tb_id =
+		#{id}
 	</update>
 	<update id="updateBookingToRefund">
 		update booking_tb set status='환불' where id = #{id}
 	</update>
 	<update id="updateRentalToRefund">
-		update rental_tb set status='환불' where show_tb_id = #{id}
+		update rental_tb set status='환불' where show_tb_id =
+		#{id}
 	</update>
 	<delete id="deleteBookingById">
 		delete from booking_tb where id = #{id}
 	</delete>
 	<delete id="deleteNonpaymentBooking">
-		delete from booking_tb where timestampdiff(minute, created_at , now()) >= 30 and status='결제 대기';
+		delete from booking_tb where timestampdiff(minute,
+		created_at , now()) >= 30 and status='결제 대기';
 	</delete>
 
 

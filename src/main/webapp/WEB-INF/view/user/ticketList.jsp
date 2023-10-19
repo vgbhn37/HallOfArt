@@ -5,36 +5,54 @@
 <%@	include file="/WEB-INF/view/layout/header.jsp"%>
 <!-- --------------------------------------------------------- -->
 <div class="container my-5" style="width: 75%;">
-	<h2 class= "title--list">티켓 리스트</h2>
+	<h2 class="title--list">티켓 리스트</h2>
 	<hr>
 
 	<c:forEach var="booking" items="${ticketList }">
-			<div class="my-3" style="font-family: 'NanumSquareRound'">
-				<div class="card flex-row flex-wrap">
-					<div class="card-header border-0">
-						<img src="/imagePath/${booking.showImg}" onerror="this.src='/resources/images/errorImage.png'"
-							style="width: 150px; height: 200px;">
-					</div>
-					<div class="card-body p-5">
-						<h4 class="card-title pb-3">${booking.title }</h4>
-						<span class="card-text">${booking.hallName }(${booking.seatName })</span>
-						<span class="card-text"><fmt:formatNumber type="number">${booking.price}</fmt:formatNumber>원</span>
-						<p class="card-text">
-							공연 일시 :
-							<fmt:formatDate value="${booking.startTime}"
-								pattern="yyyy-MM-dd HH:mm" />
-						</p>
-						
-						<c:set var="currentTimeMillis" value="${currentTime.time}" />
-						<c:set var="twentyFourHoursAgoMillis" value="${booking.startTime.time - 86400000}" />
-						
-						<c:if test="${twentyFourHoursAgoMillis > currentTimeMillis }">
-							<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">환불요청</button>
-						</c:if>
-					</div>
-					<div class="w-100"></div>
+		<div class="my-3" style="font-family: 'NanumSquareRound'">
+			<div class="card flex-row flex-wrap">
+				<div class="card-header border-0">
+					<img src="/imagePath/${booking.showImg}" onerror="this.src='/resources/images/errorImage.png'" style="width: 150px; height: 200px;">
 				</div>
+				<div class="card-body p-5">
+					<c:choose>
+						<c:when test="${booking.quantity==null }">
+							<span class="card-title" style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold; margin-bottom: 20px; margin-top: 10px;"> 공연 </span>
+						</c:when>
+						<c:otherwise>
+							<span class="card-title" style="background-color: lightgrey; padding: 7px 10px; border-radius: 13px; color: white; font-weight: bold; margin-bottom: 20px; margin-top: 10px;"> 전시 </span>
+						</c:otherwise>
+					</c:choose>
+					<br>
+					<br>
+					<h4 class="card-title">${booking.title }</h4>
+
+					<br>
+					<span class="card-text">${booking.hallName }(<c:choose>
+							<c:when test="${booking.quantity==null }">${booking.seatName }</c:when>
+							<c:otherwise>${booking.quantity }매</c:otherwise>
+						</c:choose>)
+					</span> <span class="card-text"><fmt:formatNumber type="number">
+							<c:choose>
+								<c:when test="${booking.quantity==null }">${booking.price}</c:when>
+								<c:otherwise>${booking.price * booking.quantity }</c:otherwise>
+							</c:choose>
+						</fmt:formatNumber>원</span>
+					<p class="card-text">
+						공연 일시 :
+						<fmt:formatDate value="${booking.startTime}" pattern="yyyy-MM-dd HH:mm" />
+					</p>
+
+					<c:set var="currentTimeMillis" value="${currentTime.time}" />
+					<c:set var="twentyFourHoursAgoMillis" value="${booking.startTime.time - 86400000}" />
+					<!-- 						<a href="/qr/ticket">ticket</a> -->
+					<c:if test="${twentyFourHoursAgoMillis > currentTimeMillis }">
+						<button type="button" class="btn btn-outline-secondary float-right" onclick="requestRefund(${booking.bookingId},'${booking.title}','${booking.seatName}','${booking.startTime}')">환불요청</button>
+					</c:if>
+				</div>
+				<div class="w-100"></div>
 			</div>
+		</div>
 	</c:forEach>
 </div>
 <style>
@@ -49,14 +67,14 @@
 }
 
 .title--list:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 12px;
-    height: 12px;
-    background: #ed1a3b;
-    content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 12px;
+	height: 12px;
+	background: #ed1a3b;
+	content: "";
 }
 </style>
 
