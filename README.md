@@ -1,4 +1,4 @@
-# 예술의 전당
+# Lettre - 공연 예매/대관
 ## 개요
 + 단기 심화과정 1기
 + 팀 C조
@@ -27,3 +27,36 @@
 ## 주요 기능
 + 공연 예약 / 결제
 + 대관 결제
+## 화면 구현 ( 사용자 )
+<table>
+<tr>
+  <td align="center">메인 페이지</td>
+  <td align="center">공연 목록</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/ee1c877a-b338-4739-bf87-890f10c7b0dc"></td>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/aef41825-aff2-4a07-b6d0-26267ec46542"></td>
+</tr>
+<tr>
+  <td colspan="2" align="center">대관 신청</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/0052e8ae-28cb-472a-97ff-f39777ccf5d0"></td>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/d6024062-4b5a-40e8-9c84-8e8fd659cff0"></td>
+</tr>
+</table>
+
+
+## 화면 구현 ( 관리자 )
+<table>
+<tr>
+  <td align="center">대관 승인</td>
+  <td align="center">예매 현황 조회</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/f38d516a-7ffa-4ecb-bf67-5266a5ce4465"></td>
+  <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/2050d361-f461-4cdf-8c9e-d3defc0c2a0e"></td>
+</tr>
+</table>
+
+
