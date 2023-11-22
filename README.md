@@ -77,9 +77,7 @@
 <br>
 
 ## 4️⃣ ERD
-
-![erd](https://github.com/vgbhn37/HallOfArt/assets/121776914/dab3ae1a-5508-448d-88a6-272730a87f45)
-
+![erd](https://github.com/vgbhn37/HallOfArt/assets/121776914/8e49cd29-14bc-41d8-91ff-ad74c36f63d8)
 
 <br>
 <br>
@@ -89,66 +87,20 @@
 
 <br>
 
-![sitemap1](https://github.com/vgbhn37/HallOfArt/assets/121776914/b8eefb66-99d7-4221-a20d-f50701cca418)
-
-<br>
-<br>
-
-![sitemap2](https://github.com/vgbhn37/HallOfArt/assets/121776914/f051c4bb-bc5f-446a-a69e-8fc023dc6e38)
+![sitemap1](https://github.com/vgbhn37/HallOfArt/assets/121776914/205f2600-c4ed-487f-9e8f-75b498c4268f)
 
 
 <br>
+<br>
 
-## 6️⃣ 주요 기능
+![sitemap2](https://github.com/vgbhn37/HallOfArt/assets/121776914/62e3f86a-8f83-4bef-bce7-e90164ce9621)
 
-#### 메인 페이지 - 배너 및 작가, 게시판 조회 및 크롤링
-- 메인 배너 슬라이드 조회
-- 사이드 배너 조회
-- 인기 작가 조회
-- 공지사항 조회
-- 스케줄러로 버튜버 순위 자동 크롤링 후 db 저장
-- 인기 버튜버 순위 일/주/월별 조회
-- 자유/의뢰 게시판 조회
 
-#### 작가 목록
-- 태그 클릭으로 작가 분류
-- 검색
-- 마우스오버시 리뷰점수, 별점표시
+<br>
 
-#### 작가 소개
-- Three Js 뷰어로 작가 샘플 vrm 모델 미리보기
-- vrm 확대보기
-- 마우스 움직임에 따라 눈 포인팅
-- 태그로 분류
-- 작가 팔로우
-- 작가 신고
-- OpenAi 형태소 분석 기반 댓글 분석 감정
-- 별점 평가
-- 작품별 가격 설정
-- 작가에게 의뢰하기
-- 포트원API(결제)
+## 6️⃣ 화면 구현
 
-#### 자유게시판
-- 페이징
-- 검색
-- 댓글
-
-#### 의뢰게시판
-- 페이징
-- 검색
-- 댓글
-- 제안 수락
-
-#### 공지사항
-- 페이징
-- 검색
-
-#### 고객센터
-- 문의하기
-- 신고하기
-- 기타 사유 작성
-
-## 화면 구현 ( 사용자 )
+## 사용자
 <table>
 <tr>
   <td align="center">메인 페이지</td>
@@ -168,7 +120,7 @@
 </table>
 
 
-## 화면 구현 ( 관리자 )
+## 관리자
 <table>
 <tr>
   <td align="center">대관 승인</td>
