@@ -20,26 +20,26 @@
 
 ## ⚙ 의존성
 ```java
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
-    implementation 'org.jsoup:jsoup:1.15.3'
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
-    implementation 'javax.mail:javax.mail-api:1.6.2'
-    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
-    implementation 'net.coobird:thumbnailator:0.4.19'
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    implementation 'javax.servlet:jstl'
-    implementation 'org.springframework.security:spring-security-crypto:5.7.1'
-    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'javax.servlet:jstl'
+	implementation 'net.nurigo:sdk:4.3.0'
+	
+	
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
+        implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+	implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
 ```
 
 <br>
@@ -47,9 +47,9 @@
 
 ## 1️⃣ 프로젝트 구조 
 
-|   Class   | Resources | Webapp |
-| --- | --- | --- |
-| ![image](https://github.com/economicfreedom/vrink/assets/35636560/4a87ea4e-d4a0-422c-b65c-29c427738448) | ![image](https://github.com/economicfreedom/vrink/assets/35636560/947d30de-559e-45d3-bf50-36bedfae358f) | ![image](https://github.com/economicfreedom/vrink/assets/35636560/a1d994ab-8125-4001-85b8-4d6329e77c69) |
+|   Class   | Webapp |
+| --- | --- |
+| ![class](https://github.com/vgbhn37/HallOfArt/assets/121776914/8ecff777-95c9-4764-bf8f-8f64eb8eed46) | ![webapp](https://github.com/vgbhn37/HallOfArt/assets/121776914/df262030-cc9c-4390-a270-af20dc5d2ddc) |
 
 
   
@@ -57,40 +57,29 @@
 
 ## 2️⃣ 프로젝트 개요
 
-* 시대변화에 발맞춰 비즈니스 모델을 충분히 활용할 수 있는 VR 에셋 거래 중계 사이트로 주제 선정
-* 현행 시스템 벤치마킹 (아트머그, 크몽,아이템 매니아)
+* 공연, 대관 에약 / 결제 사이트 개발 
+* 현행 시스템 벤치마킹(예술의 전당)
 
 <br>
 
 ## 3️⃣ 기능 구분
 
-#### Member
-
-* 소셜 로그인 API, 결제 및 환불 API, VRM 조회 기능
-* OpenAI 평가 API, 구글 이메일 SMTP 프로토콜, 버튜버 인기 순위 기능
-* 상품 조회 기능, 게시판 기능, 신고 기능, 문의 기능
-
-#### Customer
-
-* 상품 구매 기능, 작가 팔로우 기능, 개인 의뢰 기능
-
-#### Editor
-
-* 작가 페이지 등록 기능, 상품 등록/판매 기능, 포인트 환전 기능
-
+#### 사용자
+* 회원 : 회원가입, 로그인, 카카오 소셜 로그인, 아이디/임시비밀번호 발송, 회원정보 수정
+* 결제 대기 리스트, 결제 페이지, 결제 내역 및 환불
+* 공연 목록 조회, 공연 예매 신청, 대관 신청
+* 공지사항 조회, 1:1 문의하기, 오시는 길
 #### Manager
-* 대시보드 조회, 통계 조회, 회원관리, 판매자 신청 승인, 공지/게시판 관리, 
-* 정산 조회 및 처리, 결제 조회 및 환불처리, 고객문의 답변, 신고 처리, 배너 등록 및 조회
+* 회원 목록 조회, 회원 정보 수정
+* 대관 정보 입력, 공연 상태 관리, 대관 신청 조회, 에매 내역 조회, 결제 내역 조회
+* 공지사항 작성, 1:1 문의 관리
 
 <br>
 
-## 4️⃣ ERD & 테이블 명세서
-테이블 명세서 : https://docs.google.com/spreadsheets/d/1Lrxd3bV0l5KgfyZpKmTONYraU3WzuedwmmR7ZOANyI8/edit#gid=0
+## 4️⃣ ERD
 
-<br>
-<br>
+![erd](https://github.com/vgbhn37/HallOfArt/assets/121776914/dab3ae1a-5508-448d-88a6-272730a87f45)
 
-![table](https://github.com/economicfreedom/vrink/assets/35636560/40e65e8f-9260-4f9c-9671-52387a49ed8a)
 
 <br>
 <br>
@@ -100,12 +89,12 @@
 
 <br>
 
-![image](https://github.com/economicfreedom/vrink/assets/35636560/18b08086-1471-4f11-9582-585e8b54ee1e)
+![sitemap1](https://github.com/vgbhn37/HallOfArt/assets/121776914/b8eefb66-99d7-4221-a20d-f50701cca418)
 
 <br>
 <br>
 
-![image](https://github.com/economicfreedom/vrink/assets/35636560/5748c13f-c222-4020-99d7-e76b85d9d6df)
+![sitemap2](https://github.com/vgbhn37/HallOfArt/assets/121776914/f051c4bb-bc5f-446a-a69e-8fc023dc6e38)
 
 
 <br>
