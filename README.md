@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://github.com/vgbhn37/HallOfArt/assets/121776914/ab86bc95-29b2-4cc4-a26e-e49924278ad4"  style="width:60%;">
+	<img src="https://github.com/vgbhn37/HallOfArt/assets/35636560/e181601a-4465-4dc9-b823-9ff77162fb79">
 </div>
 
 ## 🚀 프로젝트 개요
