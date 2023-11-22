@@ -1,4 +1,7 @@
-![htest](https://github.com/vgbhn37/HallOfArt/assets/121776914/ab86bc95-29b2-4cc4-a26e-e49924278ad4)
+<div align="center">
+	<img src="https://github.com/vgbhn37/HallOfArt/assets/121776914/ab86bc95-29b2-4cc4-a26e-e49924278ad4"  style="width:100%;">
+</div>
+
 ## 🚀 프로젝트 개요
 - *모든 팀원이 능동적으로 개발에 참여했으며, 주 포지션은 아래와 같습니다.*
 
