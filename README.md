@@ -113,6 +113,75 @@
   <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/ee1c877a-b338-4739-bf87-890f10c7b0dc"></td>
   <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/aef41825-aff2-4a07-b6d0-26267ec46542"></td>
 </tr>
+
+<tr>
+  <td align="center">로그인</td>
+  <td align="center">회원가입</td>
+</tr>
+<tr>
+  <td>
+      
+![로그인](https://github.com/vgbhn37/HallOfArt/assets/35636560/31b20943-38ef-42d2-a095-5bc461c375b1)
+      
+  </td>
+  <td>
+      
+![회원가입](https://github.com/vgbhn37/HallOfArt/assets/35636560/fbb20700-dab8-4836-9dd1-1ead602634f7)
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">아이디,비번찾기</td>
+  <td align="center">회원정보 수정</td>
+</tr>
+<tr>
+  <td>
+	  
+ ![아이디,비번찾기](https://github.com/vgbhn37/HallOfArt/assets/35636560/989f93b0-f580-4841-862c-38b7d76ecbe2)
+      
+  </td>
+  <td>
+	  
+  ![회원정보 수정](https://github.com/vgbhn37/HallOfArt/assets/35636560/ad59dbe1-a5cf-401a-acf6-320804cc7604)
+  
+  </td>
+</tr>
+
+<tr>
+  <td align="center">공지사항</td>
+  <td align="center">오시는길</td>
+</tr>
+<tr>
+  <td>
+      
+![공지사항](https://github.com/vgbhn37/HallOfArt/assets/35636560/30b58395-a427-4398-b8cf-1072ffde049f)
+      
+  </td>
+  <td>
+      
+![오시는길](https://github.com/vgbhn37/HallOfArt/assets/35636560/e20f352e-aaec-4845-978d-69bfdc8b9bd4)
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">1:1문의 글쓰기</td>
+  <td align="center">1:1문의 답변</td>
+</tr>
+<tr>
+  <td>
+	  
+![1대1문의글쓰기](https://github.com/vgbhn37/HallOfArt/assets/35636560/96e6b1ec-31ed-4029-aabd-e39bfe1f69cc)
+      
+  </td>
+  <td>
+      
+![1대1문의답변](https://github.com/vgbhn37/HallOfArt/assets/35636560/9bd5ec68-762f-47cd-8d99-39a6dc6d6c81)
+
+  </td>
+</tr>
+ 
 <tr>
   <td colspan="2" align="center">대관 신청</td>
 </tr>
@@ -133,6 +202,41 @@
   <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/f38d516a-7ffa-4ecb-bf67-5266a5ce4465"></td>
   <td><img src="https://github.com/vgbhn37/HallOfArt/assets/136680186/2050d361-f461-4cdf-8c9e-d3defc0c2a0e"></td>
 </tr>
+
+<tr>
+  <td align="center">유저목록</td>
+  <td align="center">유저상세</td>
+</tr>
+<tr>
+  <td>
+	  
+![관리자-유저목록](https://github.com/vgbhn37/HallOfArt/assets/35636560/a7c10dcd-d37b-4193-857a-60a8cf2a4937)
+      
+  </td>
+  <td>
+      
+![관리자-유저상세](https://github.com/vgbhn37/HallOfArt/assets/35636560/9b8b7c98-8797-4624-a87e-c088482b14c5)
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">공지작성</td>
+  <td align="center">문의목록</td>
+</tr>
+<tr>
+  <td>
+	  
+![관리자-공지작성png](https://github.com/vgbhn37/HallOfArt/assets/35636560/47485d50-3fa0-463c-bc4e-e9e60607819c)
+      
+  </td>
+  <td>
+	  
+![관리자-문의목록](https://github.com/vgbhn37/HallOfArt/assets/35636560/516aed54-1ead-4cac-995c-d98f645f6a3f)
+
+  </td>
+</tr>
+
 </table>
 
 
